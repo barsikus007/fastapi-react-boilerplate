@@ -8,7 +8,7 @@ services:
       - '80:80'
     depends_on:
       - backend
-      - frontend
+#      - frontend
 
   backend:
     build:
@@ -16,8 +16,8 @@ services:
       dockerfile: Dockerfile
     command: python main.py
     tty: true
-#    volumes:
-#      - ./backend:/app/:cached
+    volumes:
+      - ./backend:/app/:cached
 #      - ./.docker/.ipython:/root/.ipython:cached
     environment:
       PYTHONPATH: .
