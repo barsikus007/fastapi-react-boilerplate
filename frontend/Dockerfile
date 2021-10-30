@@ -1,18 +1,20 @@
-FROM node:16
+#FROM node:16
+FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package.json ./
-#ADD package.json /package.json
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install
 
 #ENV NODE_PATH=/node_modules
 #ENV PATH=$PATH:/node_modules/.bin
 RUN npm install
 
-COPY . /app
+COPY . .
 
+EXPOSE 3000
 #EXPOSE 8000
-#EXPOSE 35729
+EXPOSE 35729
 
-#ENTRYPOINT ["/bin/bash", "/app/run.sh"]
-CMD ["start"]
+CMD ['yarn', 'start']

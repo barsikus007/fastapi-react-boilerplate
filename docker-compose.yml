@@ -8,7 +8,7 @@ services:
       - '80:80'
     depends_on:
       - backend
-#      - frontend
+      - frontend
 
   backend:
     build:
@@ -16,12 +16,14 @@ services:
       dockerfile: Dockerfile
     command: python main.py
     volumes:
-      - type: bind
-        source: ./backend
-        target: /app
-      - type: bind
-        source: ./.docker/.ipython
-        target: /root/.ipython
+      - ./backend:/app:cached
+#      - type: bind
+#        source: ./backend
+#        target: /app
+#      - ./.docker/.ipython:/root/.ipython:cached
+#      - type: bind
+#        source: ./.docker/.ipython
+#        target: /root/.ipython
     environment:
       PYTHONPATH: .
 #      DATABASE_URL: 'postgresql://{{cookiecutter.postgres_user}}:{{cookiecutter.postgres_password}}@postgres:5432/{{cookiecutter.postgres_user}}'
@@ -29,22 +31,22 @@ services:
 #      - postgres
     tty: true
 
-#  frontend:
-#    build:
-#      context: frontend
-#      dockerfile: Dockerfile
-#    stdin_open: true
-#    volumes:
-##      - './frontend:/app'
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    stdin_open: true
+    volumes:
+      - ./frontend:/app:cached
 #      - type: bind
 #        source: ./frontend
 #        target: /app
-##      - './frontend/node_modules:/app/node_modules'
+      - ./frontend/node_modules:/app/node_modules:cached
 #      - type: bind
 #        source: ./frontend/node_modules
 #        target: /app/node_modules
-#    environment:
-#      - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
 
 #  postgres:
 #    image: postgres:12
