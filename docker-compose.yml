@@ -15,15 +15,19 @@ services:
       context: backend
       dockerfile: Dockerfile
     command: python main.py
-    tty: true
     volumes:
-      - ./backend:/app/:cached
-#      - ./.docker/.ipython:/root/.ipython:cached
+      - type: bind
+        source: ./backend
+        target: /app
+      - type: bind
+        source: ./.docker/.ipython
+        target: /root/.ipython
     environment:
       PYTHONPATH: .
 #      DATABASE_URL: 'postgresql://{{cookiecutter.postgres_user}}:{{cookiecutter.postgres_password}}@postgres:5432/{{cookiecutter.postgres_user}}'
 #    depends_on:
 #      - postgres
+    tty: true
 
 #  frontend:
 #    build:
@@ -31,8 +35,14 @@ services:
 #      dockerfile: Dockerfile
 #    stdin_open: true
 #    volumes:
-#      - './frontend:/app:cached'
-#      - './frontend/node_modules:/app/node_modules:cached'
+##      - './frontend:/app'
+#      - type: bind
+#        source: ./frontend
+#        target: /app
+##      - './frontend/node_modules:/app/node_modules'
+#      - type: bind
+#        source: ./frontend/node_modules
+#        target: /app/node_modules
 #    environment:
 #      - NODE_ENV=development
 
