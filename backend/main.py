@@ -5,8 +5,8 @@ app = FastAPI(
     title='WIN11TWEAKER',
     description='Документация сайта лучшего твикера для WIN11',
     version='18.3',
-    openapi_url='/api/openapi.json',
-    docs_url='/api/docs',
+    openapi_url='/docs/openapi.json',
+    docs_url='/docs',
     swagger_ui_oauth2_redirect_url='/api/docs/oauth2-redirect',
     redoc_url=None,
 )
