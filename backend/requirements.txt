@@ -1,5 +1,10 @@
 fastapi
 uvicorn[standard]
-ujson
+
+orjson
+
+# alembic
+# SQLAlchemy
+
+# python-multipart
 # email_validator
-# orjson

@@ -30,7 +30,7 @@ services:
   frontend:
     build:
       context: frontend
-      target: development
+      target: production
     volumes:
       # - ./frontend:/app/src
       - type: bind
