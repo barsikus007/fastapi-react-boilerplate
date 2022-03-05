@@ -9,8 +9,8 @@ ENV PATH $PATH:/node_modules/.bin
 
 COPY public public/
 COPY src src/
-COPY config config/
-COPY scripts scripts/
+# COPY config config/
+# COPY scripts scripts/
 
 FROM base as development
 ENV NODE_ENV development

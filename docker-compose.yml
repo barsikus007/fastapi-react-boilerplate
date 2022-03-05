@@ -12,20 +12,20 @@ services:
 
   backend:
     build: backend
-    command: bash -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0'
+    command: bash -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0 --app-dir src'
     volumes:
-      # - ./backend:/app
-      - type: bind
-        source: ./backend
-        target: /app
-    #   - ./.docker/.ipython:/root/.ipython
-    #   - type: bind
-    #     source: ./.docker/.ipython
-    #     target: /root/.ipython
+      - ./backend:/app
+      # - type: bind
+      #   source: ./backend
+      #   target: /app
+      # - ./.docker/.ipython:/root/.ipython
+      # - type: bind
+      #   source: ./.docker/.ipython
+      #   target: /root/.ipython
     environment:
       # PYTHONPATH: .
       DEBUG: True
-      DATABASE_URL: 'postgresql://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
+      DATABASE_URL: 'postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
     depends_on:
       - postgres
 
@@ -34,10 +34,11 @@ services:
       context: frontend
       target: development
     volumes:
-      # - ./frontend:/app/src
-      - type: bind
-        source: ./frontend/src
-        target: /app/src
+      # - ./frontend/node_modules:/app/node_modules
+      - ./frontend/src:/app/src
+      # - type: bind
+      #   source: ./frontend/src
+      #   target: /app/src
 
   postgres:
     image: postgres:14-alpine

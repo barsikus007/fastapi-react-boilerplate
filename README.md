@@ -4,12 +4,12 @@
 #### On Windows
 ##### Windows 11 or with winget installed
 ```pwsh
-winget install DockerDesktop -h
+winget install Docker.DockerDesktop -h
+wsl --install -d Ubuntu
 ```
 ##### Below Windows 11
 [Installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 
-(check if wsl backend needed)
 #### On Linux
 [Check setup guide](https://docs.docker.com/engine/install/)
 ## Launch app in development mode
