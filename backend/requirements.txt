@@ -3,8 +3,9 @@ uvicorn[standard]
 
 orjson
 
-# alembic
-# SQLAlchemy
+asyncpg
+alembic
+sqlmodel
 
 # python-multipart
 # email_validator

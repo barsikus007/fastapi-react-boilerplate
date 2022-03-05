@@ -12,6 +12,7 @@ services:
 
   backend:
     build: backend
+    command: bash -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0'
     volumes:
       # - ./backend:/app
       - type: bind
@@ -21,11 +22,12 @@ services:
     #   - type: bind
     #     source: ./.docker/.ipython
     #     target: /root/.ipython
-    # environment:
-    #   PYTHONPATH: .
-    #   DATABASE_URL: 'postgresql://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
-    # depends_on:
-    #   - postgres
+    environment:
+      # PYTHONPATH: .
+      DEBUG: True
+      DATABASE_URL: 'postgresql://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
+    depends_on:
+      - postgres
 
   frontend:
     build:
@@ -41,6 +43,7 @@ services:
     image: postgres:14-alpine
     restart: always
     environment:
+      TZ: Europe/Moscow
       POSTGRES_PASSWORD: TODO_CHANGE_ME
     # ports:
     #   - '5432:5432'
