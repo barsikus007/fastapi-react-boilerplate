@@ -1,6 +1,8 @@
 # For local type checking and suggestion (developer mode)
 ## Install node
+###### Note, that on windows you must use WSL if you are frontend developer due to react-scripts@5.0.0 bug with hot reloading
 #### On Windows
+###### If you are using WSL you must to preceed linux instructions
 I recommend [scoop](scoop.sh) package manager
 ```pwsh
 scoop install nodejs-lts
