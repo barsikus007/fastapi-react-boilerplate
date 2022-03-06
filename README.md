@@ -4,8 +4,8 @@
 #### On Windows
 ##### Windows 11 or with winget installed
 ```pwsh
-winget install Docker.DockerDesktop -h
 wsl --install -d Ubuntu
+winget install Docker.DockerDesktop -h
 ```
 ##### Below Windows 11
 [Installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
