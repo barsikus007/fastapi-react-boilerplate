@@ -12,46 +12,13 @@ wsl --install -d Ubuntu
 
 #### On Linux
 [Check setup guide](https://docs.docker.com/engine/install/)
+[Also install compose](https://docs.docker.com/compose/cli-command/#install-on-linux)
 ## Launch app in development mode
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
-## For local type checking and suggestion
-### Install python
-### Install packages
-#### On Windows
-```pwsh
-py -m venv venv
-venv/Scripts/Activate.ps1
-pip install -r requirements.txt
-```
-#### On Linux
+
+## Launch app in production mode
 ```bash
-python3 -m venv venv
-venv/Scripts/Activate.ps1
-pip install -r requirements.txt
+docker compose -f "docker-compose.prod.yml" up -d --build
 ```
-### Point your IDE to virtual environment
-
-
-# Aboba
-
-Python: [Python](https://python.org).
-
-## Abiba
-
-In the project directory, you can run:
-
-### `aboba`
-
-kek
-
-### `yarn test`
-
-**Note: lol `kek`, you can’t go back!**
-
-flex
-
-## React
-
-To React, [React](https://reactjs.org/).

@@ -8,9 +8,10 @@ RUN yarn
 ENV PATH $PATH:/node_modules/.bin
 
 COPY public public/
-COPY src src/
+# COPY src src/
 # COPY config config/
 # COPY scripts scripts/
+COPY tsconfig.json .
 
 FROM base as development
 ENV NODE_ENV development

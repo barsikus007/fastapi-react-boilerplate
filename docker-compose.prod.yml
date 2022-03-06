@@ -1,4 +1,3 @@
-#version: '3.9'  # optional since v1.27.0
 services:
   nginx:
     image: nginx:1.20-alpine
@@ -12,38 +11,27 @@ services:
 
   backend:
     build: backend
+    command: bash -c 'alembic upgrade head && uvicorn main:app --host 0.0.0.0 --app-dir src'
     volumes:
-      # - ./backend:/app
-      - type: bind
-        source: ./backend
-        target: /app
-    #   - ./.docker/.ipython:/root/.ipython
-    #   - type: bind
-    #     source: ./.docker/.ipython
-    #     target: /root/.ipython
-    # environment:
-    #   PYTHONPATH: .
-    #   DATABASE_URL: 'postgresql://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
-    # depends_on:
-    #   - postgres
+      - ./backend:/app
+    environment:
+      DATABASE_URL: 'postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
+    depends_on:
+      - postgres
+
 
   frontend:
     build:
       context: frontend
       target: production
-    volumes:
-      # - ./frontend:/app/src
-      - type: bind
-        source: ./frontend/src
-        target: /app/src
+    # volumes:
+    #   - ./frontend/build:/app/build
 
   postgres:
     image: postgres:14-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: TODO_CHANGE_ME
-    # ports:
-    #   - '5432:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
 
