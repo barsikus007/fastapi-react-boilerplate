@@ -5923,9 +5923,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"frontend2@workspace:.":
+"modeus@workspace:.":
   version: 0.0.0-use.local
-  resolution: "frontend2@workspace:."
+  resolution: "modeus@workspace:."
   dependencies:
     "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^12.0.0
