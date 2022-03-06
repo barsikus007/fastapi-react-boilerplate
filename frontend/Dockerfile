@@ -1,17 +1,19 @@
 FROM node:16-alpine as base
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn .yarn
 
+RUN yarn set version stable
 RUN yarn
 
+# TODO is needed?
 ENV PATH $PATH:/node_modules/.bin
 
 COPY public public/
-# COPY src src/
 # COPY config config/
 # COPY scripts scripts/
-COPY tsconfig.json .
+
 
 FROM base as development
 ENV NODE_ENV development
