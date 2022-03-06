@@ -7,6 +7,13 @@ scoop install python
 ```
 #### On Linux
 You already have python, just be sure that you have 3.10 version installed
+If your version is lower then find the way to install it on your disto
+Here is most common distro installation instruction:
+##### On Ubuntu
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt install python3.10 -y
+```
 ## Install packages
 Be sure that you in backend dir
 #### On Windows
