@@ -25,5 +25,6 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 #### Eject react-app (diff with pls ejected proj)
 #### Decide about ts usage (or make js loyal ts env)
 #### Decide about test usage
+#### Add node packages
 #### Deal with nginx config
 #### Add CI/CD
