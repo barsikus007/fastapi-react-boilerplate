@@ -10,6 +10,7 @@ winget install Docker.DockerDesktop -h
 [Installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 #### On Linux
 [Check setup guide](https://docs.docker.com/engine/install/)
+
 [Also install compose](https://docs.docker.com/compose/cli-command/#install-on-linux)
 ## Launch app in development mode
 ###### Note, that on windows you must use WSL if you are frontend developer due to react-scripts@5.0.0 bug with hot reloading

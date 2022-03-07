@@ -11,6 +11,7 @@ COPY public public/
 
 FROM installer as development
 ENV NODE_ENV development
+ENV WDS_SOCKET_PORT 80
 
 CMD ["yarn", "start"]
 
