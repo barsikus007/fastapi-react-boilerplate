@@ -10,6 +10,7 @@ services:
       - frontend
 
   backend:
+    image: backend # TODO ?
     build: backend
     command: bash -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0 --app-dir src'
     volumes:

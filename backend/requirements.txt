@@ -7,5 +7,6 @@ asyncpg
 alembic
 sqlmodel
 
+# gunicorn
 # python-multipart
 # email_validator
