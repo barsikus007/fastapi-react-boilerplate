@@ -25,13 +25,7 @@ services:
     build:
       context: frontend
       target: development
-    # for bind node_modules
-    # command: sh -c '[ "$$(ls -A node_modules)" ] && yarn start || yarn && yarn start'
     volumes:
-      # for bind node_modules
-      # - ./frontend/node_modules:/app/node_modules
-      # for volume node_modules
-      # - node_modules:/app/node_modules
       - ./frontend/src:/app/src
     environment:
       - WDS_SOCKET_PORT=80
@@ -48,10 +42,3 @@ services:
 
 volumes:
   db-data:
-  # for volume node_modules (PWD => global_path)
-  # node_modules:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: $PWD/frontend/node_modules
