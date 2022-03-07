@@ -19,6 +19,7 @@ Be sure that you in backend dir
 #### On Windows
 ```pwsh
 py -m venv venv
+venv\Scripts\pip install --upgrade pip
 venv\Scripts\pip install -r requirements.txt
 ```
 #### On Linux
