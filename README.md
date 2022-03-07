@@ -21,9 +21,9 @@ docker compose up -d --build
 docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
-#### yarn 3 react-app
-#### Eject react-app
-#### Decide about ts usage
+#### yarn v3 react-app
+#### Eject react-app (diff with pls ejected proj)
+#### Decide about ts usage (or make js loyal ts env)
+#### Decide about test usage
 #### Deal with nginx config
-#### Resolve TODOs
 #### Add CI/CD

@@ -15,9 +15,7 @@ services:
     command: sh -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0 --app-dir src'
     volumes:
       - ./backend:/app
-      # - ./.docker/.ipython:/root/.ipython
     environment:
-      # PYTHONPATH: .
       DATABASE_URL: postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres
     depends_on:
       - postgres
