@@ -26,3 +26,4 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 #### Decide about ts usage
 #### Deal with nginx config
 #### Resolve TODOs
+#### Add CI/CD

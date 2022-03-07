@@ -1,12 +1,12 @@
+orjson
 fastapi
 uvicorn[standard]
-
-orjson
+gunicorn
 
 asyncpg
 alembic
 sqlmodel
 
-# gunicorn
+# pandas
 # python-multipart
 # email_validator

@@ -9,10 +9,6 @@
 !.yarn/sdks
 !.yarn/versions
 
-# IDE
-.idea
-.vscode
-
 # dependencies
 /node_modules
 /.pnp
