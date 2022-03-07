@@ -10,17 +10,19 @@ services:
       - frontend
 
   backend:
+    image: backend
     build: backend
     command: bash -c 'alembic upgrade head && uvicorn main:app --host 0.0.0.0 --app-dir src'
     volumes:
       - ./backend:/app
     environment:
-      DATABASE_URL: 'postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
+      DATABASE_URL: postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres
     depends_on:
       - postgres
 
 
   frontend:
+    image: frontend
     build:
       context: frontend
       target: production

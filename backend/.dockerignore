@@ -23,8 +23,3 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 README.md
-
-
-.dockerignore
-Dockerfile
-__pycache__

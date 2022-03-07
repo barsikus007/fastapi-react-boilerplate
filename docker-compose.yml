@@ -10,24 +10,25 @@ services:
       - frontend
 
   backend:
-    image: backend # TODO ?
+    image: backend
     build: backend
-    command: bash -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0 --app-dir src'
+    command: sh -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0 --app-dir src'
     volumes:
       - ./backend:/app
       # - ./.docker/.ipython:/root/.ipython
     environment:
       # PYTHONPATH: .
-      DATABASE_URL: 'postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres'
+      DATABASE_URL: postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres
     depends_on:
       - postgres
 
   frontend:
+    image: frontend
     build:
       context: frontend
       target: development
     # for bind node_modules
-    # command: /bin/sh -c '[ "$$(ls -A node_modules)" ] && yarn start || yarn && yarn start'
+    # command: sh -c '[ "$$(ls -A node_modules)" ] && yarn start || yarn && yarn start'
     volumes:
       # for bind node_modules
       # - ./frontend/node_modules:/app/node_modules
