@@ -1,26 +1,23 @@
-FROM node:16-alpine as builder
+FROM node:16-alpine as installer
 WORKDIR /app
 
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 
-RUN yarn set version stable
-RUN yarn
+RUN yarn set version stable && yarn
 
 COPY public public/
 
 
-FROM builder as development
+FROM installer as development
 ENV NODE_ENV development
 
 CMD ["yarn", "start"]
 
 
-FROM builder as production
+FROM installer as builder
 ENV NODE_ENV production
 
+COPY src src/
+
 RUN yarn build
-
-RUN yarn global add serve
-
-CMD ["serve", "-s", "build", "-l", "3000"]
