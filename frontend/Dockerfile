@@ -21,4 +21,4 @@ ENV NODE_ENV production
 
 COPY src src/
 
-RUN yarn build
+CMD ["yarn", "build"]
