@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 
-RUN yarn set version stable && yarn
+RUN yarn
 
 COPY public public/
 
