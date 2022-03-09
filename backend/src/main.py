@@ -1,11 +1,11 @@
 import uvicorn
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse
-from sqlalchemy.future import select
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import select
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from db import get_session
-from models import Student, StudentCreate
+from models import Student, StudentCreate, StudentRead
 
 
 app = FastAPI(
@@ -19,24 +19,43 @@ app = FastAPI(
 )
 
 
-@app.get('/api/v1/modeus')
-async def example() -> dict:
+@app.get('/api/v1/modeus', response_model=dict[str, str])
+async def example() -> dict[str, str]:
     return {'sas': 'sus'}
 
 
-@app.get('/api/v1/student', response_model=list[Student])
-async def get_students(session: AsyncSession = Depends(get_session)) -> list[Student]:
-    result = await session.execute(select(Student))
-    students = result.scalars().all()
-    return [Student(name=student.name, major=student.major, year=student.year, id=student.id) for student in students]
+@app.patch('/api/v1/student/{student_id}', response_model=StudentRead)
+async def year_student(student_id: int, year: int, session: AsyncSession = Depends(get_session)) -> StudentRead:
+    student = await session.get(Student, student_id)
+    if not student:
+        raise HTTPException(status_code=404, detail='Student not found')
+    student.year = year
+    await session.commit()
+    print(student)
+    return student
 
 
-@app.post('/api/v1/student')
-async def add_students(student: StudentCreate, session: AsyncSession = Depends(get_session)) -> Student:
-    student = Student(name=student.name, major=student.major, year=student.year)
+@app.get('/api/v1/student/{student_id}', response_model=StudentRead)
+async def get_student(student_id: int, session: AsyncSession = Depends(get_session)) -> StudentRead:
+    student = await session.get(Student, student_id)
+    if not student:
+        raise HTTPException(status_code=404, detail='Student not found')
+    return student
+
+
+@app.get('/api/v1/students', response_model=list[StudentRead])
+async def get_students(session: AsyncSession = Depends(get_session)) -> list[StudentRead]:
+    result = await session.exec(select(Student))
+    return result.all()
+
+
+@app.post('/api/v1/student', response_model=StudentRead)
+async def add_student(student: StudentCreate, session: AsyncSession = Depends(get_session)) -> StudentRead:
+    student = Student(**student.dict())
     session.add(student)
     await session.commit()
-    await session.refresh(student)
+    # Seems, that refreshing is not necessary
+    # await session.refresh(student)
     return student
 
 

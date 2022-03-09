@@ -16,6 +16,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
+      DEBUG: true
       DATABASE_URL: postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres
     depends_on:
       - postgres

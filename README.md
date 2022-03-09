@@ -29,3 +29,4 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 #### Add node packages
 #### Deal with nginx config
 #### Add CI/CD
+#### Python app or src
