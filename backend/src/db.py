@@ -10,7 +10,7 @@ Select.inherit_cache = True
 SelectOfScalar.inherit_cache = True
 
 DATABASE_URL = getenv('DATABASE_URL')
-engine = create_async_engine(DATABASE_URL, echo=getenv('DEBUG'), future=True)
+engine = create_async_engine(DATABASE_URL, echo=bool(getenv('DEBUG')), future=True)
 
 
 async def get_session() -> AsyncSession:
