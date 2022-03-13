@@ -1,6 +1,5 @@
 import asyncio
 from logging.config import fileConfig
-from os import getenv
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -9,6 +8,7 @@ from sqlmodel import SQLModel
 from alembic import context
 
 from src.models import *
+from src.settings import settings
 
 
 # this is the Alembic Config object, which provides
@@ -32,7 +32,7 @@ target_metadata = SQLModel.metadata
 
 
 def get_url():
-    return getenv("DATABASE_URL")
+    return settings.DATABASE_URL
 
 
 def run_migrations_offline():

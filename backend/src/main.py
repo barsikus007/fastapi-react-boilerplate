@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Query, Depends, FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -9,9 +9,9 @@ from models import Student, StudentCreate, StudentRead
 
 
 app = FastAPI(
-    title='MODEUS',
-    description='Yet Another Modeus Realisation',
-    version='2.0',
+    title='Boilerplate',
+    description='Fastapi React boilerplate',
+    version='0.1',
     openapi_url='/docs/openapi.json',
     default_response_class=ORJSONResponse,
     docs_url='/docs',
@@ -44,8 +44,10 @@ async def get_student(student_id: int, session: AsyncSession = Depends(get_sessi
 
 
 @app.get('/api/v1/students', response_model=list[StudentRead])
-async def get_students(session: AsyncSession = Depends(get_session)) -> list[StudentRead]:
-    result = await session.exec(select(Student))
+async def get_students(
+        offset: int = 0, limit: int = Query(default=100, lte=100),
+        session: AsyncSession = Depends(get_session)) -> list[StudentRead]:
+    result = await session.exec(select(Student).offset(offset).limit(limit))
     return result.all()
 
 
