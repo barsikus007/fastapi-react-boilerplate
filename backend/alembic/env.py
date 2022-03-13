@@ -31,10 +31,6 @@ target_metadata = SQLModel.metadata
 # ... etc.
 
 
-def get_url():
-    return settings.DATABASE_URL
-
-
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
 
@@ -47,7 +43,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url=get_url()
+    url=settings.DATABASE_URL
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -77,7 +73,7 @@ async def run_migrations_online():
         engine_from_config(
             {
                 **config.get_section(config.config_ini_section),
-                **{"sqlalchemy.url": get_url()}
+                **{"sqlalchemy.url": settings.DATABASE_URL}
             },
             prefix="sqlalchemy.",
             poolclass=pool.NullPool,
