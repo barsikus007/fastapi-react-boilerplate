@@ -23,10 +23,15 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
 #### yarn v3 react-app
-#### Eject react-app (diff with pls ejected proj)
+#### Eject react-app (for absulute paths with @ and...?)
 #### Decide about ts usage (or make js loyal ts env)
 #### Decide about test usage
-#### Add node packages
+#### Add default node packages (like react query)
 #### Deal with nginx config
 #### Add CI/CD
 #### Python app or src
+#### Remove dockerignore?
+#### Add env file settings
+#### Add restart to docker composes
+#### Sync prod and usual docker composes (and make different image names if needed)
+#### Make and test debug docker file

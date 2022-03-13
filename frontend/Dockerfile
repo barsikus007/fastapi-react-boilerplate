@@ -7,6 +7,7 @@ COPY .yarn .yarn
 RUN yarn
 
 COPY public public/
+COPY jsconfig.json .eslintrc.yml ./
 
 
 FROM installer as development
