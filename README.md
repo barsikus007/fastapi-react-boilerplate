@@ -35,3 +35,4 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 #### Add restart to docker composes
 #### Sync prod and usual docker composes (and make different image names if needed)
 #### Make and test debug docker file
+#### Relationship(sa_relationship_kwargs={"lazy": "selectin"})
