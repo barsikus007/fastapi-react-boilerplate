@@ -6,7 +6,7 @@ I recommend [scoop](scoop.sh) package manager
 scoop install python
 ```
 #### On Linux
-You already have python, just be sure that you have 3.10 version installed (But you may need venv package. Install it via `sudo apt install python3-venv -y` on Ububntu)
+You already have python, just be sure that you have 3.10 version with venv installed
 If your version is lower then find the way to install it on your disto
 Here is most common distro installation instruction:
 ##### On Ubuntu

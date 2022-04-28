@@ -2,8 +2,8 @@ orjson
 fastapi
 uvicorn[standard]
 gunicorn
+email-validator
 python-multipart
-# email-validator
 
 asyncpg
 alembic
