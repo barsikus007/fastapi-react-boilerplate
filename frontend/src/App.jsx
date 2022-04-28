@@ -1,28 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
+import { Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-const Main = styled.div`
-  text-align: center;
-`;
+import Common from 'pages/Common';
+import Index from 'pages/Index';
+import NotFound from 'pages/NotFound';
 
-const Header = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-`;
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Main>
-      <Header>
-        <p>Edit any file in src/ to reload.</p>
-      </Header>
-    </Main>
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        <Route path="/" element={<Common />}>
+          <Route index element={<Index />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+      <ReactQueryDevtools position="bottom-right" />
+    </QueryClientProvider>
   );
 }
 
