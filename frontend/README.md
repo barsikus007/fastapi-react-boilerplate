@@ -5,7 +5,10 @@
 ###### If you are using WSL you must to preceed linux instructions
 I recommend [scoop](scoop.sh) package manager
 ```pwsh
-scoop install nodejs-lts
+scoop install nvm
+# then reload your terminal
+nvm install 16
+nvm use 16.15.0  # version may differ
 node -v
 # be sure that it starts from 16
 corepack enable
