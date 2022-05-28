@@ -46,3 +46,9 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 #### Sync prod and usual docker composes (and make different image names if needed)
 #### Make and test debug docker file
 #### Relationship(sa_relationship_kwargs={"lazy": "selectin"})
+#### celery vs apscheduler
+#### form-multipart test
+#### pin versions
+#### black, mype, other linters etc
+#### poetry ?
+#### prod conf --chdir src ?

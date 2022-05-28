@@ -2,13 +2,24 @@ orjson
 fastapi
 uvicorn[standard]
 gunicorn
-email-validator
+passlib[bcrypt]
+python-jose[cryptography]
 python-multipart
 
 asyncpg
+sqlalchemy
 alembic
 sqlmodel
 
-apscheduler
+# pydantic[email,dotenv]
+# pydantic[email]
+pydantic
+email-validator
+
 # loguru
+apscheduler
+
 # pandas
+# httpx
+
+# https://fastapi.tiangolo.com/#optional-dependencies

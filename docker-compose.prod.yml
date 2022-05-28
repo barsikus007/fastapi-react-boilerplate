@@ -13,11 +13,11 @@ services:
   backend:
     image: backend
     build: backend
-    command: bash -c 'alembic upgrade head && gunicorn src.main:app -b 0.0.0.0 --chdir src -w 4 -k uvicorn.workers.UvicornWorker'
+    command: sh -c 'alembic upgrade head && gunicorn src.main:app -b 0.0.0.0 --chdir src -w 4 -k uvicorn.workers.UvicornWorker'
     volumes:
       - ./backend:/app:ro
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres
+    env_file:
+      - .env
     depends_on:
       - postgres
 
@@ -28,14 +28,6 @@ services:
       target: builder
     volumes:
       - build:/app/build
-
-  postgres:
-    image: postgres:14-alpine
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: TODO_CHANGE_ME
-    volumes:
-      - db-data:/var/lib/postgresql/data
 
 
 volumes:

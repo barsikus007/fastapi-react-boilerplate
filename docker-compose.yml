@@ -12,13 +12,11 @@ services:
   backend:
     image: backend
     build: backend
-    command: sh -c 'alembic upgrade head && uvicorn main:app --reload --host 0.0.0.0 --app-dir src'
+    command: sh -c 'alembic upgrade head && uvicorn src.main:app --reload --host 0.0.0.0'
     volumes:
       - ./backend:/app
-    environment:
-      TZ: Europe/Moscow
-      DEBUG: true
-      DATABASE_URL: postgresql+asyncpg://postgres:TODO_CHANGE_ME@postgres:5432/postgres
+    env_file:
+      - .env
     depends_on:
       - postgres
 
@@ -29,15 +27,18 @@ services:
       target: development
     volumes:
       - ./frontend/src:/app/src
+    # env_file:
+    #   - .env
 
   postgres:
     image: postgres:14-alpine
     restart: always
-    environment:
-      TZ: Europe/Moscow
-      POSTGRES_PASSWORD: TODO_CHANGE_ME
     volumes:
       - db-data:/var/lib/postgresql/data
+    # ports:
+    #   - 5432:5432
+    env_file:
+      - .env
 
 
 volumes:

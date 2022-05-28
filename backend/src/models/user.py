@@ -1,22 +1,22 @@
 from sqlmodel import SQLModel, Field
 
 
-__all__ = ['Student']
+__all__ = ["User"]
 
 
-class StudentBase(SQLModel):
+class UserBase(SQLModel):
     name: str = Field(index=True)
     year: int
     major: str
 
 
-class Student(StudentBase, table=True):
+class User(UserBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
 
-class StudentCreate(StudentBase):
+class UserCreate(UserBase):
     pass
 
 
-class StudentRead(StudentBase):
+class UserRead(UserBase):
     id: int

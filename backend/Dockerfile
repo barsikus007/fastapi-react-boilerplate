@@ -15,7 +15,6 @@ ENV PYTHONUNBUFFERED=1
 
 COPY --from=builder /wheels /wheels
 RUN pip install --no-cache-dir /wheels/*
-# RUN apt install -y postgresql-client
 
 COPY alembic.ini .
 
