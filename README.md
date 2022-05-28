@@ -32,23 +32,24 @@ docker compose up -d --build
 docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
-#### yarn v3 react-app
-#### Eject react-app (for absulute paths with @ and...?)
-#### Decide about ts usage (or make js loyal ts env)
-#### Decide about test usage
-#### Add default node packages (like react query)
-#### Deal with nginx config
-#### Add CI/CD
-#### Python app or src
-#### Remove dockerignore?
-#### Add env file settings
-#### Add restart to docker composes
-#### Sync prod and usual docker composes (and make different image names if needed)
-#### Make and test debug docker file
-#### Relationship(sa_relationship_kwargs={"lazy": "selectin"})
-#### celery vs apscheduler
-#### form-multipart test
-#### pin versions
-#### black, mype, other linters etc
-#### poetry ?
-#### prod conf --chdir src ?
+- yarn v3 react-app
+- Eject react-app (for absulute paths with @ and...?)
+- Decide about ts usage (or make js loyal ts env)
+- Decide about test usage
+- Add default node packages (like react query)
+- Deal with nginx config
+- Add CI/CD
+- Python app or src
+- Remove dockerignore?
+- Add env file settings
+- Add restart to docker composes
+- Sync prod and usual docker composes (and make different image names if needed)
+- Make and test debug docker file
+- Relationship(sa_relationship_kwargs={"lazy": "selectin"})
+- celery vs apscheduler
+- form-multipart test
+- gunicorn logging disable
+- pin versions
+- black, mype, other linters etc
+- poetry ?
+- prod conf --chdir src ?

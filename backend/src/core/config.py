@@ -1,6 +1,6 @@
 import secrets
 
-from pydantic import PostgresDsn, BaseSettings
+from pydantic import PostgresDsn, BaseSettings, AnyHttpUrl
 
 
 class Settings(BaseSettings):
@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     # PROJECT_NAME: str = os.environ["PROJECT_NAME"]
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 180
+    BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
 
     POSTGRES_PASSWORD: str = "TODO_CHANGE"
     POSTGRES_USER: str = "postgres"
