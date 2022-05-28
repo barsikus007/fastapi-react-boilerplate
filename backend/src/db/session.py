@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel.sql.expression import Select, SelectOfScalar
 
-from src.settings import settings
+from src.core.config import settings
 
 
 # https://github.com/tiangolo/sqlmodel/issues/189
