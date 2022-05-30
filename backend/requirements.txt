@@ -1,7 +1,8 @@
 orjson
-fastapi
 uvicorn[standard]
 gunicorn
+fastapi
+fastapi-pagination
 passlib[bcrypt]
 python-jose[cryptography]
 python-multipart

@@ -8,7 +8,7 @@ from sqlmodel import SQLModel
 from alembic import context
 
 from src.models import *
-from src.settings import settings
+from src.core.config import settings
 
 
 # this is the Alembic Config object, which provides

@@ -51,5 +51,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - gunicorn logging disable
 - pin versions
 - black, mype, other linters etc
-- poetry ?
+- --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
+- poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
+- nginx to traefik ?
 - prod conf --chdir src ?

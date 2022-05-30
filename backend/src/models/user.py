@@ -1,22 +1,19 @@
-from sqlmodel import SQLModel, Field
+from pydantic import EmailStr
+from sqlmodel import Field, SQLModel
 
-
-__all__ = ["User"]
+from src.models.base import Base
 
 
 class UserBase(SQLModel):
-    name: str = Field(index=True)
-    year: int
-    major: str
+    name: str
+    email: EmailStr = Field(nullable=True, index=True, sa_column_kwargs={'unique': True})
+    phone: str | None
+    password: str
+    is_active: bool = Field(default=True)
+    is_superuser: bool = Field(default=False)
 
 
-class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-
-
-class UserCreate(UserBase):
-    pass
-
-
-class UserRead(UserBase):
-    id: int
+class User(UserBase, Base, table=True):
+    hashed_password: str = Field(
+        nullable=False, index=True
+    )
