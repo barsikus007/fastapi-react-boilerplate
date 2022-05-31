@@ -10,9 +10,9 @@ class Token(BaseModel):
     # user: IUserRead
 
 
-# class TokenRead(BaseModel):
-#     access_token: str
-#     token_type: str
+class TokenRead(BaseModel):
+    access_token: str
+    token_type: str
 
 
 class TokenPayload(BaseModel):  #DEL

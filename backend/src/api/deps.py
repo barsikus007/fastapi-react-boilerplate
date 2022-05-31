@@ -1,9 +1,8 @@
 from typing import AsyncGenerator
 
+from jose import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt
-from pydantic import ValidationError
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from src import crud
@@ -37,13 +36,14 @@ async def get_current_user(
     try:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
-        )
-    except (jwt.JWTError, ValidationError) as e:  # type: ignore TODO pylance
+        )  # Pylance(reportGeneralTypeIssues)
+    # except (jwt.JWTError, ValidationError) as e:  # type: ignore
+    except jwt.JWTError as e:  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
         ) from e
-    user = await crud.user.get_user_by_id(db, id=int(payload["sub"]))
+    user = await crud.user.get(db, id_=int(payload["sub"]))
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
@@ -62,6 +62,6 @@ def get_current_active_superuser(
 ) -> User:
     if not current_user.is_superuser:
         raise HTTPException(
-            status_code=400, detail="The user doesn't have enough privileges"
+            status_code=403, detail="The user doesn't have enough privileges"
         )
     return current_user

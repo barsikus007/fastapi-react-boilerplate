@@ -1,18 +1,18 @@
 from datetime import datetime
-from sqlmodel import SQLModel, Field, func, text
+
+from sqlmodel import SQLModel, Field, Column, DateTime, func, text
 
 
 class Base(SQLModel):
     id: int | None = Field(default=None, primary_key=True, nullable=False)
     date_create: datetime | None = Field(
-        default=None, nullable=False,
-        sa_column_kwargs={'server_default': func.now()})
+        default=None,
+        sa_column=Column(DateTime(timezone=True), server_default=func.now()))
     date_update: datetime | None = Field(
-        default=None, nullable=False,
-        sa_column_kwargs={'server_default': func.now()})
+        default=None,
+        sa_column=Column(DateTime(timezone=True), server_default=func.now()))
     # TODO https://stackoverflow.com/questions/70946151/how-to-set-default-on-update-current-timestamp-in-postgres-with-sqlalchemy
-    # TODO Field(sa_column=Column(DateTime(timezone=True), nullable=True, server_default=func.now()))  preffered
-    # TODO Field(sa_column=Column(TIMESTAMP(timezone=True), nullable=True, server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')))
+    # TODO Field(sa_column=Column(DateTime(timezone=True), server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')))
 
 
 # TODO: Why?

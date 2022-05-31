@@ -1,11 +1,12 @@
 from uuid import UUID
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
+from typing import Any, Generic, Type, TypeVar
 from datetime import datetime
 
-from fastapi.encoders import jsonable_encoder
-from fastapi_pagination import Page, Params
-from fastapi_pagination.ext.async_sqlmodel import paginate
 from pydantic import BaseModel
+from fastapi.encoders import jsonable_encoder
+from fastapi_pagination import Params
+from fastapi_pagination.bases import AbstractPage
+from fastapi_pagination.ext.async_sqlmodel import paginate
 from sqlmodel import SQLModel, select, func
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel.sql.expression import Select, SelectOfScalar
@@ -22,75 +23,66 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: Type[ModelType]):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
+
         **Parameters**
+
         * `model`: A SQLModel model class
         """
         self.model = model
 
     async def get(
-        self, db: AsyncSession, *, obj_id: Union[str, int]
-    ) -> Optional[ModelType]:
-        response = await db.get(self.model, obj_id)
-        return response
+            self, db: AsyncSession, *, id_: str | int
+    ) -> ModelType | None:
+        return await db.get(self.model, id_)
 
-    # async def get_count(
-    #     self, db: AsyncSession
-    # ) -> Optional[ModelType]:
-    #     response = await db.exec(select(func.count()).select_from(select(self.model).subquery()))
-    #     return response.one()
+    async def get_count(self, db: AsyncSession) -> ModelType | None:
+        # https://github.com/tiangolo/sqlmodel/issues/54
+        response = await db.exec(select(func.count()).select_from(select(self.model).subquery()))  # type: ignore
+        return response.one()
 
-    # async def get_multi(
-    #     self, db: AsyncSession, *, skip: int = 0, limit: int = 100
-    # ) -> List[ModelType]:
-    #     response = await db.exec(
-    #         select(self.model).offset(skip).limit(limit).order_by(self.model.id)  # type: ignore
-    #     )
-    #     return response.all()
-
-    async def get_multi_paginated(
-        self, db: AsyncSession, *, params: Params, query: T | Select[T] | SelectOfScalar[T] | None = None
-    ) -> Page[ModelType]:
-        if query is None:
-            query = select(self.model)  # type: ignore
+    async def get_multi(
+            self, db: AsyncSession, *, params: Params,
+            query: ModelType | Select[ModelType] | SelectOfScalar[ModelType] | None = None,
+    ) -> AbstractPage[ModelType]:
+        if query is None:  # Pylance(reportGeneralTypeIssues)
+            query = self.model  # type: ignore
         return await paginate(db, query, params)  # type: ignore
 
     async def create(
-        self, db: AsyncSession, *, obj_in: CreateSchemaType
+            self, db: AsyncSession, *, obj_in: CreateSchemaType
     ) -> ModelType:
-        db_obj = self.model.from_orm(obj_in)  # type: ignore
-        db.add(db_obj)
+        obj_db = self.model.from_orm(obj_in)
+        db.add(obj_db)
         await db.commit()
-        await db.refresh(db_obj)
-        return db_obj
+        await db.refresh(obj_db)
+        return obj_db
 
     async def update(
-        self,
-        db: AsyncSession,
-        *,
-        obj_current: ModelType,
-        obj_new: Union[UpdateSchemaType, Dict[str, Any]]
+            self, db: AsyncSession, *,
+            obj_db: ModelType, obj_in: UpdateSchemaType | dict[str, Any],
     ) -> ModelType:
-        obj_data = jsonable_encoder(obj_current)
-
-        if isinstance(obj_new, dict):
-            update_data = obj_new
+        obj_data = jsonable_encoder(obj_db)
+        if isinstance(obj_in, dict):
+            update_data = obj_in
         else:
-            update_data = obj_new.dict(exclude_unset=True) #This tells Pydantic to not include the values that were not sent
+            update_data = obj_in.dict(exclude_unset=True)
         for field in obj_data:
             if field in update_data:
-                setattr(obj_current, field, update_data[field])
+                setattr(obj_db, field, update_data[field])
+            # TODO psql triggers when update
+            # TODO timezone aware
             if field == "updated_at":
-                setattr(obj_current, field, datetime.utcnow())
-
-        db.add(obj_current)
+                setattr(obj_db, field, datetime.utcnow())
+        db.add(obj_db)
         await db.commit()
-        await db.refresh(obj_current)
-        return obj_current
+        await db.refresh(obj_db)
+        return obj_db
 
     async def remove(
-        self, db: AsyncSession, *, obj_id: int | str | UUID
+            self, db: AsyncSession, *, id_: int | str | UUID
     ) -> ModelType | None:
-        obj = await db.get(self.model, obj_id)
-        await db.delete(obj)
-        await db.commit()
+        obj = await db.get(self.model, id_)
+        if obj:
+            await db.delete(obj)
+            await db.commit()
         return obj

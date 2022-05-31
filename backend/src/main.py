@@ -8,7 +8,7 @@ from src.api.api_v1.api import api_router
 
 
 app = FastAPI(
-    title="Boilerplate",
+    title=settings.PROJECT_NAME,
     description="Fastapi React boilerplate",
     version="0.1",
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
