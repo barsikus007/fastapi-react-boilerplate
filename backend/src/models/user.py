@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import EmailStr
 from sqlmodel import Field, SQLModel
 
@@ -18,13 +16,3 @@ class User(UserBase, Base, table=True):
     hashed_password: str = Field(
         nullable=False, index=True
     )
-
-
-class UserRead(UserBase):
-    id: int 
-    date_create: datetime
-    date_update: datetime
-
-
-class UserCreate(UserBase):
-    pass

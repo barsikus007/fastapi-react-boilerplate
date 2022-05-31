@@ -1,6 +1,6 @@
 from uuid import UUID
 from typing import Any, Generic, Type, TypeVar
-from datetime import datetime
+from datetime import datetime, timezone
 
 from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
@@ -69,10 +69,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         for field in obj_data:
             if field in update_data:
                 setattr(obj_db, field, update_data[field])
-            # TODO psql triggers when update
-            # TODO timezone aware
-            if field == "updated_at":
-                setattr(obj_db, field, datetime.utcnow())
+        # TODO psql triggers when update
+        setattr(obj_db, "date_update", datetime.now(timezone.utc))
         db.add(obj_db)
         await db.commit()
         await db.refresh(obj_db)

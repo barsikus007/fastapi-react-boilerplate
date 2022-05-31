@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from sqlmodel import SQLModel, Field, Column, DateTime, func, text
+from sqlmodel import SQLModel, Field, Column, DateTime, func
 
 
 class Base(SQLModel):
+    # sourcery skip: avoid-builtin-shadow
     id: int | None = Field(default=None, primary_key=True, nullable=False)
     date_create: datetime | None = Field(
         default=None,
@@ -27,3 +28,5 @@ class Base(SQLModel):
     
     # classes: List["Class"] = Relationship(back_populates="enrollments", link_model=Attendance)
     # role: Optional['Role'] = Relationship(back_populates='users')
+    # created_by: "User" = Relationship(sa_relationship_kwargs={"lazy":"selectin", "primaryjoin":"Group.created_by_id==User.id"})    
+    # users: List["User"] = Relationship(back_populates="groups", link_model=LinkGroupUser, sa_relationship_kwargs={"lazy": "selectin"})

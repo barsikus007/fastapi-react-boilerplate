@@ -37,7 +37,6 @@ async def get_current_user(
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
         )  # Pylance(reportGeneralTypeIssues)
-    # except (jwt.JWTError, ValidationError) as e:  # type: ignore
     except jwt.JWTError as e:  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

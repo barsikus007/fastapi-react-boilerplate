@@ -32,26 +32,30 @@ docker compose up -d --build
 docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
+## frontend
 - yarn v3 react-app
 - Eject react-app (for absulute paths with @ and...?)
 - Decide about ts usage (or make js loyal ts env)
 - Decide about test usage
 - Add default node packages (like react query)
-- Deal with nginx config
-- Add CI/CD
+## backend
 - Python app or src
-- Remove dockerignore?
-- Add env file settings
-- Add restart to docker composes
-- Sync prod and usual docker composes (and make different image names if needed)
-- Make and test debug docker file
 - Relationship(sa_relationship_kwargs={"lazy": "selectin"})
 - celery vs apscheduler
 - form-multipart test
 - gunicorn logging disable
 - pin versions
+- https://fastapi-users.github.io/
 - black, mype, other linters etc
 - --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
 - poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
-- nginx to traefik ?
 - prod conf --chdir src ?
+## devops
+- Remove dockerignore?
+- Add CI/CD
+- Add restart to docker composes
+- Sync prod and usual docker composes (and make different image names if needed)
+- Make and test debug docker file
+## other
+- Deal with nginx config
+- nginx to traefik ?

@@ -1,12 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.encoders import jsonable_encoder
 from fastapi_pagination import Page, Params
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from src import crud
 from src.api import deps
-from src.core.config import settings
-from src.models import User
 from src.models.user import User
 from src.schemas.user import IUserCreate, IUserRead, IUserUpdate
 from src.schemas.common import (
@@ -54,7 +51,7 @@ async def get_my_data(
 
 
 @router.put("/me", response_model=IPutResponseBase[IUserRead])
-def update_user_me(
+async def update_user_me(
     *,
     db: AsyncSession = Depends(deps.get_db),
     user_in: IUserUpdate,
@@ -62,8 +59,7 @@ def update_user_me(
 ):
     if await crud.user.get_by_email(db, email=user_in.email):
         raise HTTPException(status_code=400, detail="There is already a user with same email")
-    user = crud.user.update(db, db_obj=current_user, obj_in=user_in)
-    print(user)
+    user = crud.user.update(db, obj_db=current_user, obj_in=user_in)
     return IPutResponseBase[IUserRead](data=user)
 
 
@@ -75,7 +71,7 @@ async def remove_user(
     current_user: User = Depends(deps.get_current_active_superuser),
 ):
     if current_user.id == user_id:
-        raise HTTPException(status_code=404, detail="Users can not delete theirselfs")
+        raise HTTPException(status_code=404, detail="Users can not delete themself")
 
     user = await crud.user.get(db, id_=user_id)
     if not user:
@@ -92,14 +88,8 @@ async def get_user_by_id(
     *,
     user_id: int,
     db: AsyncSession = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_active_user),
+    current_user: User = Depends(deps.get_current_active_superuser),
 ):
-    if user_id == current_user.id:
-        return current_user
-    if not current_user.is_superuser:
-        raise HTTPException(
-            status_code=403, detail="The user doesn't have enough privileges"
-        )
     user = await crud.user.get(db, id_=user_id)
     return IGetResponseBase[IUserRead](data=user)
 
@@ -112,9 +102,10 @@ async def update_user(
     user_in: IUserUpdate,
     current_user: User = Depends(deps.get_current_active_superuser),
 ):
-    if await crud.user.get_by_email(db, email=user_in.email):
-        raise HTTPException(status_code=400, detail="There is already a user with same email")
     user = await crud.user.get(db, id_=user_id)
+    if user_db := await crud.user.get_by_email(db, email=user_in.email):
+        if user.id != user_db.id:
+            raise HTTPException(status_code=400, detail="There is already a user with same email")
     if not user:
         raise HTTPException(
             status_code=404,
