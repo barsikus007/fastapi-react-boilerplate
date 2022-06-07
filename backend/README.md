@@ -7,7 +7,9 @@ scoop install python
 ```
 #### On Linux
 You already have python, just be sure that you have 3.10 version with venv installed
+
 If your version is lower, then find the way to install it on your distro
+
 Here is the most common distro installation instruction:
 ##### On Ubuntu
 ```bash

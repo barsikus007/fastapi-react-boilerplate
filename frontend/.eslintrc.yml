@@ -13,6 +13,10 @@ parserOptions:
 plugins:
   - react
 rules: 
+  react/prop-types:  # skip props validation error in javascript
+    - warn
+    -
+      skipUndeclared: true
   react/jsx-uses-react: off  # plugin:react/jsx-runtime wont work in vscode
   react/react-in-jsx-scope: off  # plugin:react/jsx-runtime wont work in vscode
   react/jsx-props-no-spreading: off  # Spreading is useful

@@ -75,7 +75,7 @@ async def remove_user(
 
     user = await crud.user.get(db, id_=user_id)
     if not user:
-        raise HTTPException(status_code=404, detail="User no found")
+        raise HTTPException(status_code=404, detail="User not found")
 
     user = await crud.user.remove(db, id_=user_id)
     return IDeleteResponseBase[IUserRead](
@@ -103,13 +103,13 @@ async def update_user(
     current_user: User = Depends(deps.get_current_active_superuser),
 ):
     user = await crud.user.get(db, id_=user_id)
-    if user_db := await crud.user.get_by_email(db, email=user_in.email):
-        if user.id != user_db.id:
-            raise HTTPException(status_code=400, detail="There is already a user with same email")
     if not user:
         raise HTTPException(
             status_code=404,
             detail="The user with this id does not exist in the system",
         )
+    if user_db := await crud.user.get_by_email(db, email=user_in.email):
+        if user.id != user_db.id:
+            raise HTTPException(status_code=400, detail="There is already a user with same email")
     user = await crud.user.update(db, obj_db=user, obj_in=user_in)
     return IPutResponseBase[IUserRead](data=user)

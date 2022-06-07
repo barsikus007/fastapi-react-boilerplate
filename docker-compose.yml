@@ -12,7 +12,7 @@ services:
   backend:
     image: backend
     build: backend
-    command: sh -c 'alembic upgrade head && uvicorn src.main:app --reload --host 0.0.0.0'
+    command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && uvicorn src.main:app --reload --host 0.0.0.0'
     volumes:
       - ./backend:/app
     env_file:

@@ -12,7 +12,7 @@ function Index() {
   return (
     <Center>
       <a href="/docs">
-        <img src="http://assets.stickpng.com/thumbs/5c9226c6598da1028f26c5af.png" alt="Doki-Doki!" />
+        <img src="https://assets.stickpng.com/thumbs/5c9226c6598da1028f26c5af.png" alt="Doki-Doki!" />
       </a>
       Doki-Doki!
       <br />
