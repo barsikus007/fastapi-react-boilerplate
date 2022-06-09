@@ -6,18 +6,12 @@ from src import crud
 from src.api import deps
 from src.models.user import User
 from src.schemas.user import IUserCreate, IUserRead, IUserUpdate
-from src.schemas.common import (
-    IGetResponseBase,
-    IPostResponseBase,
-    IPutResponseBase,
-    IDeleteResponseBase,
-)
 
 
 router = APIRouter()
 
 
-@router.get("/", response_model=IGetResponseBase[Page[IUserRead]])
+@router.get("/", response_model=Page[IUserRead])
 async def read_users_list(
     *,
     params: Params = Depends(),
@@ -25,10 +19,10 @@ async def read_users_list(
     current_user: User = Depends(deps.get_current_active_user),
 ):
     users = await crud.user.get_multi(db, params=params)
-    return IGetResponseBase[Page[IUserRead]](data=users)
+    return users
 
 
-@router.post("/", response_model=IPostResponseBase[IUserRead])
+@router.post("/", response_model=IUserRead)
 async def create_user(
     *,
     new_user: IUserCreate,
@@ -39,18 +33,19 @@ async def create_user(
     if user:
         raise HTTPException(status_code=400, detail="There is already a user with same email")
     user = await crud.user.create(db, obj_in=new_user)
-    return IPostResponseBase[IUserRead](data=user)
+    return user
 
 
-@router.get("/me", response_model=IGetResponseBase[IUserRead])
+@router.get("/me", response_model=IUserRead)
 async def get_my_data(
     *,
     current_user: User = Depends(deps.get_current_active_user),
 ):
-    return IGetResponseBase[IUserRead](data=IUserRead.from_orm(current_user))
+    user = IUserRead.from_orm(current_user)
+    return user
 
 
-@router.put("/me", response_model=IPutResponseBase[IUserRead])
+@router.put("/me", response_model=IUserRead)
 async def update_user_me(
     *,
     db: AsyncSession = Depends(deps.get_db),
@@ -59,11 +54,11 @@ async def update_user_me(
 ):
     if await crud.user.get_by_email(db, email=user_in.email):
         raise HTTPException(status_code=400, detail="There is already a user with same email")
-    user = crud.user.update(db, obj_db=current_user, obj_in=user_in)
-    return IPutResponseBase[IUserRead](data=user)
+    user = await crud.user.update(db, obj_db=current_user, obj_in=user_in)
+    return user
 
 
-@router.delete("/{user_id}", response_model=IDeleteResponseBase[IUserRead])
+@router.delete("/{user_id}", response_model=IUserRead)
 async def remove_user(
     *,
     user_id: int,
@@ -78,12 +73,10 @@ async def remove_user(
         raise HTTPException(status_code=404, detail="User not found")
 
     user = await crud.user.remove(db, id_=user_id)
-    return IDeleteResponseBase[IUserRead](
-        data=user
-    )
+    return user
 
 
-@router.get("/{user_id}", response_model=IGetResponseBase[IUserRead])
+@router.get("/{user_id}", response_model=IUserRead)
 async def get_user_by_id(
     *,
     user_id: int,
@@ -91,10 +84,10 @@ async def get_user_by_id(
     current_user: User = Depends(deps.get_current_active_superuser),
 ):
     user = await crud.user.get(db, id_=user_id)
-    return IGetResponseBase[IUserRead](data=user)
+    return user
 
 
-@router.put("/{user_id}", response_model=IPutResponseBase[IUserRead])
+@router.put("/{user_id}", response_model=IUserRead)
 async def update_user(
     *,
     db: AsyncSession = Depends(deps.get_db),
@@ -112,4 +105,4 @@ async def update_user(
         if user.id != user_db.id:
             raise HTTPException(status_code=400, detail="There is already a user with same email")
     user = await crud.user.update(db, obj_db=user, obj_in=user_in)
-    return IPutResponseBase[IUserRead](data=user)
+    return user

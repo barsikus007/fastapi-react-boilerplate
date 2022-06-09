@@ -11,19 +11,16 @@ from src.api import deps
 from src.core import security
 from src.core.config import settings
 from src.schemas.token import TokenRead, Token
-# from src.schemas.common import IMetaGeneral, IPostResponseBase
-from src.schemas.common import IPostResponseBase
 
 
 router = APIRouter()
 
 
-@router.post("/login", response_model=IPostResponseBase[Token], status_code=201)
+@router.post("/login", response_model=Token, status_code=201)
 async def login(
     email: EmailStr = Body(...),
     password: str = Body(...),
     db_session: AsyncSession = Depends(deps.get_db),
-    # meta_data: IMetaGeneral = Depends(deps.get_general_meta)
 ) -> Any:
     """
     Login for all users
@@ -35,13 +32,11 @@ async def login(
         raise HTTPException(status_code=400, detail="User is inactive")
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = security.create_access_token(user.id, expires_delta=access_token_expires)
-    data = Token(
+    token = Token(
         access_token=access_token,
         token_type="bearer",
     )
-    return IPostResponseBase[Token](data=data, message="Login correctly")
-    # return IPostResponseBase[Token](meta=meta_data, data=data, message="Login correctly")
-
+    return token
 
 @router.post("/login/access-token", response_model=TokenRead)
 async def login_access_token(

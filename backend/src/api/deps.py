@@ -10,7 +10,6 @@ from src.db.session import SessionLocal
 from src.core import security
 from src.core.config import settings
 from src.models import User
-# from src.schemas.common import IMetaGeneral
 
 
 reusable_oauth2 = OAuth2PasswordBearer(
@@ -21,13 +20,6 @@ reusable_oauth2 = OAuth2PasswordBearer(
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with SessionLocal() as session:
         yield session
-
-
-# async def get_general_meta(
-#     db_session: AsyncSession = Depends(get_db)
-# ) -> IMetaGeneral:
-#     current_roles = await crud.role.get_multi(db_session, skip=0, limit=100)
-#     return IMetaGeneral(roles=current_roles)
 
 
 async def get_current_user(
