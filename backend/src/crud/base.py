@@ -31,7 +31,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.model = model
 
     async def get(
-            self, db: AsyncSession, *, id_: str | int
+            self, db: AsyncSession, *, id_: int | str | UUID
     ) -> ModelType | None:
         return await db.get(self.model, id_)
 

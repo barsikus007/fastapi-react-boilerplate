@@ -33,6 +33,6 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 if __name__ == "__main__":
     uvicorn.run(
         "main:app", host="127.0.0.1",
-        log_level='debug' if settings.DEBUG else "critical",
+        log_level="debug" if settings.DEBUG else "critical",
         debug=settings.DEBUG, reload=settings.DEBUG,
     )
