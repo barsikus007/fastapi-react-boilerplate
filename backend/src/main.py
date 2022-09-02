@@ -1,4 +1,3 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from starlette.middleware.cors import CORSMiddleware
@@ -31,6 +30,8 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 if __name__ == "__main__":
+    import uvicorn
+
     uvicorn.run(
         "main:app", host="127.0.0.1",
         log_level="debug" if settings.DEBUG else "critical",
