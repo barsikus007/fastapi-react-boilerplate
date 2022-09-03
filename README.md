@@ -42,15 +42,21 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
 ## frontend
-- add dayjs
-- add reactquery boilerplate
-- yarn v3 react-app https://github.com/remix-run/remix/issues/683
+- add
+  - default node packages (like react-query)
+  - usage examples of
+    - dayjs
+    - reactquery
+- yarn v3 react-app
+  - https://github.com/yarnpkg/berry/issues/4217
+  - https://github.com/remix-run/remix/issues/683
 - Eject react-app (for absolute paths with @ and...?)
-- Decide about ts usage (or make js loyal ts env)
-- Decide about test usage
-- Add default node packages (like react query)
-- react-query or react-query from react-router stack
-- https://fastapi.tiangolo.com/advanced/generate-clients/
+- Decide about
+  - emotion migration
+  - test usage
+  - react-query or react-query from tanstack
+  - ts usage (or make js loyal ts env)
+    - ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
 ## backend
 - TODO CHECK FIX https://github.com/tiangolo/sqlmodel/pull/79
 - add backend cors
