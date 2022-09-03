@@ -7,10 +7,12 @@ passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
 
-asyncpg
-sqlalchemy
-alembic
-sqlmodel
+asyncpg~=0.26.0
+alembic~=1.8.1  # TODO update alembic/env.py
+sqlmodel~=0.0.7
+# TODO TODO CHECK IF FIXED
+# sqlalchemy==1.4.35  # https://github.com/tiangolo/sqlmodel/issues/315
+# fastapi-users-db-sqlmodel~=0.2.0
 
 # pydantic[email,dotenv]
 # pydantic[email]

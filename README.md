@@ -52,6 +52,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - react-query or react-query from react-router stack
 - https://fastapi.tiangolo.com/advanced/generate-clients/
 ## backend
+- TODO CHECK FIX https://github.com/tiangolo/sqlmodel/pull/79
 - add backend cors
 - fix no connection to postgres at first startup (restart on failure)
 - Python app or src
