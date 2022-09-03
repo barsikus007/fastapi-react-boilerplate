@@ -5,7 +5,7 @@ from src.models.base import Base
 
 
 class UserBase(SQLModel):
-    email: EmailStr = Field(nullable=True, index=True, sa_column_kwargs={'unique': True})
+    email: EmailStr = Field(index=True, unique=True)
     name: str | None = None
     phone: str | None = None
     is_superuser: bool = Field(default=False)
