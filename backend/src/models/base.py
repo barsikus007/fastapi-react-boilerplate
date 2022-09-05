@@ -1,10 +1,13 @@
+# from uuid import uuid4
 from datetime import datetime
 
+# from pydantic import UUID4
 from sqlmodel import SQLModel, Field, Column, DateTime, func
 
 
 class Base(SQLModel):
     id: int | None = Field(primary_key=True)
+    # id: UUID4 | None = Field(default_factory=uuid4, primary_key=True)
     date_create: datetime | None = Field(
         sa_column=Column(DateTime(timezone=True), server_default=func.now()))
     date_update: datetime | None = Field(

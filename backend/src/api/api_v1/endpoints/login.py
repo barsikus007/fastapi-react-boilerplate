@@ -16,7 +16,7 @@ from src.schemas.token import TokenRead, Token
 router = APIRouter()
 
 
-@router.post("/login", response_model=Token, status_code=201)
+@router.post("/", response_model=Token, status_code=201)
 async def login(
     email: EmailStr = Body(...),
     password: str = Body(...),
@@ -38,7 +38,7 @@ async def login(
     )
     return token
 
-@router.post("/login/access-token", response_model=TokenRead)
+@router.post("/access-token", response_model=TokenRead)
 async def login_access_token(
     db_session: AsyncSession = Depends(deps.get_db),
     form_data: OAuth2PasswordRequestForm = Depends(),

@@ -8,7 +8,7 @@ class UserBase(SQLModel):
     email: EmailStr = Field(index=True, unique=True)
     name: str | None = None
     phone: str | None = None
-    is_superuser: bool = Field(default=False)
+    is_superuser: bool = False
 
 
 class User(UserBase, Base, table=True):

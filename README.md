@@ -71,7 +71,8 @@ docker compose -f "docker-compose.prod.yml" up -d --build
     - Relationship(sa_relationship_kwargs={"lazy": "selectin"})
 - check and use fastapi addons
   - https://github.com/awtkns/fastapi-crudrouter/issues/122
-- black, mype, other linters etc
+- black, mypy, other linters etc
+  - wemake-python-styleguide
 - --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
 - poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
 - prod conf --chdir src ?

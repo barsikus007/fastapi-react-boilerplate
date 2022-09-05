@@ -41,8 +41,7 @@ async def get_my_data(
     *,
     current_user: User = Depends(deps.get_current_active_user),
 ):
-    user = IUserRead.from_orm(current_user)
-    return user
+    return IUserRead.from_orm(current_user)
 
 
 @router.put("/me", response_model=IUserRead)
@@ -54,8 +53,7 @@ async def update_user_me(
 ):
     if await crud.user.get_by_email(db, email=user_in.email):
         raise HTTPException(status_code=400, detail="There is already a user with same email")
-    user = await crud.user.update(db, obj_db=current_user, obj_in=user_in)
-    return user
+    return await crud.user.update(db, obj_db=current_user, obj_in=user_in)
 
 
 @router.delete("/{user_id}", response_model=IUserRead)
@@ -72,8 +70,7 @@ async def remove_user(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    user = await crud.user.remove(db, id_=user_id)
-    return user
+    return await crud.user.remove(db, id_=user_id)
 
 
 @router.get("/{user_id}", response_model=IUserRead)
@@ -83,8 +80,7 @@ async def get_user_by_id(
     db: AsyncSession = Depends(deps.get_db),
     current_user: User = Depends(deps.get_current_active_superuser),
 ):
-    user = await crud.user.get(db, id_=user_id)
-    return user
+    return await crud.user.get(db, id_=user_id)
 
 
 @router.put("/{user_id}", response_model=IUserRead)
@@ -101,8 +97,8 @@ async def update_user(
             status_code=404,
             detail="The user with this id does not exist in the system",
         )
-    if user_db := await crud.user.get_by_email(db, email=user_in.email):
-        if user.id != user_db.id:
-            raise HTTPException(status_code=400, detail="There is already a user with same email")
-    user = await crud.user.update(db, obj_db=user, obj_in=user_in)
-    return user
+    if user_in.email:
+        if user_db := await crud.user.get_by_email(db, email=user_in.email):
+            if user.id != user_db.id:
+                raise HTTPException(status_code=400, detail="There is already a user with same email")
+    return await crud.user.update(db, obj_db=user, obj_in=user_in)
