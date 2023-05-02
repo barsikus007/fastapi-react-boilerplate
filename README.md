@@ -41,25 +41,28 @@ docker compose up -d --build
 docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
+- https://github.com/testdrivenio/fastapi-sqlmodel-alembic
 ## frontend
-- add
-  - default node packages (like react-query)
-  - usage examples of
-    - dayjs
-    - reactquery
-- yarn v3 react-app
+- eslint
+- fix tsc in docker builds
+- ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
+- editorconfig wsl
+- react-router 6.4+ data api
+- new https://react.dev/ docs
+- new https://tanstack.com/ libs
+  - react-query update to v4
+  - react-router or tanstack/router
+- add usage examples of
+  - dayjs
+  - react-query
+- yarn v3 berry vs pnpm
   - https://github.com/yarnpkg/berry/issues/4217
   - https://github.com/remix-run/remix/issues/683
-- Eject react-app (for absolute paths with @ and...?)
-- Decide about
-  - emotion migration
-  - test usage
-  - react-query or react-query from tanstack
-  - ts usage (or make js loyal ts env)
-    - ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
 ## backend
+- prod None to docs and openapi
 - TODO CHECK FIX https://github.com/tiangolo/sqlmodel/pull/79
 - add backend cors
+- fix of postgres at first launch   File "/app/alembic/env.py", line 85, in run_migrations_online or `sleep 5 && `
 - fix no connection to postgres at first startup (restart on failure)
 - Python app or src
 - pendulium?

@@ -1,25 +1,21 @@
-FROM node:16-alpine as installer
+FROM node:18-alpine as installer
 WORKDIR /app
 
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn .yarn
+RUN corepack enable
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
 
-RUN yarn
-
-COPY public public/
-COPY jsconfig.json .eslintrc.yml ./
+COPY public/ public/
+COPY index.html .eslintrc.cjs vite.config.ts ./
 
 
 FROM installer as development
-ENV NODE_ENV development
-ENV WDS_SOCKET_PORT 80
 
-CMD ["yarn", "start"]
+CMD ["pnpm", "dev", "--host"]
 
 
 FROM installer as builder
-ENV NODE_ENV production
 
 COPY src src/
 
-CMD ["yarn", "build"]
+CMD ["pnpm", "build"]

@@ -14,7 +14,7 @@ services:
     build: backend
     command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && uvicorn src.main:app --reload --host 0.0.0.0'
     volumes:
-      - ./backend:/app
+      - ./backend/:/app/
     env_file:
       - .env
     depends_on:
@@ -26,7 +26,7 @@ services:
       context: frontend
       target: development
     volumes:
-      - ./frontend/src:/app/src
+      - ./frontend/src/:/app/src/
     # env_file:
     #   - .env
 
@@ -34,7 +34,7 @@ services:
     image: postgres:14-alpine
     restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data/
     env_file:
       - .env
 
