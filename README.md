@@ -44,7 +44,6 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
 ## frontend
 - eslint import/no-unresolved
-- fix tsc in docker builds
 - ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
 - editorconfig wsl
 - react-router 6.4+ data api
@@ -89,6 +88,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - make schema autogeneration from models
   - remove fields when inherit schemas 
 ## devops
+- frontend cache
 - Remove dockerignore?
 - Add restart to docker composes
 - Sync prod and usual docker composes (and make different image names if needed)

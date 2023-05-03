@@ -6,7 +6,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 
 COPY public/ public/
-COPY index.html .eslintrc.cjs vite.config.ts ./
+COPY index.html .eslintrc.cjs vite.config.ts tsconfig.json tsconfig.node.json ./
 
 
 FROM installer as development
