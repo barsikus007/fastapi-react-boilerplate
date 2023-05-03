@@ -1,29 +1,28 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import styled from '@emotion/styled';
 
-import reactLogo from 'assets/react.svg'
-import viteLogo from '/vite.svg'
+import reactLogo from 'assets/react.svg';
+import viteLogo from '/favicon.svg';
+import 'App.css';
 
 const Center = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 1.5vmin;
 `;
 
 function Index() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <Center>
       <a href="/docs">
-        <img src="https://assets.stickpng.com/thumbs/5c9226c6598da1028f26c5af.png" alt="Doki-Doki!" />
+        <img src="//assets.stickpng.com/thumbs/5c9226c6598da1028f26c5af.png" alt="Doki-Doki!" />
+        <div>Doki-Doki!</div>
       </a>
-      Doki-Doki!
-      <br />
-      <a href="/docs">(/docs)</a>
-      <hr/>
+      <hr />
       <div>
         <div>
           <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
@@ -35,11 +34,17 @@ function Index() {
         </div>
         <h1>Vite + React</h1>
         <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
+          <button type="button" onClick={() => setCount(cnt => cnt + 1)}>
+            count is
+            {' '}
+            {count}
           </button>
           <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
+            Edit
+            {' '}
+            <code>src/App.tsx</code>
+            {' '}
+            and save to test HMR
           </p>
         </div>
         <p className="read-the-docs">

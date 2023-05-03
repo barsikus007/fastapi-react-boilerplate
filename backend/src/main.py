@@ -8,7 +8,6 @@ from src.api.api_v1.api import api_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="Fastapi React boilerplate",
     version="0.1",
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     default_response_class=ORJSONResponse,
@@ -33,7 +32,6 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        "main:app", host="127.0.0.1",
+        "main:app", host="127.0.0.1", reload=settings.DEBUG,
         log_level="debug" if settings.DEBUG else "critical",
-        debug=settings.DEBUG, reload=settings.DEBUG,
     )

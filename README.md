@@ -43,7 +43,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 # Boilerplate TODO
 - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
 ## frontend
-- eslint
+- eslint import/no-unresolved
 - fix tsc in docker builds
 - ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
 - editorconfig wsl

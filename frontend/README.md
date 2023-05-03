@@ -26,7 +26,7 @@ corepack enable
 ## Install packages
 Be sure that you in frontend dir
 ```bash
-pnpm install
+pnpm i
 ```
 ## Config linters and etc
 ¯\\\_( ͡° ͜ʖ ͡°)_/¯
