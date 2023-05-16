@@ -18,7 +18,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   frontend:
     image: frontend
@@ -37,6 +38,11 @@ services:
       - db-data:/var/lib/postgresql/data/
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
 volumes:

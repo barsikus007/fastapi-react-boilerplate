@@ -11,11 +11,7 @@ const Header = styled.header`
 `;
 
 function Navbar() {
-  return (
-    <Header>
-      Header
-    </Header>
-  );
+  return <Header>Header</Header>;
 }
 
 export default Navbar;

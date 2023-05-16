@@ -42,12 +42,13 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
 - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
+- https://github.com/nsidnev/fastapi-realworld-example-app
 ## frontend
-- eslint import/no-unresolved
+- remove App.css
+- node 20
 - ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
-- editorconfig wsl
 - react-router 6.4+ data api
-- new https://react.dev/ docs
+- react-query as state manager or effector
 - new https://tanstack.com/ libs
   - react-query update to v4
   - react-router or tanstack/router
@@ -77,30 +78,29 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - wemake-python-styleguide
 - --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
 - poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
-- prod conf --chdir src ?
 - auto HTTPErrors (like IResponse) (maybe with cats)
 - rewrite status codes to status consts
+- remake structure to more convinient usage
+  - make schema autogeneration from models
+    - migrate from sqlmodel?
+  - remove fields when inherit schemas
+## devops
 - prepare for files
+  - nginx serve static files
   - max filesize deps
   - nginx client_max_body_size 100M;
   - compose.prod     command: sh -c 'alembic upgrade head && gunicorn src.main:app -b 0.0.0.0 -w 4 -k uvicorn.workers.UvicornWorker'
-- remake structure to more convinient usage
-  - make schema autogeneration from models
-  - remove fields when inherit schemas 
-## devops
-- frontend cache
+- rename docker-compose to compose
+- docker secrets
 - Remove dockerignore?
 - Add restart to docker composes
-- Sync prod and usual docker composes (and make different image names if needed)
-- fix prod compose (files doesn't work)
-- Make and test debug docker file
+- Sync prod and usual docker composes (and make different image names (or tags) if needed)
+  - fix prod compose
+  - fix debug compose
 - GUID for file rights (container user not root)
 - https://florian-kromer.medium.com/fastapi-microservice-patterns-3052c1241019
 ## other
 - Add CI/CD
-- Deal with nginx config
 - nginx to traefik ?
-- nginx client_max_body_size 100M;
 - https
 - https://stribny.name/blog/fastapi-production/
-- serve local files nginx

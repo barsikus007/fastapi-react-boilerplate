@@ -20,7 +20,7 @@ wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 # then reload your terminal
 nvm install 18
 node -v
-# be sure that it starts from 16
+# be sure that it starts from 18
 corepack enable
 ```
 ## Install packages
@@ -29,8 +29,11 @@ Be sure that you in frontend dir
 pnpm i
 ```
 ## Config linters and etc
+### VSCode
+Install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extensions
+### Other editors
 ¯\\\_( ͡° ͜ʖ ͡°)_/¯
 ## This template was created by
 ```bash
-pnpm create vite frontend --template react-swc-tc
+pnpm create vite frontend --template react-swc-ts
 ```

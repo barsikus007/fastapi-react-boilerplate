@@ -6,42 +6,50 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'airbnb',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module', ecmaFeatures: { jsx: true } },
-  plugins: [
-    'react-refresh',
-    'react',
-    '@typescript-eslint',
-  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+  },
+  plugins: ['react-refresh', 'react', '@typescript-eslint'],
   rules: {
-    'react-refresh/only-export-components': 'warn',
-    'react/jsx-filename-extension': ['warn', { extensions: ['.jsx', '.tsx'] }], // typescript moment
+    // tsx import fixes
     '@typescript-eslint/ban-ts-comment': 'warn', // typescript moment
-    'import/extensions': 'off', // no need to specify extensions for tsx
-    'import/no-unresolved': 'off', // doesnt work with vite for no reason (react-dom/client and absolute)
-    'import/no-absolute-path': 'off', // absolute import is useful in vite
+    'react/jsx-filename-extension': ['warn', { extensions: ['.tsx'] }], // JSX fix
+    'import/extensions': [
+      'off',
+      'ignorePackages',
+      { ts: 'never', tsx: 'never' },
+    ], // .tsx extension fix
+
+    // fix vite /public to / mapping cause eslint can't resolve vite.resolve.alias
+    'import/no-unresolved': ['error', { ignore: ['^/.*'] }],
+    'import/no-absolute-path': 'off',
+
+    // other fixes
+    'import/no-extraneous-dependencies': ['off'], // @tanstack/react-virtual wont resolve
+    'react-refresh/only-export-components': 'warn', // vite initial rule
     'react/prop-types': ['warn', { skipUndeclared: true }], // skip props validation error
     // TODO test 'react/jsx-uses-react': 'off', // plugin:react/jsx-runtime wont work in vscode
     'react/react-in-jsx-scope': 'off', // plugin:react/jsx-runtime wont work in vscode
     'react/jsx-props-no-spreading': 'off', // spreading is useful
-    // TODO test 'jsx-a11y/label-has-associated-control': 'off', // turned off due to modern label syntax wont work in vscode
-    'arrow-parens': ['error', 'as-needed'], // e => { e.doSmth() }
-    'max-len': ['warn', {
-      code: 120,
-      ignoreComments: true,
-      ignoreTrailingComments: true,
-      ignoreStrings: true,
-      ignoreTemplateLiterals: true,
-      ignoreRegExpLiterals: true,
-    }],
+    'jsx-a11y/label-has-associated-control': 'off', // turned off due to modern label syntax wont work
+    // TODO prettier
+    // 'max-len': ['warn', {
+    //   code: 120,
+    //   ignoreComments: true,
+    //   ignoreTrailingComments: true,
+    //   ignoreStrings: true,
+    //   ignoreTemplateLiterals: true,
+    //   ignoreRegExpLiterals: true,
+    // }],
   },
   settings: {
     'import/resolver': {
-      node: {
-        extensions: ['.jsx', '.tsx'],
-        paths: ['src'],
-      },
+      typescript: {},
     },
   },
 };

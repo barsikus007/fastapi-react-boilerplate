@@ -13,7 +13,7 @@ services:
   backend:
     image: backend
     build: backend
-    command: sh -c 'alembic upgrade head && gunicorn src.main:app -b 0.0.0.0 --chdir src -w 4 -k uvicorn.workers.UvicornWorker'
+    command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && gunicorn src.main:app -b 0.0.0.0 -w 4 -k uvicorn.workers.UvicornWorker'
     volumes:
       - ./backend/:/app/:ro
     env_file:
