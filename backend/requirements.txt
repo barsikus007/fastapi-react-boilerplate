@@ -9,7 +9,7 @@ python-multipart
 
 asyncpg~=0.26.0
 alembic~=1.8.1  # TODO update alembic/env.py
-sqlmodel~=0.0.7
+sqlmodel~=0.0.8
 # TODO TODO CHECK IF FIXED
 # sqlalchemy==1.4.35  # https://github.com/tiangolo/sqlmodel/issues/315
 

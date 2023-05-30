@@ -7,8 +7,8 @@ FROM python:${PYTHON_VERSION}-slim as builder
 # into this layer.
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
-    # pip wheel --no-deps --wheel-dir /wheels -r requirements.txt
+    # pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
+    pip wheel --no-deps --wheel-dir /wheels -r requirements.txt
 
 
 FROM python:${PYTHON_VERSION}-slim

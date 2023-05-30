@@ -43,6 +43,8 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 # Boilerplate TODO
 - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
 - https://github.com/nsidnev/fastapi-realworld-example-app
+  - https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/app/db/migrations/versions/fdf8821871d7_main_tables.py#L20
+- vscode workspace recommended extensions
 ## frontend
 - remove App.css
 - node 20
@@ -59,6 +61,13 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - https://github.com/yarnpkg/berry/issues/4217
   - https://github.com/remix-run/remix/issues/683
 ## backend
+- loguru -> default logging? (or https://github.com/hynek/structlog)
+- return status code and data in return???
+- pin versions
+  - SQLAlchemy = "1.4.35" to fix relations
+    - this is fixed
+    - update to 2.0
+    - Relationship(sa_relationship_kwargs={"lazy": "selectin"})
 - prod None to docs and openapi
 - TODO CHECK FIX https://github.com/tiangolo/sqlmodel/pull/79
 - add backend cors
@@ -66,12 +75,10 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - fix no connection to postgres at first startup (restart on failure)
 - Python app or src
 - pendulium?
-- celery vs apscheduler
+- apscheduler 4
+- https://github.com/faust-streaming/faust
 - form-multipart test
 - gunicorn logging disable
-- pin versions
-  - SQLAlchemy = "1.4.35" to fix relations
-    - Relationship(sa_relationship_kwargs={"lazy": "selectin"})
 - check and use fastapi addons
   - https://github.com/awtkns/fastapi-crudrouter/issues/122
 - black, mypy, other linters etc
@@ -100,6 +107,9 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - GUID for file rights (container user not root)
 - https://florian-kromer.medium.com/fastapi-microservice-patterns-3052c1241019
 ## other
+- ./backend#on-ubuntu
+  - add bedian (asdf or pyenv)
+  - fnm
 - Add CI/CD
 - nginx to traefik ?
 - https
