@@ -1,19 +1,30 @@
 from pydantic import BaseModel, EmailStr
 
-from src.models.user import UserBase
+
+class UserBase(BaseModel):
+    class Config:
+        orm_mode = True
+
+    email: EmailStr
+    name: str | None = None
+    phone: str | None = None
 
 
 class IUserCreate(UserBase):
+    is_superuser: bool = False
     password: str
 
 
 class IUserRead(UserBase):
+    is_superuser: bool
+    is_active: bool
     id: int
 
 
-class IUserUpdate(BaseModel):
-    email: EmailStr
+class IUserUpdate(UserBase):
     password: str
-    is_active: bool = True
-    name: str | None = None
-    phone: str | None = None
+
+
+class IUserUpdateAdmin(IUserUpdate):
+    is_superuser: bool
+    is_active: bool

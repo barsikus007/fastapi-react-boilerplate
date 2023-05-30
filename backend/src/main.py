@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from fastapi_pagination import add_pagination
 from starlette.middleware.cors import CORSMiddleware
 
 from src.core.config import settings
@@ -25,6 +26,7 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
+add_pagination(app)
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 

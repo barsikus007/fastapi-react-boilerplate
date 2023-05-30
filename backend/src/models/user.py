@@ -1,18 +1,15 @@
-from pydantic import EmailStr
-from sqlmodel import Field, SQLModel
+from sqlalchemy import true, false
+from sqlalchemy.orm import Mapped, mapped_column
 
 from src.models.base import Base
 
 
-class UserBase(SQLModel):
-    email: EmailStr = Field(index=True, unique=True)
-    name: str | None = None
-    phone: str | None = None
-    is_superuser: bool = False
+class User(Base):
+    __tablename__ = "users"
 
-
-class User(UserBase, Base, table=True):
-    is_active: bool = Field(default=True)
-    hashed_password: str = Field(
-        nullable=False, index=True
-    )
+    email: Mapped[str] = mapped_column(index=True, unique=True)
+    name: Mapped[str | None]
+    phone: Mapped[str | None]
+    is_superuser: Mapped[bool] = mapped_column(server_default=false())
+    is_active: Mapped[bool] = mapped_column(server_default=true())
+    hashed_password: Mapped[str] = mapped_column(index=True)

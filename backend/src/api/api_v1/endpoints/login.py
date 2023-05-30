@@ -3,7 +3,7 @@ from datetime import timedelta
 from pydantic import EmailStr
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import crud
 from src.api import deps

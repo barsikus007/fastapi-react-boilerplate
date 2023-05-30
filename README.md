@@ -61,15 +61,14 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - https://github.com/yarnpkg/berry/issues/4217
   - https://github.com/remix-run/remix/issues/683
 ## backend
+- errors to schema
 - loguru -> default logging? (or https://github.com/hynek/structlog)
 - return status code and data in return???
+- remake structure to more convinient usage
+  - make schema autogeneration from models
+  - remove fields when inherit schemas
 - pin versions
-  - SQLAlchemy = "1.4.35" to fix relations
-    - this is fixed
-    - update to 2.0
-    - Relationship(sa_relationship_kwargs={"lazy": "selectin"})
 - prod None to docs and openapi
-- TODO CHECK FIX https://github.com/tiangolo/sqlmodel/pull/79
 - add backend cors
 - fix of postgres at first launch   File "/app/alembic/env.py", line 85, in run_migrations_online or `sleep 5 && `
 - fix no connection to postgres at first startup (restart on failure)
@@ -87,11 +86,8 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
 - auto HTTPErrors (like IResponse) (maybe with cats)
 - rewrite status codes to status consts
-- remake structure to more convinient usage
-  - make schema autogeneration from models
-    - migrate from sqlmodel?
-  - remove fields when inherit schemas
 ## devops
+- pip install or pip wheel
 - prepare for files
   - nginx serve static files
   - max filesize deps

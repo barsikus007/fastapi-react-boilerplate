@@ -7,7 +7,7 @@ FROM python:${PYTHON_VERSION}-slim as builder
 # into this layer.
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    # pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
+    # TODO pip wheel --wheel-dir /wheels -r requirements.txt
     pip wheel --no-deps --wheel-dir /wheels -r requirements.txt
 
 
@@ -24,12 +24,13 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
 COPY --from=builder /wheels /wheels
-RUN pip install --no-cache-dir /wheels/*
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir /wheels/*
 
 COPY alembic.ini .
 
 # Id 1000 is used instead of 10001 due to broken permissions for alembic migration files,
-ARG UID=10001
+ARG UID=1000
 ARG USER=appuser
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user

@@ -1,6 +1,6 @@
 import asyncio
 
-from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import crud
 from src.db.session import SessionLocal

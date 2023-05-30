@@ -1,8 +1,8 @@
 from typing import Any
 
 from pydantic.networks import EmailStr
-from sqlmodel import select
-from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.crud.base import CRUDBase
 from src.models.user import User
@@ -12,8 +12,8 @@ from src.core.security import verify_password, get_password_hash
 
 class CRUDUser(CRUDBase[User, IUserCreate, IUserUpdate]):
     async def get_by_email(self, db: AsyncSession, *, email: str) -> User | None:
-        users = await db.exec(select(User).where(User.email == email))  # type: ignore
-        return users.first()
+        users = await db.execute(select(User).where(User.email == email))
+        return users.scalars().first()
 
     async def create(self, db: AsyncSession, *, obj_in: IUserCreate) -> User:
         obj_db = User(

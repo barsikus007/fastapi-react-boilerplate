@@ -6,17 +6,20 @@ from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
 from fastapi_pagination import Params
 from fastapi_pagination.bases import AbstractPage
-from fastapi_pagination.ext.async_sqlmodel import paginate
-from sqlmodel import SQLModel, select, func
-from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel.sql.expression import Select, SelectOfScalar
+from fastapi_pagination.ext.sqlalchemy import count_query
+from fastapi_pagination.ext.async_sqlalchemy import paginate
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql.expression import Select
+
+from src.models.base import Base
 
 
-ModelType = TypeVar("ModelType", bound=SQLModel)
+ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 SchemaType = TypeVar("SchemaType", bound=BaseModel)
-T = TypeVar("T", bound=SQLModel)
+T = TypeVar("T", bound=Base)
 
 
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
@@ -26,7 +29,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         **Parameters**
 
-        * `model`: A SQLModel model class
+        * `model`: A SQLAlchemy model class
         """
         self.model = model
 
@@ -35,18 +38,17 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     ) -> ModelType | None:
         return await db.get(self.model, id_)
 
-    async def get_count(self, db: AsyncSession) -> ModelType | None:
-        # https://github.com/tiangolo/sqlmodel/issues/54
-        response = await db.exec(select(func.count()).select_from(select(self.model).subquery()))  # type: ignore
-        return response.one()
+    async def get_count(self, db: AsyncSession) -> ModelType:
+        response = await db.execute(count_query(select(self.model)))
+        return response.scalars().one()
 
     async def get_multi(
             self, db: AsyncSession, *, params: Params,
-            query: ModelType | Select[ModelType] | SelectOfScalar[ModelType] | None = None,
+            query: ModelType | Select[ModelType] | None = None,
     ) -> AbstractPage[ModelType]:
-        if query is None:  # Pylance(reportGeneralTypeIssues)
-            query = self.model  # type: ignore
-        return await paginate(db, query, params)  # type: ignore
+        if query is None:
+            query = select(self.model)
+        return await paginate(db, query, params)
 
     async def create(
             self, db: AsyncSession, *, obj_in: CreateSchemaType

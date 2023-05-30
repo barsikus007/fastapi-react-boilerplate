@@ -1,17 +1,14 @@
 orjson
 uvicorn[standard]
 gunicorn
-fastapi
-fastapi-pagination
+fastapi~=0.95.2
+fastapi-pagination~=0.12.4
 passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
 
-asyncpg~=0.26.0
-alembic~=1.8.1  # TODO update alembic/env.py
-sqlmodel~=0.0.8
-# TODO TODO CHECK IF FIXED
-# sqlalchemy==1.4.35  # https://github.com/tiangolo/sqlmodel/issues/315
+sqlalchemy[postgresql_asyncpg]~=2.0.15
+alembic~=1.11.1
 
 # pydantic[email,dotenv]
 pydantic
@@ -19,7 +16,7 @@ python-dotenv
 email-validator
 
 # loguru
-apscheduler
+# apscheduler
 
 # pandas
 # httpx
