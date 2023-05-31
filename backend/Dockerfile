@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.10.11
+ARG PYTHON_VERSION=3.11.3
 FROM python:${PYTHON_VERSION}-slim as builder
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -7,8 +7,8 @@ FROM python:${PYTHON_VERSION}-slim as builder
 # into this layer.
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    # TODO pip wheel --wheel-dir /wheels -r requirements.txt
-    pip wheel --no-deps --wheel-dir /wheels -r requirements.txt
+    pip wheel --wheel-dir /wheels -r requirements.txt
+# https://habr.com/en/companies/wunderfund/articles/586778/
 
 
 FROM python:${PYTHON_VERSION}-slim
@@ -47,4 +47,4 @@ USER $USER
 EXPOSE 8000
 
 # # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-k", "uvicorn.workers.UvicornWorker", "main:app"]
+CMD ["gunicorn", "src.main:app", "-b", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]

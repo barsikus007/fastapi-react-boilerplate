@@ -1,15 +1,15 @@
 # from uuid import uuid4, UUID
 from datetime import datetime
 
-import pydantic
+# import pydantic
 from sqlalchemy import func, TIMESTAMP
 from sqlalchemy.orm import declared_attr, DeclarativeBase, Mapped, mapped_column, MappedAsDataclass
 
 
 class Base(
         MappedAsDataclass,
-        DeclarativeBase,
-        dataclass_callable=pydantic.dataclasses.dataclass,
+        DeclarativeBase,  # Pylance(reportGeneralTypeIssues)
+        # dataclass_callable=pydantic.dataclasses.dataclass,  # type: ignore
 ):
     @declared_attr.directive
     def __tablename__(cls):  # pylint: disable=no-self-argument

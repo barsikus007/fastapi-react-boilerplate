@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
 
-    @validator("BACKEND_CORS_ORIGINS", pre=True)
-    def assemble_cors_origins(cls, v: str | list[str]) -> str | list[str]:
+    @validator("BACKEND_CORS_ORIGINS", pre=True)  # pylint-pydantic
+    def assemble_cors_origins(cls, v: str | list[str]) -> str | list[str]:  # pylint: disable=no-self-argument
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
         elif isinstance(v, str | list):
@@ -29,8 +29,8 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = "postgres"
     POSTGRES_HOST: str = "postgres"
     POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = POSTGRES_USER
-    DATABASE_URL: PostgresDsn = PostgresDsn(
+    POSTGRES_DB: str = POSTGRES_USER  # PostgresDsn can't be casted to PostgresDsn lol
+    DATABASE_URL: PostgresDsn = PostgresDsn(  # type: ignore
         f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@"
         f"{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}", scheme="postgresql+asyncpg")
 

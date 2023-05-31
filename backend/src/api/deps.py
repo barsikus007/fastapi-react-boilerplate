@@ -12,8 +12,8 @@ from src.core.config import settings
 from src.models import User
 
 
-reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_V1_STR}/login/access-token"
+reusable_oauth2 = OAuth2PasswordBearer(  # settings.API_V1_STR is not accessible lol
+    tokenUrl=f"{settings.API_V1_STR}/login/access-token"  # type: ignore
 )
 
 

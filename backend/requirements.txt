@@ -4,11 +4,7 @@ uvicorn[standard]~=0.22.0
 python-multipart~=0.0.6
 fastapi~=0.95.2
 fastapi-pagination~=0.12.4
-# pydantic[email]~=2.0.0
-# pydantic[email,dotenv]
-pydantic~=1.10.8
-python-dotenv~=1.0.0
-email-validator~=2.0.0.post2
+pydantic[email,dotenv]~=1.10.8
 
 # OAuth2 deps
 passlib[bcrypt]~=1.7.4
@@ -18,4 +14,3 @@ gunicorn~=20.1.0
 # ORM deps
 sqlalchemy[postgresql_asyncpg]~=2.0.15
 alembic~=1.11.1
-

@@ -9,5 +9,5 @@ class User(Base):
     name: Mapped[str | None]
     phone: Mapped[str | None]
     is_superuser: Mapped[bool] = mapped_column(server_default=false())
-    is_active: Mapped[bool] = mapped_column(server_default=true())
+    is_active: Mapped[bool] = mapped_column(init=False, server_default=true())
     hashed_password: Mapped[str] = mapped_column(index=True)

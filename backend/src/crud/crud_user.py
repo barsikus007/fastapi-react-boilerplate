@@ -1,6 +1,7 @@
 from typing import Any
 
-from pydantic.networks import EmailStr
+from fastapi.encoders import jsonable_encoder
+from pydantic import EmailStr
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -11,28 +12,28 @@ from src.core.security import verify_password, get_password_hash
 
 
 class CRUDUser(CRUDBase[User, IUserCreate, IUserUpdate]):
-    async def get_by_email(self, db: AsyncSession, *, email: str) -> User | None:
+    async def get_by_email(
+            self, db: AsyncSession, *,
+            email: str,
+    ) -> User | None:
         users = await db.execute(select(User).where(User.email == email))
         return users.scalars().first()
 
-    async def create(self, db: AsyncSession, *, obj_in: IUserCreate) -> User:
-        obj_db = User(
-            name=obj_in.name,
-            email=obj_in.email,
-            hashed_password=get_password_hash(obj_in.password),
-            is_superuser=obj_in.is_superuser,
-        )
+    async def create(
+            self, db: AsyncSession, *,
+            obj_in: IUserCreate,
+    ) -> User:
+        obj_in_data = jsonable_encoder(obj_in, exclude={"password"})
+        obj_in_data["hashed_password"] = get_password_hash(obj_in.password)
+        obj_db = self.model(**obj_in_data)
         db.add(obj_db)
         await db.commit()
         await db.refresh(obj_db)
         return obj_db
 
     async def update(
-        self,
-        db: AsyncSession,
-        *,
-        obj_db: User,
-        obj_in: IUserUpdate | dict[str, Any]
+            self, db: AsyncSession, *,
+            obj_db: User, obj_in: IUserUpdate | dict[str, Any],
     ) -> User:
         if isinstance(obj_in, dict):
             update_data = obj_in
@@ -45,7 +46,8 @@ class CRUDUser(CRUDBase[User, IUserCreate, IUserUpdate]):
         return await super().update(db, obj_db=obj_db, obj_in=update_data)
 
     async def authenticate(
-        self, db: AsyncSession, *, email: EmailStr, password: str
+            self, db: AsyncSession, *,
+            email: EmailStr, password: str,
     ) -> User | None:
         user_auth = await self.get_by_email(db, email=email)
         if not user_auth:

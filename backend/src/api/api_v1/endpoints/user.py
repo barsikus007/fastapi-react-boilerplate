@@ -33,7 +33,7 @@ async def create_user(
     if user:
         raise HTTPException(status_code=400, detail="There is already a user with same email")
     user = await crud.user.create(db, obj_in=new_user)
-    return user
+    return user  # type: ignore
 
 
 @router.get("/me")
@@ -41,7 +41,7 @@ async def get_my_data(
     *,
     current_user: User = Depends(deps.get_current_active_user),
 ) -> IUserRead:
-    return current_user
+    return current_user  # type: ignore
 
 
 @router.put("/me")
@@ -51,9 +51,9 @@ async def update_user_me(
     user_in: IUserUpdate,
     current_user: User = Depends(deps.get_current_active_user),
 ) -> IUserRead:
-    if await crud.user.get_by_email(db, email=user_in.email):
+    if user_in.email and await crud.user.get_by_email(db, email=user_in.email):
         raise HTTPException(status_code=400, detail="There is already a user with same email")
-    return await crud.user.update(db, obj_db=current_user, obj_in=user_in)
+    return await crud.user.update(db, obj_db=current_user, obj_in=user_in)  # type: ignore
 
 
 @router.delete("/{user_id}")
@@ -83,7 +83,7 @@ async def get_user_by_id(
     user = await crud.user.get(db, id_=user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return user
+    return user  # type: ignore
 
 
 @router.put("/{user_id}")
@@ -104,4 +104,4 @@ async def update_user(
         if user_db := await crud.user.get_by_email(db, email=user_in.email):
             if user.id != user_db.id:
                 raise HTTPException(status_code=400, detail="There is already a user with same email")
-    return await crud.user.update(db, obj_db=user, obj_in=user_in)
+    return await crud.user.update(db, obj_db=user, obj_in=user_in)  # type: ignore
