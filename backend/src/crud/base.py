@@ -34,7 +34,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.model = model
 
     async def get(
-            self, db: AsyncSession, *, id_: int | str | UUID
+            self, db: AsyncSession, *,
+            id_: int | str | UUID,
     ) -> ModelType | None:
         return await db.get(self.model, id_)
 
@@ -43,15 +44,16 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return response.scalars().one()
 
     async def get_multi(
-            self, db: AsyncSession, *, params: Params,
-            query: ModelType | Select[ModelType] | None = None,
+            self, db: AsyncSession, *,
+            params: Params, query: Select | None = None,
     ) -> AbstractPage[ModelType]:
         if query is None:
             query = select(self.model)
         return await paginate(db, query, params)
 
     async def create(
-            self, db: AsyncSession, *, obj_in: CreateSchemaType
+            self, db: AsyncSession, *,
+            obj_in: CreateSchemaType,
     ) -> ModelType:
         obj_db = self.model.from_orm(obj_in)
         db.add(obj_db)
@@ -79,7 +81,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return obj_db
 
     async def remove(
-            self, db: AsyncSession, *, id_: int | str | UUID
+            self, db: AsyncSession, *,
+            id_: int | str | UUID,
     ) -> ModelType | None:
         obj = await db.get(self.model, id_)
         if obj:

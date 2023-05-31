@@ -41,9 +41,10 @@ docker compose up -d --build
 docker compose -f "docker-compose.prod.yml" up -d --build
 ```
 # Boilerplate TODO
-- https://github.com/testdrivenio/fastapi-sqlmodel-alembic
-- https://github.com/nsidnev/fastapi-realworld-example-app
-  - https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/app/db/migrations/versions/fdf8821871d7_main_tables.py#L20
+- examples
+  - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
+  - https://github.com/nsidnev/fastapi-realworld-example-app
+    - https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/app/db/migrations/versions/fdf8821871d7_main_tables.py#L20
 - vscode workspace recommended extensions
 ## frontend
 - remove App.css
@@ -61,52 +62,62 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - https://github.com/yarnpkg/berry/issues/4217
   - https://github.com/remix-run/remix/issues/683
 ## backend
-- errors to schema
-- loguru -> default logging? (or https://github.com/hynek/structlog)
-- return status code and data in return???
-- remake structure to more convinient usage
-  - make schema autogeneration from models
-  - remove fields when inherit schemas
-- pin versions
-- prod None to docs and openapi
-- add backend cors
-- fix of postgres at first launch   File "/app/alembic/env.py", line 85, in run_migrations_online or `sleep 5 && `
-- fix no connection to postgres at first startup (restart on failure)
-- Python app or src
-- pendulium?
-- apscheduler 4
-- https://github.com/faust-streaming/faust
-- form-multipart test
-- gunicorn logging disable
-- check and use fastapi addons
-  - https://github.com/awtkns/fastapi-crudrouter/issues/122
-- black, mypy, other linters etc
-  - wemake-python-styleguide
-- --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
-- poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
-- auto HTTPErrors (like IResponse) (maybe with cats)
-- rewrite status codes to status consts
+- other
+  - relation model examples
+  - onupdate timestamps
+  - pip install or pip wheel
+    - why pip wheel --no-deps ?
+  - prod None to docs and openapi
+  - add backend cors
+  - form-multipart test
+  - gunicorn logging disable
+  - black, mypy, other linters etc
+    - wemake-python-styleguide
+  - --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
+    - other nginx configurations from uvicorn docs
+      - better nginx location managment (global fastapi location)
+  - poetry ? https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
+- arch related
+  - https://docs.sqlalchemy.org/en/20/changelog/migration_20.html#migration-20-step-six
+  - errors
+    - rewrite status codes to status consts
+    - errors to schema
+    - auto HTTPErrors (like IResponse) (maybe with cats)
+  - return status code and data in return???
+    - + protocol agnostic
+    - + custom response codes
+    - - overhead
+  - remake structure to more convinient usage
+    - make schema autogeneration from models
+    - remove fields when inherit schemas
+- libs related
+  - passlib[bcrypt] to passlib[argon2] ?
+  - padantic 2 when released
+    - https://docs.pydantic.dev/dev-v2/migration/
+    - dotenv settings parsing
+  - loguru -> default logging? (or https://github.com/hynek/structlog)
+  - pendulium
+  - apscheduler 4
+  - https://github.com/faust-streaming/faust
 ## devops
-- pip install or pip wheel
 - prepare for files
   - nginx serve static files
-  - max filesize deps
+  - max filesize deps for FastAPI
   - nginx client_max_body_size 100M;
-  - compose.prod     command: sh -c 'alembic upgrade head && gunicorn src.main:app -b 0.0.0.0 -w 4 -k uvicorn.workers.UvicornWorker'
 - rename docker-compose to compose
 - docker secrets
-- Remove dockerignore?
-- Add restart to docker composes
+- Remove dockerignore ?
+- Add restart to docker composes ?
 - Sync prod and usual docker composes (and make different image names (or tags) if needed)
-  - fix prod compose
   - fix debug compose
-- GUID for file rights (container user not root)
+- GUID in env or another workaround for correct file rights (container user not root) (migrations for example)
 - https://florian-kromer.medium.com/fastapi-microservice-patterns-3052c1241019
 ## other
 - ./backend#on-ubuntu
   - add bedian (asdf or pyenv)
   - fnm
 - Add CI/CD
+  - github or gitlab ?
 - nginx to traefik ?
-- https
+  - https is easier in traefik
 - https://stribny.name/blog/fastapi-production/

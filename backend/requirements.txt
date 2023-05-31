@@ -1,24 +1,21 @@
-orjson
-uvicorn[standard]
-gunicorn
+# FastAPI deps (https://fastapi.tiangolo.com/#optional-dependencies)
+orjson~=3.8.14
+uvicorn[standard]~=0.22.0
+python-multipart~=0.0.6
 fastapi~=0.95.2
 fastapi-pagination~=0.12.4
-passlib[bcrypt]
-python-jose[cryptography]
-python-multipart
+# pydantic[email]~=2.0.0
+# pydantic[email,dotenv]
+pydantic~=1.10.8
+python-dotenv~=1.0.0
+email-validator~=2.0.0.post2
 
+# OAuth2 deps
+passlib[bcrypt]~=1.7.4
+python-jose[cryptography]~=3.3.0
+gunicorn~=20.1.0
+
+# ORM deps
 sqlalchemy[postgresql_asyncpg]~=2.0.15
 alembic~=1.11.1
 
-# pydantic[email,dotenv]
-pydantic
-python-dotenv
-email-validator
-
-# loguru
-# apscheduler
-
-# pandas
-# httpx
-
-# https://fastapi.tiangolo.com/#optional-dependencies

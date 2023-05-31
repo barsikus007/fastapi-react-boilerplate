@@ -5,8 +5,6 @@ from src.models.base import Base
 
 
 class User(Base):
-    __tablename__ = "users"
-
     email: Mapped[str] = mapped_column(index=True, unique=True)
     name: Mapped[str | None]
     phone: Mapped[str | None]

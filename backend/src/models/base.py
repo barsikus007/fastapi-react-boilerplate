@@ -1,20 +1,29 @@
 # from uuid import uuid4, UUID
 from datetime import datetime
 
-from sqlalchemy import func, DateTime
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+import pydantic
+from sqlalchemy import func, TIMESTAMP
+from sqlalchemy.orm import declared_attr, DeclarativeBase, Mapped, mapped_column, MappedAsDataclass
 
 
-class Base(DeclarativeBase):
+class Base(
+        MappedAsDataclass,
+        DeclarativeBase,
+        dataclass_callable=pydantic.dataclasses.dataclass,
+):
+    @declared_attr.directive
+    def __tablename__(cls):  # pylint: disable=no-self-argument
+        return cls.__name__.lower()
+
     type_annotation_map = {
-        datetime: DateTime(timezone=True),
+        datetime: TIMESTAMP(timezone=True),
     }
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
     # id: Mapped[UUID] = mapped_column(default_factory=uuid4, primary_key=True)
-    date_create: Mapped[datetime] = mapped_column(server_default=func.now())
-    date_update: Mapped[datetime] = mapped_column(server_default=func.now(), insert_default=func.now())
+    date_create: Mapped[datetime] = mapped_column(init=False, server_default=func.now())
+    date_update: Mapped[datetime] = mapped_column(init=False, server_default=func.now(), insert_default=func.now())
     # TODO https://stackoverflow.com/questions/70946151/how-to-set-default-on-update-current-timestamp-in-postgres-with-sqlalchemy
-    # TODO Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
+    # TODO Mapped[datetime] = mapped_column(server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 
 
 # TODO: Why?
