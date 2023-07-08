@@ -36,6 +36,8 @@ services:
     restart: always
     volumes:
       - db-data:/var/lib/postgresql/data/
+    # ports:
+    #   - 5432:5432
     env_file:
       - .env
     healthcheck:

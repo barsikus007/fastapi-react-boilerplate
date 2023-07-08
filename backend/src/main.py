@@ -3,9 +3,8 @@ from fastapi.responses import ORJSONResponse
 from fastapi_pagination import add_pagination
 from starlette.middleware.cors import CORSMiddleware
 
+from src.api.v1 import api_router
 from src.core.config import settings
-from src.api.api_v1.api import api_router
-
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

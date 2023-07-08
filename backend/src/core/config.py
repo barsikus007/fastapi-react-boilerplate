@@ -1,6 +1,6 @@
 import secrets
 
-from pydantic import PostgresDsn, BaseSettings, EmailStr, AnyHttpUrl, validator
+from pydantic import AnyHttpUrl, BaseSettings, EmailStr, PostgresDsn, validator
 
 
 class Settings(BaseSettings):
@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = "postgres"
     POSTGRES_HOST: str = "postgres"
     POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = POSTGRES_USER  # PostgresDsn can't be casted to PostgresDsn lol
+    POSTGRES_DB: str = POSTGRES_USER  # PostgresDsn can't be cast to PostgresDsn lol
     DATABASE_URL: PostgresDsn = PostgresDsn(  # type: ignore
         f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@"
         f"{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}", scheme="postgresql+asyncpg")

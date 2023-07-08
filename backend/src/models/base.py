@@ -1,23 +1,26 @@
 # from uuid import uuid4, UUID
 from datetime import datetime
 
-# import pydantic
-from sqlalchemy import func, TIMESTAMP
-from sqlalchemy.orm import declared_attr, DeclarativeBase, Mapped, mapped_column, MappedAsDataclass
+from sqlalchemy import TIMESTAMP, func
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, declared_attr, mapped_column
 
 
+# https://docs.sqlalchemy.org/en/20/orm/dataclasses.html#integrating-with-alternate-dataclass-providers-such-as-pydantic
 class Base(
         MappedAsDataclass,
-        DeclarativeBase,  # Pylance(reportGeneralTypeIssues)
-        # dataclass_callable=pydantic.dataclasses.dataclass,  # type: ignore
+        DeclarativeBase,
+        kw_only=True,
 ):
     @declared_attr.directive
     def __tablename__(cls):  # pylint: disable=no-self-argument
         return cls.__name__.lower()
 
+    # https://docs.sqlalchemy.org/en/20/core/type_basics.html#generic-camelcase-types
+    # https://docs.sqlalchemy.org/en/20/orm/declarative_tables.html#mapped-column-derives-the-datatype-and-nullability-from-the-mapped-annotation
     type_annotation_map = {
         datetime: TIMESTAMP(timezone=True),
     }
+
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     # id: Mapped[UUID] = mapped_column(default_factory=uuid4, primary_key=True)
     date_create: Mapped[datetime] = mapped_column(init=False, server_default=func.now())
@@ -26,6 +29,7 @@ class Base(
     # TODO Mapped[datetime] = mapped_column(server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 
 
+# cascade check
 # TODO: Why?
     # student_id: int | None = Field(
     #     foreign_key='student.id', primary_key=True

@@ -58,7 +58,9 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - https://github.com/remix-run/remix/issues/683
 ## backend
 - other
-- fix return casting type: ignore
+  - pylint(too-few-public-methods) on sqlalchemy models
+  - return 201 when create
+  - fix return casting type: ignore
   - pydantic.dataclasses.dataclass fix
   - relation model examples
   - onupdate timestamps

@@ -1,15 +1,15 @@
 from datetime import timedelta
 
-from pydantic import EmailStr
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import crud
 from src.api import deps
 from src.core import security
 from src.core.config import settings
-from src.schemas.token import TokenRead, Token
+from src.schemas.token import Token, TokenRead
 
 
 router = APIRouter()

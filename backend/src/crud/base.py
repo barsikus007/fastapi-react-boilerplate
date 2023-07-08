@@ -1,19 +1,17 @@
-from uuid import UUID
-from typing import Any, Generic, Type, TypeVar
 from datetime import datetime, timezone
+from typing import Any, Generic, Type, TypeVar
+from uuid import UUID
 
-from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
 from fastapi_pagination import Params
 from fastapi_pagination.bases import AbstractPage
-from fastapi_pagination.ext.sqlalchemy import count_query
-from fastapi_pagination.ext.async_sqlalchemy import paginate
+from fastapi_pagination.ext.sqlalchemy import count_query, paginate
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import Select
 
 from src.models.base import Base
-
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)

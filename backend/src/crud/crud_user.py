@@ -5,10 +5,10 @@ from pydantic import EmailStr
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.core.security import get_password_hash, verify_password
 from src.crud.base import CRUDBase
 from src.models.user import User
 from src.schemas.user import IUserCreate, IUserUpdate
-from src.core.security import verify_password, get_password_hash
 
 
 class CRUDUser(CRUDBase[User, IUserCreate, IUserUpdate]):
@@ -18,18 +18,6 @@ class CRUDUser(CRUDBase[User, IUserCreate, IUserUpdate]):
     ) -> User | None:
         users = await db.execute(select(User).where(User.email == email))
         return users.scalars().first()
-
-    async def create(
-            self, db: AsyncSession, *,
-            obj_in: IUserCreate,
-    ) -> User:
-        obj_in_data = jsonable_encoder(obj_in, exclude={"password"})
-        obj_in_data["hashed_password"] = get_password_hash(obj_in.password)
-        obj_db = self.model(**obj_in_data)
-        db.add(obj_db)
-        await db.commit()
-        await db.refresh(obj_db)
-        return obj_db
 
     async def update(
             self, db: AsyncSession, *,
