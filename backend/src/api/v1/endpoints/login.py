@@ -46,7 +46,7 @@ async def login_access_token(
     OAuth2 compatible token login, get an access token for future requests
     """
     user = await crud.user.authenticate(
-        db_session, email=EmailStr(form_data.username), password=form_data.password
+        db_session, email=form_data.username, password=form_data.password
     )
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")

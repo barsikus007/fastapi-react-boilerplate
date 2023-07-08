@@ -68,12 +68,10 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
-            update_data = obj_in.dict(exclude_unset=True)
+            update_data = obj_in.model_dump(exclude_unset=True)
         for field in obj_data:
             if field in update_data:
                 setattr(obj_db, field, update_data[field])
-        # TODO psql triggers when update
-        setattr(obj_db, "date_update", datetime.now(timezone.utc))
         db.add(obj_db)
         await db.commit()
         await db.refresh(obj_db)

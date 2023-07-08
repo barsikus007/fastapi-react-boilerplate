@@ -129,6 +129,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - nginx to traefik ?
   - https is easier in traefik
 ## other
+- https://containers.dev
 - examples
   - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
   - https://github.com/nsidnev/fastapi-realworld-example-app

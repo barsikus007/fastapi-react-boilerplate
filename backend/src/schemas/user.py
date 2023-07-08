@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
     class Config:
-        orm_mode = True
+        from_attributes = True
 
     email: EmailStr
     name: str | None = None

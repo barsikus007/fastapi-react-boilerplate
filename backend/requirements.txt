@@ -2,9 +2,10 @@
 orjson~=3.8.14
 uvicorn[standard]~=0.22.0
 python-multipart~=0.0.6
-fastapi~=0.95.2
-fastapi-pagination~=0.12.4
-pydantic[email,dotenv]~=1.10.8
+fastapi~=0.100.0
+fastapi-pagination~=0.12.5
+pydantic[email]~=2.0.2
+pydantic_settings~=2.0.1
 
 # OAuth2 deps
 passlib[bcrypt]~=1.7.4

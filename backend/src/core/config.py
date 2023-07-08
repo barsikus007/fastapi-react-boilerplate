@@ -1,6 +1,7 @@
 import secrets
 
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, PostgresDsn, validator
+from pydantic import AnyHttpUrl, EmailStr, PostgresDsn, field_validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -15,7 +16,7 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
 
-    @validator("BACKEND_CORS_ORIGINS", pre=True)  # pylint-pydantic
+    @field_validator("BACKEND_CORS_ORIGINS", mode="before")  # pylint-pydantic
     def assemble_cors_origins(cls, v: str | list[str]) -> str | list[str]:  # pylint: disable=no-self-argument
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
@@ -29,10 +30,10 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = "postgres"
     POSTGRES_HOST: str = "postgres"
     POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = POSTGRES_USER  # PostgresDsn can't be cast to PostgresDsn lol
-    DATABASE_URL: PostgresDsn = PostgresDsn(  # type: ignore
+    POSTGRES_DB: str = POSTGRES_USER
+    DATABASE_URL: PostgresDsn = PostgresDsn(
         f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@"
-        f"{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}", scheme="postgresql+asyncpg")
+        f"{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}")
 
     class Config:
         case_sensitive = True
