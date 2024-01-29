@@ -9,18 +9,13 @@ winget install Docker.DockerDesktop -h
 ##### Below Windows 11
 [Installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 #### On Linux
+[Convinient script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
 ```bash
 # install docker
 curl -sSL https://get.docker.com | sh
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker; exit
-
-# install docker compose
-DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-mkdir -p $DOCKER_CONFIG/cli-plugins
-curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-$(uname -i) -o $DOCKER_CONFIG/cli-plugins/docker-compose
-chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 ```
 #### On MacOS
 [Installer](https://docs.docker.com/desktop/install/mac-install/)
@@ -56,6 +51,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - yarn v3 berry vs pnpm
   - https://github.com/yarnpkg/berry/issues/4217
   - https://github.com/remix-run/remix/issues/683
+- `*.svg?react` from project
 ## backend
 - other
   - pylint(too-few-public-methods) on sqlalchemy models

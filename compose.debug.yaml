@@ -1,0 +1,28 @@
+services:
+  backend:
+    image: backend
+    build: backend
+    command: sh -c 'alembic upgrade head && pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn src.main:app --reload --host 0.0.0.0'
+    ports:
+      - 8000:8000
+      - 5678:5678
+    volumes:
+      - ./backend/:/app/
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  frontend:
+    image: frontend
+    build:
+      context: frontend
+      dockerfile: development
+    volumes:
+      - ./frontend/src/:/app/src/
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: yarn start --inspect=0.0.0.0:9229
