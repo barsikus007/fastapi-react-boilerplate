@@ -1,58 +1,88 @@
 # Installation
+
 ## Install docker
-#### On Windows
-##### Windows 11 or with winget installed
+
+### On Windows
+
+#### Windows 11 or with winget installed
+
 ```pwsh
 wsl --install -d Ubuntu
 winget install Docker.DockerDesktop -h
 ```
-##### Below Windows 11
+
+#### Below Windows 11
+
 [Installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
-#### On Linux
+
+### On Linux
+
 [Convinient script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
-```bash
+
+```sh
 # install docker
 curl -sSL https://get.docker.com | sh
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker; exit
 ```
-#### On MacOS
+
+### On MacOS
+
 [Installer](https://docs.docker.com/desktop/install/mac-install/)
-##### Apple Silicon launch instruction
-Due to some issues with several python packages (like asyncpg), which haven't builds for linux aarch64, you should use buildx
-```zsh
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose up -d --build
-# Then to accelerate frontend, if you are frontend dev, build frontend without buildx
-docker-compose up -d --build frontend
+
+### Arm issues resolution
+
+Due to possible issues with several packages, which haven't builds for linux aarch64, you can use buildx
+
+```sh
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose up -d --build {issued-service}
+docker-compose up -d --build {other-services}
 ```
-## Launch app in development mode
-###### Note, that on windows you must use WSL if you are frontend developer due to react-scripts@5.0.0 bug with hot reloading
-```bash
+
+## Launch app
+
+Copy `.env.example` to `.env` and change settings
+
+### Development mode
+
+```sh
 docker compose up -d --build
 ```
-## Launch app in production mode
-```bash
-docker compose -f "docker-compose.prod.yml" up -d --build
+
+### Production mode
+
+```sh
+docker compose -f compose.prod.yaml up -d --build
 ```
-# Boilerplate TODO
-## frontend
+
+## Untemplating
+
+- `fastapi-react-boilerplate` -> `your-project-name`
+- `boilerplate` in any case -> `your-project-name`
+
+## Boilerplate TODO
+
+### frontend
+
 - remove App.css
 - node 20 when lts
-- ts models from backend https://fastapi.tiangolo.com/advanced/generate-clients/
+- ts models from backend <https://fastapi.tiangolo.com/advanced/generate-clients/>
 - react-router 6.4+ data api
 - react-query as state manager or effector
-- new https://tanstack.com/ libs
+- new <https://tanstack.com/> libs
   - react-query update to v4
   - react-router or tanstack/router
 - add usage examples of
   - dayjs
   - react-query
 - yarn v3 berry vs pnpm
-  - https://github.com/yarnpkg/berry/issues/4217
-  - https://github.com/remix-run/remix/issues/683
+  - <https://github.com/yarnpkg/berry/issues/4217>
+  - <https://github.com/remix-run/remix/issues/683>
 - `*.svg?react` from project
-## backend
+
+### backend
+
 - other
   - pylint(too-few-public-methods) on sqlalchemy models
   - return 201 when create
@@ -68,14 +98,14 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - gunicorn logging disable
   - black, mypy, other linters etc
     - wemake-python-styleguide
-  - --proxy-headers https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy
+  - --proxy-headers <https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy>
     - other nginx configurations from uvicorn docs
       - better nginx location sctucture (global fastapi location)
   - poetry ?
-    - https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
-    - https://gabnotes.org/posts/lighten-your-python-image-docker-multi-stage-builds/
+    - <https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry>
+    - <https://gabnotes.org/posts/lighten-your-python-image-docker-multi-stage-builds/>
 - arch related
-  - https://docs.sqlalchemy.org/en/20/changelog/migration_20.html#migration-20-step-six
+  - <https://docs.sqlalchemy.org/en/20/changelog/migration_20.html#migration-20-step-six>
   - errors
     - rewrite status codes to status consts
     - errors to schema
@@ -91,13 +121,15 @@ docker compose -f "docker-compose.prod.yml" up -d --build
 - libs related
   - passlib[bcrypt] to passlib[argon2] ?
   - padantic 2 when released
-    - https://docs.pydantic.dev/dev-v2/migration/
+    - <https://docs.pydantic.dev/dev-v2/migration/>
     - dotenv settings parsing
-  - loguru -> default logging ? (with https://github.com/hynek/structlog)
+  - loguru -> default logging ? (with <https://github.com/hynek/structlog>)
   - pendulium
   - apscheduler 4
-  - https://github.com/faust-streaming/faust
-## devops
+  - <https://github.com/faust-streaming/faust>
+
+### devops
+
 - file serving example
   - nginx serve static files
   - max filesize deps for FastAPI
@@ -115,8 +147,8 @@ docker compose -f "docker-compose.prod.yml" up -d --build
   - k8s config ?
   - make different image names (or tags) for different compose files
     - fix debug compose
-  - https://florian-kromer.medium.com/fastapi-microservice-patterns-3052c1241019
-  - https://stribny.name/blog/fastapi-production/
+  - <https://florian-kromer.medium.com/fastapi-microservice-patterns-3052c1241019>
+  - <https://stribny.name/blog/fastapi-production/>
   - Add CI/CD example
     - github or gitlab ?
     - what and how?
@@ -125,12 +157,14 @@ docker compose -f "docker-compose.prod.yml" up -d --build
       - docker builds?
 - nginx to traefik ?
   - https is easier in traefik
-## other
-- https://containers.dev
+
+### other
+
+- <https://containers.dev>
 - examples
-  - https://github.com/testdrivenio/fastapi-sqlmodel-alembic
-  - https://github.com/nsidnev/fastapi-realworld-example-app
-    - https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/app/db/migrations/versions/fdf8821871d7_main_tables.py#L20
+  - <https://github.com/testdrivenio/fastapi-sqlmodel-alembic>
+  - <https://github.com/nsidnev/fastapi-realworld-example-app>
+    - <https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/app/db/migrations/versions/fdf8821871d7_main_tables.py#L20>
 - vscode workspace recommended extensions
 - ./backend#on-ubuntu
   - add bedian (asdf or pyenv)
