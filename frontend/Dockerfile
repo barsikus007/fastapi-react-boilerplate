@@ -1,6 +1,6 @@
-# pin version to prevent side-effects when new version releases
-# ARG NODE_VERSION=20.11.0
-ARG NODE_VERSION=lts
+# pin version to prevent side-effects when new lts version releases
+ARG NODE_VERSION=20
+# ARG NODE_VERSION=lts
 FROM node:${NODE_VERSION}-alpine as installer
 ARG USER=node
 ARG PNPM_VERSION=latest
@@ -24,7 +24,6 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     # https://stackoverflow.com/a/75428179/12634253
     # --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=private \
     pnpm install --frozen-lockfile
-# RUN chown -R $USER /app
 
 COPY --chown=$USER public/ public/
 COPY --chown=$USER package.json pnpm-lock.yaml index.html .eslintrc.cjs vite.config.ts tsconfig.json tsconfig.node.json ./
@@ -38,13 +37,14 @@ CMD ["pnpm", "dev", "--host"]
 
 FROM installer as builder
 
-COPY src src/
+COPY src/ src/
 RUN pnpm build
 
 
 FROM nginx:stable-alpine as serve
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
+# minimized nginx/nginx.prod.conf
 # hadolint ignore=SC2016
 RUN echo 'server{listen 80;listen [::]:80;server_name boilerplate;location /{root /usr/share/nginx/html;try_files $uri /index.html;}}' > /etc/nginx/conf.d/default.conf
 

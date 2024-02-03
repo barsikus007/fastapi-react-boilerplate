@@ -1,16 +1,16 @@
 services:
-  nginx:
+  nginx-dev:
     image: nginx:stable-alpine
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - 80:80
     depends_on:
-      - backend
-      - frontend
+      - backend-dev
+      - frontend-dev
 
-  backend:
-    image: backend
+  backend-dev:
+    image: backend-dev
     build: backend
     command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && uvicorn src.main:app --reload --host 0.0.0.0'
     volumes:
@@ -18,11 +18,11 @@ services:
     env_file:
       - .env
     depends_on:
-      postgres:
+      postgres-dev:
         condition: service_healthy
 
-  frontend:
-    image: frontend
+  frontend-dev:
+    image: frontend-dev
     build:
       context: frontend
       target: development
@@ -31,7 +31,7 @@ services:
     # env_file:
     #   - .env
 
-  postgres:
+  postgres-dev:
     image: postgres:15-alpine
     restart: always
     volumes:

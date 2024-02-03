@@ -29,6 +29,24 @@ module.exports = {
     'import/no-unresolved': ['error', { ignore: ['^/.*'] }],
     'import/no-absolute-path': 'off',
 
+    // allow imports autosort
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type',
+        ],
+        'newlines-between': 'always',
+      },
+    ],
+
     // other fixes
     'import/no-extraneous-dependencies': ['off'], // @tanstack/react-virtual wont resolve
     'react-refresh/only-export-components': 'warn', // vite initial rule

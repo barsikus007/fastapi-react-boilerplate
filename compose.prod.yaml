@@ -1,17 +1,18 @@
 services:
-  nginx:
-    image: nginx:stable-alpine
+  nginx-prod:
+    image: nginx-prod
+    build:
+      context: frontend
+      target: serve
     volumes:
-      - dist:/usr/share/nginx/html:ro
       - ./nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - 80:80
     depends_on:
-      - backend
-      - frontend
+      - backend-dev
 
-  backend:
-    image: backend
+  backend-prod:
+    image: backend-prod
     build: backend
     command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && gunicorn src.main:app -b 0.0.0.0 -w 4 -k uvicorn.workers.UvicornWorker'
     volumes:
@@ -19,17 +20,23 @@ services:
     env_file:
       - .env
     # depends_on:
-    #   - postgres
+    #   - postgres-dev
 
-  frontend:
-    image: builder
-    build:
-      context: frontend
-      target: builder
-    volumes:
-      - dist:/app/dist/
+  # postgres-dev:
+  #   image: postgres:15-alpine
+  #   restart: always
+  #   volumes:
+  #     - db-data:/var/lib/postgresql/data/
+  #   # ports:
+  #   #   - 5432:5432
+  #   env_file:
+  #     - .env
+  #   healthcheck:
+  #     test: [ "CMD", "pg_isready" ]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
 
 volumes:
   db-data:
-  dist:

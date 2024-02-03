@@ -108,6 +108,7 @@ docker compose -f "docker-compose.prod.yml" up -d --build
     - mix it with usual compose file to run prod with docker database example
 - docker secrets
 - Remove dockerignore ?
+  - <https://pnpm.io/docker#example-1-build-a-bundle-in-a-docker-container>
 - prod related
   - Add restart to docker services unlike pg ?
   - docker swarm config ?

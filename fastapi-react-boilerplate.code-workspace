@@ -1,17 +1,29 @@
 {
-	"folders": [
-		{
-			"name": "backend",
-			"path": "backend"
-		},
-		{
-			"name": "frontend",
-			"path": "frontend"
-		},
-		{
-			"name": "fastapi-react-boilerplate",
-			"path": "."
-		}
-	],
-	"settings": {},
+    "folders": [
+        {
+            "name": "backend",
+            "path": "backend"
+        },
+        {
+            "name": "frontend",
+            "path": "frontend"
+        },
+        {
+            "name": "fastapi-react-boilerplate",
+            "path": "."
+        }
+    ],
+    "settings": {
+        // TODO move to own config too
+        "eslint.workingDirectories": ["./frontend"],
+        "eslint.format.enable": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "editorconfig.editorconfig"
+        ]
+    }
 }
