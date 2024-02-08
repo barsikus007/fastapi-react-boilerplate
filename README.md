@@ -96,7 +96,7 @@ docker compose -f compose.prod.yaml up -d --build
   - add backend cors
   - form-multipart test
   - gunicorn logging disable
-  - black, mypy, other linters etc
+  - use ruff
     - wemake-python-styleguide
   - --proxy-headers <https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy>
     - other nginx configurations from uvicorn docs
@@ -111,9 +111,9 @@ docker compose -f compose.prod.yaml up -d --build
     - errors to schema
     - auto HTTPErrors (like IResponse) (maybe with cats)
   - return status code and data in return???
-    - + protocol agnostic
-    - + custom response codes
-    - - overhead
+    - [+] protocol agnostic
+    - [+] custom response codes
+    - [-] overhead
   - remake structure to more convinient usage
     - make schema autogeneration from models
       - basinc cases only (user is very unusual for example)

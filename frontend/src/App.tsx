@@ -1,6 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Route, Routes } from 'react-router-dom';
 
 import Common from '@/pages/Common';
 import Index from '@/pages/Index';

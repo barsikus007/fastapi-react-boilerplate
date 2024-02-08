@@ -26,7 +26,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     pnpm install --frozen-lockfile
 
 COPY --chown=$USER public/ public/
-COPY --chown=$USER package.json pnpm-lock.yaml index.html .eslintrc.cjs vite.config.ts tsconfig.json tsconfig.node.json ./
+COPY --chown=$USER package.json pnpm-lock.yaml index.html .eslintrc.yaml vite.config.ts tsconfig.json tsconfig.node.json ./
 
 
 FROM installer as development
@@ -46,7 +46,7 @@ FROM nginx:stable-alpine as serve
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 # minimized nginx/nginx.prod.conf
 # hadolint ignore=SC2016
-RUN echo 'server{listen 80;listen [::]:80;server_name boilerplate;location /{root /usr/share/nginx/html;try_files $uri /index.html;}}' > /etc/nginx/conf.d/default.conf
+RUN echo 'server{listen 80;listen [::]:80;server_name fastapi-react-boilerplate;location /{root /usr/share/nginx/html;try_files $uri /index.html;}}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

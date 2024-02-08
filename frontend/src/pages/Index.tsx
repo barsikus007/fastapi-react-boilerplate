@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 
 import viteLogo from '/favicon.svg';
+
 import reactLogo from '@/assets/react.svg';
 import '@/App.css';
 
