@@ -59,24 +59,22 @@ docker compose -f compose.prod.yaml up -d --build
 ## Untemplating
 
 - `fastapi-react-boilerplate` -> `your-project-name`
-- `boilerplate` in any case -> `your-project-name`
 
-## Boilerplate TODO
+## FastAPI React Boilerplate TODO
 
 ### frontend
 
 - remove App.css
-- node 20 when lts
 - ts models from backend <https://fastapi.tiangolo.com/advanced/generate-clients/>
 - react-router 6.4+ data api
 - react-query as state manager or effector
 - new <https://tanstack.com/> libs
-  - react-query update to v4
+  - react-query update to v5
   - react-router or tanstack/router
 - add usage examples of
   - dayjs
   - react-query
-- yarn v3 berry vs pnpm
+- yarn v3 berry vs pnpm vs bun
   - <https://github.com/yarnpkg/berry/issues/4217>
   - <https://github.com/remix-run/remix/issues/683>
 - `*.svg?react` from project
