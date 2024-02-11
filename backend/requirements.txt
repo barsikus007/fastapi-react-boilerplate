@@ -13,5 +13,7 @@ python-jose[cryptography]~=3.3.0
 gunicorn~=21.2.0
 
 # ORM deps
-sqlalchemy[postgresql-asyncpg]~=2.0.25
+# fix broken for no reason (probably a pip version) normalized optional-dependencies
+# sqlalchemy[postgresql-asyncpg]~=2.0.25
+sqlalchemy[postgresql_asyncpg]~=2.0.25
 alembic~=1.13.1
