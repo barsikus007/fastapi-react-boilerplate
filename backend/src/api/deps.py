@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -11,9 +11,8 @@ from src.core.config import settings
 from src.db.session import SessionLocal
 from src.models import User
 
-
 reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_V1_STR}/login/access-token"
+    tokenUrl=f"{settings.API_V1_STR}/login/access-token",
 )
 
 
@@ -23,11 +22,11 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def get_current_user(
-    db: AsyncSession = Depends(get_db), token: str = Depends(reusable_oauth2)
+    db: AsyncSession = Depends(get_db), token: str = Depends(reusable_oauth2),
 ) -> User:
     try:
         payload = jwt.decode(
-            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
+            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM],
         )  # Pylance(reportGeneralTypeIssues)
     except jwt.JWTError as e:  # type: ignore
         raise HTTPException(
@@ -53,6 +52,6 @@ def get_current_active_superuser(
 ) -> User:
     if not current_user.is_superuser:
         raise HTTPException(
-            status_code=403, detail="The user doesn't have enough privileges"
+            status_code=403, detail="The user doesn't have enough privileges",
         )
     return current_user

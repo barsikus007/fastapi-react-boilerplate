@@ -1,6 +1,5 @@
 from typing import Any
 
-from fastapi.encoders import jsonable_encoder
 from pydantic import EmailStr
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession

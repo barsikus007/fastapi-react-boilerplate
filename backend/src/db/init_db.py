@@ -3,8 +3,8 @@ import asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import crud
-from src.db.session import SessionLocal
 from src.core.config import settings
+from src.db.session import SessionLocal
 from src.schemas.user import IUserCreate
 
 
@@ -25,5 +25,5 @@ async def main() -> None:
         await init_db(session)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

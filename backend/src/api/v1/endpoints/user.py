@@ -7,7 +7,6 @@ from src.api import deps
 from src.models.user import User
 from src.schemas.user import IUserCreate, IUserRead, IUserUpdate, IUserUpdateAdmin
 
-
 router = APIRouter()
 
 

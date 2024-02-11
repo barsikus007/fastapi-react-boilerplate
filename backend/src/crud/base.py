@@ -1,5 +1,4 @@
-from datetime import datetime, timezone
-from typing import Any, Generic, Type, TypeVar
+from typing import Any, Generic, TypeVar
 from uuid import UUID
 
 from fastapi.encoders import jsonable_encoder
@@ -21,7 +20,7 @@ T = TypeVar("T", bound=Base)
 
 
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
-    def __init__(self, model: Type[ModelType]):
+    def __init__(self, model: type[ModelType]):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 

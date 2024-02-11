@@ -8,9 +8,8 @@ max_line_length = 120
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# [*.py]
-# TODO ruff handles that!
-# lines_after_imports = 2
+[*.py]
+indent_size = 4
 
 [*.{json,code-workspace}]
 indent_size = 4
