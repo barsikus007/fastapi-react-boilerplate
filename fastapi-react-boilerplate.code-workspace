@@ -15,16 +15,67 @@
     ],
     "settings": {
         // TODO move to own config too
-        "eslint.workingDirectories": ["./frontend"],
-        "eslint.format.enable": true,
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": "explicit"
-        }
+        // "eslint.workingDirectories": ["./frontend"],
+        // "eslint.format.enable": true,
+        // "editor.codeActionsOnSave": {
+        //     "source.fixAll.eslint": "explicit"
+        // },
+
+        // python
+        "python.analysis.autoFormatStrings": true,
+        "python.analysis.autoImportCompletions": true,
+        "python.analysis.completeFunctionParens": true,
+        "ruff.enable": true,
+        "ruff.importStrategy": "useBundled",
+        "[python]": {
+            // "editor.formatOnSave": true,
+            "editor.defaultFormatter": "charliermarsh.ruff",
+            "editor.codeActionsOnSave": {
+                "source.organizeImports": "explicit",
+                "source.fixAll": "explicit",
+            },
+        },
+
+        // javascript
+        "[json]": {
+            "editor.tabSize": 4,
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
+        "[jsonc]": {
+            "editor.tabSize": 4,
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
+        "[code-workspace]": {
+            "editor.tabSize": 4,
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
+        "[javascript]": {
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
+        "[javascriptreact]": {
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
+        "[typescriptreact]": {
+            "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+            "editor.formatOnSave": true,
+        },
     },
     "extensions": {
         "recommendations": [
+            // backend
+            "charliermarsh.ruff",
+            // frontend
             "dbaeumer.vscode-eslint",
-            "esbenp.prettier-vscode",
+            "rvest.vs-code-prettier-eslint",
             "editorconfig.editorconfig"
         ]
     }
