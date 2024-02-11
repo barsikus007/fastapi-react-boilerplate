@@ -8,7 +8,7 @@ from src.models.base import Base
 
 
 # https://github.com/sqlalchemy/sqlalchemy/issues/9493
-class User(Base, kw_only=True):
+class User(Base, kw_only=True):  # type: ignore[call-arg]
     email: Mapped[str] = mapped_column(index=True, unique=True)
     name: Mapped[str | None]
     phone: Mapped[str | None]

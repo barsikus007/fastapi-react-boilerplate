@@ -9,7 +9,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, declared_
 class Base(
         MappedAsDataclass,
         DeclarativeBase,
-        kw_only=True,
+        kw_only=True,  # type: ignore[call-arg]
 ):
     @declared_attr.directive
     def __tablename__(cls):  # pylint: disable=no-self-argument

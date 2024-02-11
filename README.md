@@ -69,7 +69,7 @@ docker compose -f compose.prod.yaml up -d --build
 - react-router 6.4+ data api
 - react-query as state manager or effector
 - new <https://tanstack.com/> libs
-  - react-query update to v5
+  - react-query update to tanstack/react-query
   - react-router or tanstack/router
 - add usage examples of
   - dayjs
@@ -82,6 +82,7 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - other
+  - postgres `FATAL:  role "root" does not exist` spam
   - pylint(too-few-public-methods) on sqlalchemy models
   - return 201 when create
   - fix return casting type: ignore

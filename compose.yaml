@@ -32,10 +32,10 @@ services:
     #   - .env
 
   postgres-dev:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data/
     # ports:
     #   - 5432:5432
     env_file:
@@ -48,4 +48,4 @@ services:
 
 
 volumes:
-  db-data:
+  postgres-data:

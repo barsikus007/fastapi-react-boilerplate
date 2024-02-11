@@ -1,4 +1,5 @@
-ARG PYTHON_VERSION=3.11.3
+# pin version to prevent side-effects when new lts version releases
+ARG PYTHON_VERSION=3.12
 FROM python:${PYTHON_VERSION}-slim as builder
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -48,3 +49,5 @@ EXPOSE 8000
 
 # # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["gunicorn", "src.main:app", "-b", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
+
+# TODO prod dev

@@ -1,19 +1,19 @@
 from typing import AsyncGenerator
 
-from jose import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from jose import jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import crud
-from src.db.session import SessionLocal
 from src.core import security
 from src.core.config import settings
+from src.db.session import SessionLocal
 from src.models import User
 
 
-reusable_oauth2 = OAuth2PasswordBearer(  # settings.API_V1_STR is not accessible lol
-    tokenUrl=f"{settings.API_V1_STR}/login/access-token"  # type: ignore
+reusable_oauth2 = OAuth2PasswordBearer(
+    tokenUrl=f"{settings.API_V1_STR}/login/access-token"
 )
 
 

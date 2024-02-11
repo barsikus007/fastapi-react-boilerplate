@@ -21,8 +21,8 @@ class IUserRead(UserBase):
     id: int
 
 
-class IUserUpdate(UserBase):  # mypy(error) inherit EmailStr as Optional
-    email: EmailStr | None = None  # type: ignore
+class IUserUpdate(UserBase):
+    email: EmailStr | None = None
     password: str | None = None
 
 

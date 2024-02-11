@@ -1,7 +1,8 @@
 import secrets
+from pathlib import Path
 
 from pydantic import AnyHttpUrl, EmailStr, PostgresDsn, field_validator
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -28,16 +29,14 @@ class Settings(BaseSettings):
     MAX_OVERFLOW: int = 64
     POSTGRES_PASSWORD: str = "TODO_CHANGE"
     POSTGRES_USER: str = "postgres"
-    POSTGRES_HOST: str = "postgres"
+    POSTGRES_HOST: str = "postgres-dev"
     POSTGRES_PORT: int = 5432
     POSTGRES_DB: str = POSTGRES_USER
     DATABASE_URL: PostgresDsn = PostgresDsn(
         f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@"
         f"{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}")
 
-    class Config:
-        case_sensitive = True
-        env_file = "../.env"
+    model_config = SettingsConfigDict(case_sensitive=True, env_file=Path("../.env"))
 
 
 settings = Settings()  # type: ignore
