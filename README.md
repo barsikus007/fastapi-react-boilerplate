@@ -135,6 +135,8 @@ docker compose -f compose.prod.yaml up -d --build
 
 ### devops
 
+- fix env leaks
+  - use environment instead env_file ?
 - file serving example
   - nginx serve static files
   - max filesize deps for FastAPI

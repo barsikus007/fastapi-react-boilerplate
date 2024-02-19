@@ -28,8 +28,8 @@ services:
       target: development
     volumes:
       - ./frontend/src/:/app/src/
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
 
   postgres-dev:
     image: postgres:16-alpine
