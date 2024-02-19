@@ -25,6 +25,8 @@
         "python.analysis.autoFormatStrings": true,
         "python.analysis.autoImportCompletions": true,
         "python.analysis.completeFunctionParens": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "customFString1": "f\"⚡🐍 {variable=}\"",
         "ruff.enable": true,
         "ruff.importStrategy": "useBundled",
         "[python]": {
@@ -71,12 +73,15 @@
     },
     "extensions": {
         "recommendations": [
+            // all
+            "editorconfig.editorconfig",
             // backend
             "charliermarsh.ruff",
+            "mihaicosma.quick-python-printf",
             // frontend
+            "AhadCove.js-quick-console",
             "dbaeumer.vscode-eslint",
             "rvest.vs-code-prettier-eslint",
-            "editorconfig.editorconfig"
         ]
     }
 }

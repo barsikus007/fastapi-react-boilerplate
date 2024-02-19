@@ -58,33 +58,40 @@ docker compose -f compose.prod.yaml up -d --build
 
 ## Untemplating
 
-- `fastapi-react-boilerplate` -> `your-project-name`
+- `s/fastapi-react-boilerplate/your-project-name/g`
 
 ## FastAPI React Boilerplate TODO
 
 ### frontend
 
-- remove App.css
-- ts models from backend <https://fastapi.tiangolo.com/advanced/generate-clients/>
-- react-router 6.4+ data api
-- react-query as state manager or effector
-- new <https://tanstack.com/> libs
-  - react-query update to tanstack/react-query
-  - react-router or tanstack/router
-- add usage examples of
-  - dayjs
-  - react-query
-- yarn v3 berry vs pnpm vs bun
-  - <https://github.com/yarnpkg/berry/issues/4217>
-  - <https://github.com/remix-run/remix/issues/683>
-- `*.svg?react` from project
+- port new things
+  - `*.svg?react`
+  - react-router 6.4+ data api
+    - <https://tkdodo.eu/blog/react-query-meets-react-router>
+    - new <https://tanstack.com/> libs
+      - react-router or tanstack/router
+  - example usage
+    - dayjs
+    - react-query
+    - tanstack-table
+  - styled typography and theming
+  - bun && front & back dockerfile todo
+    - yarn v3 berry vs pnpm vs bun
+      - <https://github.com/yarnpkg/berry/issues/4217>
+      - <https://github.com/remix-run/remix/issues/683>
+- to project
+  - remove App.css
+  - ts models from backend <https://fastapi.tiangolo.com/advanced/generate-clients/>
+    - task to generate models from backend ?
+- discuss
+  - react-query enough as state manager or use effector (or what) ?
 
 ### backend
 
 - other
   - postgres `FATAL:  role "root" does not exist` spam
   - pylint(too-few-public-methods) on sqlalchemy models
-  - return 201 when create
+  - use return 201 when create
   - fix return casting type: ignore
   - pydantic.dataclasses.dataclass fix
   - relation model examples
@@ -167,4 +174,3 @@ docker compose -f compose.prod.yaml up -d --build
 - vscode workspace recommended extensions
 - ./backend#on-ubuntu
   - add bedian (asdf or pyenv)
-  - fnm

@@ -62,10 +62,14 @@ It is automatic in vscode but in other IDEs you could point it manually
 
 ## Other
 
+### Run psql
+
+`source .env && docker compose exec -it postgres-dev psql -U $POSTGRES_USER`
+
 ### [docker pg_dump](https://stackoverflow.com/a/29913462)
 
 ```bash
-docker exec -t your-db-container pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+docker compose exec -t postgres-dev pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
 
 cat dump_%d-%m-%Y_%H_%M_%S.sql | docker exec -i your-db-container psql -U postgres
 ```
