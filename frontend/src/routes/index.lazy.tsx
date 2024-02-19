@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import viteLogo from '/favicon.svg';
 
 import reactLogo from '~/assets/react.svg';
+
 import '~/App.css';
 
 const Center = styled.div`
@@ -13,6 +15,11 @@ const Center = styled.div`
   justify-content: center;
   font-size: 1.5vmin;
 `;
+
+export const Route = createLazyFileRoute('/')({
+  // eslint-disable-next-line no-use-before-define
+  component: Index,
+});
 
 function Index() {
   const [count, setCount] = useState(0);

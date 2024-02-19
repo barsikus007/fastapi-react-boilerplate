@@ -66,10 +66,8 @@ docker compose -f compose.prod.yaml up -d --build
 
 - port new things
   - `*.svg?react`
-  - react-router 6.4+ data api
-    - <https://tkdodo.eu/blog/react-query-meets-react-router>
-    - new <https://tanstack.com/> libs
-      - react-router or tanstack/router
+  - <https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading#a-more-realistic-example-using-tanstack-query>
+    - <https://tanstack.com/router/latest/docs/framework/react/examples/kitchen-sink-react-query-file-based>
   - example usage
     - dayjs
     - react-query
