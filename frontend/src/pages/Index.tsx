@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 
 import viteLogo from '/favicon.svg';
 
-import reactLogo from '@/assets/react.svg';
-import '@/App.css';
+import reactLogo from '~/assets/react.svg';
+import '~/App.css';
 
 const Center = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ function Index() {
     <Center>
       <a href="/docs">
         <img
-          src="//assets.stickpng.com/thumbs/5c9226c6598da1028f26c5af.png"
+          src="https://static.wikia.nocookie.net/logopedia/images/a/ac/Doki_Doki_Literature_Club_Logo.png"
           alt="Doki-Doki!"
         />
         <div>Doki-Doki!</div>
