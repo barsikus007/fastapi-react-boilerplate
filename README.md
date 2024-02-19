@@ -89,7 +89,6 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - other
-  - postgres `FATAL:  role "root" does not exist` spam
   - pylint(too-few-public-methods) on sqlalchemy models
   - use return 201 when create
   - fix return casting type: ignore
