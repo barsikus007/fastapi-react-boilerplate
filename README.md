@@ -78,6 +78,7 @@ docker compose -f compose.prod.yaml up -d --build
       - <https://github.com/yarnpkg/berry/issues/4217>
       - <https://github.com/remix-run/remix/issues/683>
 - to project
+  - VITE_APP_TITLE pnpm build
   - remove App.css
   - ts models from backend <https://fastapi.tiangolo.com/advanced/generate-clients/>
     - task to generate models from backend ?
