@@ -12,7 +12,8 @@ I recommend [scoop](scoop.sh) package manager (but proto isn't available in scoo
 # install https://moonrepo.dev/proto
 irm https://moonrepo.dev/install/proto.ps1 | iex
 proto install node lts
-proto install pnpm
+# not available for windows, use scoop versions bucket instead
+# proto install bun
 ```
 
 ### On Linux
@@ -21,7 +22,7 @@ proto install pnpm
 # install https://moonrepo.dev/proto
 curl -fsSL https://moonrepo.dev/install/proto.sh | bash
 proto install node lts
-proto install pnpm
+proto install bun
 ```
 
 ## Install packages
@@ -29,7 +30,7 @@ proto install pnpm
 Be sure that you in current (frontend) dir
 
 ```bash
-pnpm i
+bun i
 ```
 
 ## Config linters and etc
@@ -45,5 +46,5 @@ Install recommended extensions
 ## This template was created by
 
 ```bash
-pnpm create vite frontend --template react-swc-ts
+bun create vite frontend --template react-swc-ts
 ```

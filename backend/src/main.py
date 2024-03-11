@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from fastapi.routing import APIRoute
 from fastapi_pagination import add_pagination
 from starlette.middleware.cors import CORSMiddleware
 
 from src.api.v1 import api_router
 from src.core.config import settings
+
+
+def custom_generate_unique_id(route: APIRoute):
+    """For cerrect naming in generated frontend client"""
+    return route.name
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -13,6 +19,7 @@ app = FastAPI(
     default_response_class=ORJSONResponse,
     docs_url="/docs",
     redoc_url=None,
+    generate_unique_id_function=custom_generate_unique_id,
 )
 
 # Set all CORS enabled origins

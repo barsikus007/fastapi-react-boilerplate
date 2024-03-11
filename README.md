@@ -73,15 +73,14 @@ docker compose -f compose.prod.yaml up -d --build
     - react-query
     - tanstack-table
   - styled typography and theming
-  - bun && front & back dockerfile todo
-    - yarn v3 berry vs pnpm vs bun
-      - <https://github.com/yarnpkg/berry/issues/4217>
-      - <https://github.com/remix-run/remix/issues/683>
 - to project
-  - VITE_APP_TITLE pnpm build
+  - VITE_APP_TITLE bun build
+  - BACKEND_URL env var
   - remove App.css
-  - ts models from backend <https://fastapi.tiangolo.com/advanced/generate-clients/>
+  - [ts models from backend](https://fastapi.tiangolo.com/advanced/generate-clients/)
+    - [OpenAPI object](https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/OpenAPI-object)
     - task to generate models from backend ?
+    - zod ?
 - discuss
   - react-query enough as state manager or use effector (or what) ?
 
