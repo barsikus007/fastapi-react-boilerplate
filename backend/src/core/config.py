@@ -17,11 +17,12 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
 
-    @field_validator("BACKEND_CORS_ORIGINS", mode="before")  # pylint-pydantic
-    def assemble_cors_origins(cls, v: str | list[str]) -> str | list[str]:  # pylint: disable=no-self-argument
+    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
+    @classmethod
+    def assemble_cors_origins(cls, v: str | list[str]) -> str | list[str]:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
-        elif isinstance(v, str | list):
+        if isinstance(v, str | list):
             return v
         raise ValueError(v)
 
@@ -53,4 +54,4 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(case_sensitive=True, env_file=Path("../.env"))
 
 
-settings = Settings()  # type: ignore
+settings = Settings()  # pyright: ignore[reportCallIssue]

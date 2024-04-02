@@ -1,4 +1,5 @@
 from collections.abc import AsyncGenerator
+from typing import Annotated
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -22,13 +23,16 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def get_current_user(
-    db: AsyncSession = Depends(get_db), token: str = Depends(reusable_oauth2),
+    db: Annotated[AsyncSession, Depends(get_db)],
+    token: Annotated[str, Depends(reusable_oauth2)],
 ) -> User:
     try:
         payload = jwt.decode(
-            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM],
-        )  # Pylance(reportGeneralTypeIssues)
-    except jwt.JWTError as e:  # type: ignore
+            token,
+            settings.SECRET_KEY,
+            algorithms=[security.ALGORITHM],
+        )
+    except jwt.JWTError as e:  # pyright: ignore[reportAttributeAccessIssue]
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
@@ -40,7 +44,7 @@ async def get_current_user(
 
 
 def get_current_active_user(
-    current_user: User = Depends(get_current_user),
+    current_user: Annotated[User, Depends(get_current_user)],
 ) -> User:
     if not current_user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
@@ -48,10 +52,11 @@ def get_current_active_user(
 
 
 def get_current_active_superuser(
-    current_user: User = Depends(get_current_active_user),
+    current_user: Annotated[User, Depends(get_current_active_user)],
 ) -> User:
     if not current_user.is_superuser:
         raise HTTPException(
-            status_code=403, detail="The user doesn't have enough privileges",
+            status_code=403,
+            detail="The user doesn't have enough privileges",
         )
     return current_user

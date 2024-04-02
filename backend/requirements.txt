@@ -8,8 +8,10 @@ pydantic[email]~=2.6.1
 pydantic-settings~=2.1.0
 
 # OAuth2 deps
-passlib[bcrypt]~=1.7.4
+bcrypt~=4.1.2
 python-jose[cryptography]~=3.3.0
+
+# Other deps
 gunicorn~=21.2.0
 
 # ORM deps

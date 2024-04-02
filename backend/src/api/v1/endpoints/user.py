@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_pagination import Page, Params
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,9 +15,9 @@ router = APIRouter()
 @router.get("/")
 async def read_users_list(
     *,
-    params: Params = Depends(),
-    db: AsyncSession = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_active_user),
+    params: Annotated[Params, Depends()],
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
+    _: Annotated[User, Depends(deps.get_current_active_user)],
 ) -> Page[IUserRead]:
     users = await crud.user.get_multi(db, params=params)
     return users  # type: ignore
@@ -25,8 +27,8 @@ async def read_users_list(
 async def create_user(
     *,
     new_user: IUserCreate,
-    db: AsyncSession = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_active_superuser),
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
+    _: Annotated[User, Depends(deps.get_current_active_superuser)],
 ) -> IUserRead:
     user = await crud.user.get_by_email(db, email=new_user.email)
     if user:
@@ -46,9 +48,9 @@ async def get_my_data(
 @router.put("/me")
 async def update_user_me(
     *,
-    db: AsyncSession = Depends(deps.get_db),
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
     user_in: IUserUpdate,
-    current_user: User = Depends(deps.get_current_active_user),
+    current_user: Annotated[User, Depends(deps.get_current_active_user)],
 ) -> IUserRead:
     if user_in.email and await crud.user.get_by_email(db, email=user_in.email):
         raise HTTPException(status_code=400, detail="There is already a user with same email")
@@ -59,10 +61,10 @@ async def update_user_me(
 async def remove_user(
     *,
     user_id: int,
-    db: AsyncSession = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_active_superuser),
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
+    current_superuser: Annotated[User, Depends(deps.get_current_active_superuser)],
 ) -> IUserRead:
-    if current_user.id == user_id:
+    if current_superuser.id == user_id:
         raise HTTPException(status_code=404, detail="Users can not delete themself")
 
     user = await crud.user.get(db, id_=user_id)
@@ -76,8 +78,8 @@ async def remove_user(
 async def get_user_by_id(
     *,
     user_id: int,
-    db: AsyncSession = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_active_superuser),
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
+    _: Annotated[User, Depends(deps.get_current_active_superuser)],
 ) -> IUserRead:
     user = await crud.user.get(db, id_=user_id)
     if not user:
@@ -88,10 +90,10 @@ async def get_user_by_id(
 @router.put("/{user_id}")
 async def update_user(
     *,
-    db: AsyncSession = Depends(deps.get_db),
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
     user_id: int,
     user_in: IUserUpdateAdmin,
-    current_user: User = Depends(deps.get_current_active_superuser),
+    _: Annotated[User, Depends(deps.get_current_active_superuser)],
 ) -> IUserRead:
     user = await crud.user.get(db, id_=user_id)
     if not user:
@@ -99,8 +101,6 @@ async def update_user(
             status_code=404,
             detail="The user with this id does not exist in the system",
         )
-    if user_in.email:
-        if user_db := await crud.user.get_by_email(db, email=user_in.email):
-            if user.id != user_db.id:
-                raise HTTPException(status_code=400, detail="There is already a user with same email")
+    if user_in.email and (user_db := await crud.user.get_by_email(db, email=user_in.email)) and user.id != user_db.id:
+        raise HTTPException(status_code=400, detail="There is already a user with same email")
     return await crud.user.update(db, obj_db=user, obj_in=user_in)  # type: ignore
