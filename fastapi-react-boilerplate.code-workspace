@@ -74,7 +74,9 @@
     "extensions": {
         "recommendations": [
             // all
+            "eamodio.gitlens",
             "editorconfig.editorconfig",
+            "ms-azuretools.vscode-docker",
             // backend
             "charliermarsh.ruff",
             "mihaicosma.quick-python-printf",

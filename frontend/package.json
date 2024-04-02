@@ -13,7 +13,7 @@
     "format-lint": "bun prettier-eslint",
     "format-lint:fix": "bun format-lint --write",
     "format-lint:fix-all": "bun format-lint:fix src/**/*.ts{x,}",
-    "generate-client": "openapi --input http://localhost/api/v1/openapi.json --output src/client --useOptions --useUnionTypes",
+    "generate-client": "bun openapi --input http://localhost/api/v1/openapi.json --output src/client --useOptions --useUnionTypes --indent 2",
     "preview": "vite preview"
   },
   "engineStrict": true,

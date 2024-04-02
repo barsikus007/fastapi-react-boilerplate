@@ -1,6 +1,5 @@
-**/.idea
-**/.vscode
+**/.idea/
+**/.vscode/
 **/.DS_Store
-.mypy_cache
 
 .env

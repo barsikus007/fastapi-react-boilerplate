@@ -11,7 +11,7 @@ services:
 
   backend-dev:
     image: backend-dev
-    build: backend
+    build: backend/
     command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && uvicorn src.main:app --reload --host 0.0.0.0'
     volumes:
       - ./backend/:/app/
@@ -24,7 +24,7 @@ services:
   frontend-dev:
     image: frontend-dev
     build:
-      context: frontend
+      context: frontend/
       target: development
     volumes:
       - ./frontend/src/:/app/src/
