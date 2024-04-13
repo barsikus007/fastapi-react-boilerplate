@@ -51,7 +51,7 @@ class Settings(BaseSettings):
             path=info.data["POSTGRES_DB"],
         )
 
-    model_config = SettingsConfigDict(extra="allow", case_sensitive=True, env_file=Path("../.env"))
+    model_config = SettingsConfigDict(extra="ignore", case_sensitive=True, env_file=Path("../.env"))
 
 
 settings = Settings()  # pyright: ignore[reportCallIssue]

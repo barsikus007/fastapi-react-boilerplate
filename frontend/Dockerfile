@@ -30,6 +30,7 @@ CMD ["bun", "dev", "--host"]
 
 FROM installer as builder
 
+ARG VITE_APP_TITLE
 COPY src/ src/
 RUN bun run build
 

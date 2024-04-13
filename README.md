@@ -74,7 +74,6 @@ docker compose -f compose.prod.yaml up -d --build
     - tanstack-table
   - styled typography and theming
 - to project
-  - VITE_APP_TITLE bun build
   - BACKEND_URL env var
   - remove App.css
   - [ts models from backend](https://fastapi.tiangolo.com/advanced/generate-clients/)
@@ -87,21 +86,20 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - tasks for alembic
-- correct user creation in dockerfile
 - other
   - pylint(too-few-public-methods) on sqlalchemy models
   - use return 201 when create
-  - fix return casting type: ignore
-  - pydantic.dataclasses.dataclass fix
-  - relation model examples
-  - onupdate timestamps
+  - fix return casting `# type: ignore`
+  - SQLAlchemy 2.0
+    - pydantic.dataclasses.dataclass fix
+    - relation model examples
+    - onupdate timestamps
   - pip install or pip wheel
     - why pip wheel --no-deps ?
-  - prod None to docs and openapi
-  - add backend cors
+  - hide docs in prod (None to docs and openapi schema)
   - form-multipart test
   - gunicorn logging disable
-  - use ruff
+  - ruff
     - wemake-python-styleguide
   - --proxy-headers <https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy>
     - other nginx configurations from uvicorn docs
@@ -113,21 +111,13 @@ docker compose -f compose.prod.yaml up -d --build
   - <https://docs.sqlalchemy.org/en/20/changelog/migration_20.html#migration-20-step-six>
   - errors
     - rewrite status codes to status consts
-    - errors to schema
-    - auto HTTPErrors (like IResponse) (maybe with cats)
-  - return status code and data in return???
-    - [+] protocol agnostic
-    - [+] custom response codes
-    - [-] overhead
+      - conflicts with current errors to schema solution
+        - make own solution
   - remake structure to more convinient usage
     - make schema autogeneration from models
       - basinc cases only (user is very unusual for example)
     - how to remove fields when inherit pydantic models
 - libs related
-  - passlib[bcrypt] to passlib[argon2] ?
-  - padantic 2 when released
-    - <https://docs.pydantic.dev/dev-v2/migration/>
-    - dotenv settings parsing
   - loguru -> default logging ? (with <https://github.com/hynek/structlog>)
   - pendulium
   - apscheduler 4
@@ -135,29 +125,23 @@ docker compose -f compose.prod.yaml up -d --build
 
 ### devops
 
-- fix env leaks
-  - use environment instead env_file ?
 - file serving example
   - nginx serve static files
   - max filesize deps for FastAPI
   - nginx client_max_body_size 100M;
   - GUID in env or another workaround for correct file rights (container user not root) (migrations for example)
-- rename docker-compose.yml to compose.yml
-  - compose.prod.yml?
-    - mix it with usual compose file to run prod with docker database example
+- update && fix compose.debug.yaml
+  - backend
+  - frontend
 - docker secrets
-- Remove dockerignore ?
-  - <https://pnpm.io/docker#example-1-build-a-bundle-in-a-docker-container>
 - prod related
-  - Add restart to docker services unlike pg ?
   - docker swarm config ?
   - k8s config ?
   - make different image names (or tags) for different compose files
-    - fix debug compose
   - <https://florian-kromer.medium.com/fastapi-microservice-patterns-3052c1241019>
   - <https://stribny.name/blog/fastapi-production/>
   - Add CI/CD example
-    - github or gitlab ?
+    - github and/or gitlab ?
     - what and how?
       - tests/lints/checks
       - deploys

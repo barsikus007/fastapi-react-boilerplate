@@ -2,8 +2,8 @@
 orjson~=3.10.0
 uvicorn[standard]~=0.29.0
 python-multipart~=0.0.9
-fastapi~=0.109.2
-pydantic[email]~=2.6.4
+fastapi~=0.110.1
+pydantic[email]~=2.7.0
 pydantic-settings~=2.2.1
 
 # OAuth2 deps
