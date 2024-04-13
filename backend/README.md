@@ -69,9 +69,9 @@ It is automatic in vscode but in other IDEs you could point it manually
 ### [docker pg_dump](https://stackoverflow.com/a/29913462)
 
 ```bash
-docker compose exec -t postgres-dev pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+docker compose exec -t postgres-dev pg_dumpall -c -U postgres > dump_`date +%Y-%m-%d"_"%H_%M_%S`.sql
 
-cat dump_%d-%m-%Y_%H_%M_%S.sql | docker exec -i your-db-container psql -U postgres
+cat dump_%Y-%m-%d_%H_%M_%S.sql | docker exec -i your-db-container psql -U postgres
 ```
 
 ### alembic cheatsheet

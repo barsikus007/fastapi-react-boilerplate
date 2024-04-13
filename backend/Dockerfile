@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # https://habr.com/en/companies/wunderfund/articles/586778/
 
 
-FROM python:${PYTHON_VERSION}-slim
+FROM python:${PYTHON_VERSION}-slim as development
 
 WORKDIR /app
 
@@ -47,7 +47,13 @@ USER $USER
 
 EXPOSE 8000
 
-# # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["gunicorn", "src.main:app", "-b", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
+CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]
 
-# TODO prod dev
+
+FROM development as production
+
+COPY src/ src/
+COPY alembic/ alembic/
+
+# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
+CMD ["gunicorn", "src.main:app", "-b", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]

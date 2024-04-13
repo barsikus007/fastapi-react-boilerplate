@@ -1,11 +1,10 @@
 # FastAPI deps (https://fastapi.tiangolo.com/#optional-dependencies)
-orjson~=3.9.13
-uvicorn[standard]~=0.27.1
+orjson~=3.10.0
+uvicorn[standard]~=0.29.0
 python-multipart~=0.0.9
 fastapi~=0.109.2
-fastapi-pagination~=0.12.15
-pydantic[email]~=2.6.1
-pydantic-settings~=2.1.0
+pydantic[email]~=2.6.4
+pydantic-settings~=2.2.1
 
 # OAuth2 deps
 bcrypt~=4.1.2
@@ -16,6 +15,7 @@ gunicorn~=21.2.0
 
 # ORM deps
 # fix broken for no reason (probably a pip version) normalized optional-dependencies
-# sqlalchemy[postgresql-asyncpg]~=2.0.25
-sqlalchemy[postgresql_asyncpg]~=2.0.25
+# sqlalchemy[postgresql-asyncpg]~=2.0.29
+sqlalchemy[postgresql_asyncpg]~=2.0.29
 alembic~=1.13.1
+fastapi-pagination[sqlalchemy]~=0.12.22

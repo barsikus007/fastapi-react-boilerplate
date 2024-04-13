@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int = 5432
     POSTGRES_DB: str = POSTGRES_USER
     DATABASE_URL: PostgresDsn | None = None
+
     @field_validator("DATABASE_URL", mode="after")
     @classmethod
     def assemble_db_connection(cls, v: PostgresDsn | None, info: ValidationInfo) -> PostgresDsn:
@@ -50,8 +51,7 @@ class Settings(BaseSettings):
             path=info.data["POSTGRES_DB"],
         )
 
-
-    model_config = SettingsConfigDict(case_sensitive=True, env_file=Path("../.env"))
+    model_config = SettingsConfigDict(extra="allow", case_sensitive=True, env_file=Path("../.env"))
 
 
 settings = Settings()  # pyright: ignore[reportCallIssue]

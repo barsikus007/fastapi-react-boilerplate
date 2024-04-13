@@ -86,6 +86,8 @@ docker compose -f compose.prod.yaml up -d --build
 
 ### backend
 
+- tasks for alembic
+- correct user creation in dockerfile
 - other
   - pylint(too-few-public-methods) on sqlalchemy models
   - use return 201 when create

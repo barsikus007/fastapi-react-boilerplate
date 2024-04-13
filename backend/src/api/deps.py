@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
+from jose.exceptions import JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import crud
@@ -32,7 +33,7 @@ async def get_current_user(
             settings.SECRET_KEY,
             algorithms=[security.ALGORITHM],
         )
-    except jwt.JWTError as e:  # pyright: ignore[reportAttributeAccessIssue]
+    except JWTError as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",

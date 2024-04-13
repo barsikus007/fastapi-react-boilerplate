@@ -4,7 +4,8 @@ from uuid import UUID
 from fastapi.encoders import jsonable_encoder
 from fastapi_pagination import Params
 from fastapi_pagination.bases import AbstractPage
-from fastapi_pagination.ext.sqlalchemy import count_query, paginate
+from fastapi_pagination.cursor import CursorParams
+from fastapi_pagination.ext.sqlalchemy import create_count_query, paginate
 from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -31,26 +32,44 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.model = model
 
     async def get(
-            self, db: AsyncSession, *,
-            id_: int | str | UUID,
+        self,
+        db: AsyncSession,
+        *,
+        id_: int | str | UUID,
     ) -> ModelType | None:
         return await db.get(self.model, id_)
 
     async def get_count(self, db: AsyncSession) -> ModelType:
-        response = await db.execute(count_query(query=select(self.model)))
+        response = await db.execute(create_count_query(query=select(self.model)))
         return response.scalars().one()
 
     async def get_multi(
-            self, db: AsyncSession, *,
-            params: Params, query: Select | None = None,
+        self,
+        db: AsyncSession,
+        *,
+        params: Params,
+        query: Select | None = None,
     ) -> AbstractPage[ModelType]:
         if query is None:
             query = select(self.model)
         return await paginate(db, query, params)
 
+    async def get_multi_cursor(
+        self,
+        db: AsyncSession,
+        *,
+        params: CursorParams,
+        query: Select | None = None,
+    ) -> AbstractPage[ModelType]:
+        if query is None:
+            query = select(self.model).order_by(self.model.id)
+        return await paginate(db, query, params)
+
     async def create(
-            self, db: AsyncSession, *,
-            obj_in: CreateSchemaType,
+        self,
+        db: AsyncSession,
+        *,
+        obj_in: CreateSchemaType,
     ) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
         obj_db = self.model(**obj_in_data)
@@ -60,14 +79,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return obj_db
 
     async def update(
-            self, db: AsyncSession, *,
-            obj_db: ModelType, obj_in: UpdateSchemaType | dict[str, Any],
+        self,
+        db: AsyncSession,
+        *,
+        obj_db: ModelType,
+        obj_in: UpdateSchemaType | dict[str, Any],
     ) -> ModelType:
         obj_data = jsonable_encoder(obj_db)
-        if isinstance(obj_in, dict):
-            update_data = obj_in
-        else:
-            update_data = obj_in.model_dump(exclude_unset=True)
+        update_data = obj_in if isinstance(obj_in, dict) else obj_in.model_dump(exclude_unset=True)
         for field in obj_data:
             if field in update_data:
                 setattr(obj_db, field, update_data[field])
@@ -77,8 +96,10 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return obj_db
 
     async def remove(
-            self, db: AsyncSession, *,
-            id_: int | str | UUID,
+        self,
+        db: AsyncSession,
+        *,
+        id_: int | str | UUID,
     ) -> ModelType | None:
         obj = await db.get(self.model, id_)
         if obj:
