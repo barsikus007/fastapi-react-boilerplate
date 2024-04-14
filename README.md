@@ -82,10 +82,10 @@ docker compose -f compose.prod.yaml up -d --build
     - zod ?
 - discuss
   - react-query enough as state manager or use effector (or what) ?
+  - <https://github.com/lukemorales/query-key-factory>
 
 ### backend
 
-- tasks for alembic
 - other
   - pylint(too-few-public-methods) on sqlalchemy models
   - use return 201 when create
@@ -125,6 +125,7 @@ docker compose -f compose.prod.yaml up -d --build
 
 ### devops
 
+- tasks for database backup and restore
 - file serving example
   - nginx serve static files
   - max filesize deps for FastAPI

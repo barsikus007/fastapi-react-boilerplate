@@ -1,4 +1,128 @@
 {
+    "tasks": {
+        // See https://go.microsoft.com/fwlink/?LinkId=733558
+        // for the documentation about the tasks.json format
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Run uvicorn with main app",
+                "type": "shell",
+                // https://github.com/microsoft/vscode/issues/160891
+                // fix for windows
+                // "command": ".venv/Scripts/python.exe",
+                "command": "${command:python.interpreterPath}",
+                "args": [
+                    "-m",
+                    "uvicorn", "src.main:app", "--reload"
+                ],
+                "problemMatcher": [],
+                "presentation": {
+                    "clear": true
+                },
+            },
+            {
+                "label": "Docker alembic generate migration",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "exec", "-it", "backend-dev",
+                    "alembic", "revision", "--autogenerate", "-m", "${input:python.alembic.migration_name}",
+                ],
+                "problemMatcher": [],
+                "presentation": {
+                    "clear": true
+                },
+            },
+            {
+                "label": "Docker alembic upgrade to head",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "exec", "-it", "backend-dev",
+                    "alembic", "upgrade", "head",
+                ],
+                "problemMatcher": [],
+                "presentation": {
+                    "clear": true
+                },
+            },
+            {
+                "label": "Docker alembic downgrade 1 migration",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "exec", "-it", "backend-dev",
+                    "alembic", "downgrade", "-1",
+                ],
+                "problemMatcher": [],
+                "presentation": {
+                    "clear": true
+                },
+            },
+            {
+                "label": "Docker alembic downgrade to base",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "exec", "-it", "backend-dev",
+                    "alembic", "downgrade", "base",
+                ],
+                "problemMatcher": [],
+                "presentation": {
+                    "clear": true
+                },
+            },
+            {
+                "label": "Docker backend run init_db",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "exec", "-it", "backend-dev",
+                    "python", "./src/db/init_db.py",
+                ],
+                "problemMatcher": [],
+            },
+            {
+                "label": "Docker database remove",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "down", "-v", "postgres-dev",
+                ],
+                "problemMatcher": [],
+                "presentation": {
+                    "clear": true
+                },
+            },
+            {
+                "label": "Docker database create",
+                "type": "process",
+                "command": "docker",
+                "args": [
+                    "compose", "up", "-d", "postgres-dev",
+                ],
+                "problemMatcher": [],
+            },
+            {
+                "label": "Docker database remove and create again",
+                "type": "process",
+                "dependsOn": [
+                    "Docker database remove",
+                    "Docker database create",
+                ],
+                "dependsOrder": "sequence",
+                "problemMatcher": [],
+            },
+        ],
+        "inputs": [
+            {
+                "id": "python.alembic.migration_name",
+                "type": "promptString",
+                "description": "Migration name",
+                "default": "Migration name"
+            }
+        ]
+    },
     "folders": [
         {
             "name": "backend",

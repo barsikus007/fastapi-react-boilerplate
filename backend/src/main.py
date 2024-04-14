@@ -12,6 +12,7 @@ def custom_generate_unique_id(route: APIRoute):
     """For cerrect naming in generated frontend client"""
     return route.name
 
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version="0.1",
@@ -34,12 +35,15 @@ if settings.BACKEND_CORS_ORIGINS:
 
 add_pagination(app)
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.add_api_route("/", lambda: {"status": "I am alive!"}, include_in_schema=False)  # pyright: ignore[reportArgumentType]
 
 
 if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        "main:app", host="127.0.0.1", reload=settings.DEBUG,
+        "main:app",
+        host="127.0.0.1",
+        reload=settings.DEBUG,
         log_level="debug" if settings.DEBUG else "critical",
     )
