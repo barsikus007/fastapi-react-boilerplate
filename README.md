@@ -1,21 +1,30 @@
-# Installation
+# fasta-react-boilerplate
 
-## Install docker
+## Features
 
-### On Windows
+- boilerplate
+- ???
+- PROFIT
+- (and cute http.cat error pages)
 
-#### Windows 11 or with winget installed
+## Installation
+
+### Install docker
+
+#### On Windows
+
+##### Windows 11 or with winget installed
 
 ```pwsh
 wsl --install -d Ubuntu
 winget install Docker.DockerDesktop -h
 ```
 
-#### Below Windows 11
+##### Below Windows 11
 
 [Installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 
-### On Linux
+#### On Linux
 
 [Convinient script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
 
@@ -27,11 +36,11 @@ sudo usermod -aG docker $USER
 newgrp docker; exit
 ```
 
-### On MacOS
+#### On MacOS
 
 [Installer](https://docs.docker.com/desktop/install/mac-install/)
 
-### Arm issues resolution
+#### Arm issues resolution
 
 Due to possible issues with several packages, which haven't builds for linux aarch64, you can use buildx
 
@@ -40,23 +49,23 @@ COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/amd64
 docker-compose up -d --build {other-services}
 ```
 
-## Launch app
+### Launch app
 
 Copy `.env.example` to `.env` and change settings
 
-### Development mode
+#### Development mode
 
 ```sh
 docker compose up -d --build
 ```
 
-### Production mode
+#### Production mode
 
 ```sh
 docker compose -f compose.prod.yaml up -d --build
 ```
 
-## Untemplating
+### Untemplating
 
 - `s/fastapi-react-boilerplate/your-project-name/g`
 

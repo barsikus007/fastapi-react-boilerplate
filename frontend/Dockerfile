@@ -40,7 +40,7 @@ FROM nginx:stable-alpine as serve
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 # minimized nginx/nginx.prod.conf
 # hadolint ignore=SC2016
-RUN echo 'server{listen 80;listen [::]:80;server_name fastapi-react-boilerplate;location /{root /usr/share/nginx/html;try_files $uri /index.html;}}' > /etc/nginx/conf.d/default.conf
+RUN echo 'server{listen 80;listen [::]:80;server_name nginx-quick-serve;location /{root /usr/share/nginx/html;try_files $uri /index.html;}}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

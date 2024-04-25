@@ -35,7 +35,7 @@ if settings.BACKEND_CORS_ORIGINS:
 
 add_pagination(app)
 app.include_router(api_router, prefix=settings.API_V1_STR)
-app.add_api_route("/", lambda: {"status": "I am alive!"}, include_in_schema=False)  # pyright: ignore[reportArgumentType]
+app.add_api_route("api/health", lambda: {"status": "I am alive!"}, include_in_schema=False)  # pyright: ignore[reportArgumentType]
 
 
 if __name__ == "__main__":

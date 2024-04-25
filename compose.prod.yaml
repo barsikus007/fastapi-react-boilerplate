@@ -9,8 +9,6 @@ services:
         VITE_APP_TITLE: ${VITE_APP_TITLE}
     volumes:
       - ./nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
-    env_file:
-      - .env
     ports:
       - 80:80
     depends_on:
