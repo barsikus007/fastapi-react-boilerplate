@@ -113,6 +113,18 @@
                 "dependsOrder": "sequence",
                 "problemMatcher": [],
             },
+            {
+                "label": "Docker database postgres backup dump",
+                "type": "shell",
+                "command": "docker compose exec postgres-dev pg_dumpall -c -U postgres > dump_`date +%Y-%m-%d'_'%H_%M_%S`.sql",
+                "problemMatcher": [],
+            },
+            {
+                "label": "Docker database postgres restore opened dump",
+                "type": "shell",
+                "command": "cat ${file} | docker compose exec -T postgres-dev psql -U postgres",
+                "problemMatcher": [],
+            },
         ],
         "inputs": [
             {

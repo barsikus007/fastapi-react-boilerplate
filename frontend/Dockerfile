@@ -38,9 +38,19 @@ RUN bun run build
 FROM nginx:stable-alpine as serve
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
-# minimized nginx/nginx.prod.conf
-# hadolint ignore=SC2016
-RUN echo 'server{listen 80;listen [::]:80;server_name nginx-quick-serve;location /{root /usr/share/nginx/html;try_files $uri /index.html;}}' > /etc/nginx/conf.d/default.conf
+# frontend section from nginx/nginx.prod.conf
+COPY <<'EOF' /etc/nginx/conf.d/default.conf
+server {
+    listen 80;
+    listen [::]:80;
+    server_name nginx-quick-serve;
+
+    location / {
+        root /usr/share/nginx/html;
+        try_files $uri /index.html;  # for react-router
+    }
+}
+EOF
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

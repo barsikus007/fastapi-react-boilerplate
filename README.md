@@ -166,6 +166,9 @@ docker compose -f compose.prod.yaml up -d --build
   - <https://github.com/testdrivenio/fastapi-sqlmodel-alembic>
   - <https://github.com/nsidnev/fastapi-realworld-example-app>
     - <https://github.com/nsidnev/fastapi-realworld-example-app/blob/master/app/db/migrations/versions/fdf8821871d7_main_tables.py#L20>
-- vscode workspace recommended extensions
+- vscode workspace
+  - recommended extensions
+  - tasks
+    - .env file parse (use script for that)
 - ./backend#on-ubuntu
   - add bedian (asdf or pyenv)
