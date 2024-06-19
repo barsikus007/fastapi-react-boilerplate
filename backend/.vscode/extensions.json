@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "charliermarsh.ruff",
+        "mihaicosma.quick-python-printf",
+        // "KevinRose.vsc-python-indent",
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "AhadCove.js-quick-console",
+        "dbaeumer.vscode-eslint",
+        "rvest.vs-code-prettier-eslint",
+    ]
+}

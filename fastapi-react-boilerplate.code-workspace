@@ -209,17 +209,9 @@
     },
     "extensions": {
         "recommendations": [
-            // all
             "eamodio.gitlens",
             "editorconfig.editorconfig",
             "ms-azuretools.vscode-docker",
-            // backend
-            "charliermarsh.ruff",
-            "mihaicosma.quick-python-printf",
-            // frontend
-            "AhadCove.js-quick-console",
-            "dbaeumer.vscode-eslint",
-            "rvest.vs-code-prettier-eslint",
         ]
     }
 }

@@ -170,5 +170,7 @@ docker compose -f compose.prod.yaml up -d --build
   - recommended extensions
   - tasks
     - .env file parse (use script for that)
+  - move backend/frotnend specific to own folders
+    - (don't move tasks needed for dev mode)
 - ./backend#on-ubuntu
   - add bedian (asdf or pyenv)
