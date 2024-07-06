@@ -4,6 +4,6 @@
         "ms-python.pylint",
         "charliermarsh.ruff",
         "mihaicosma.quick-python-printf",
-        // "KevinRose.vsc-python-indent",
+        // TODO "KevinRose.vsc-python-indent",
     ]
 }

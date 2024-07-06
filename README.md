@@ -1,4 +1,4 @@
-# fasta-react-boilerplate
+# fastapi-react-boilerplate
 
 ## Features
 

@@ -23,3 +23,17 @@ ignore = [
     "RET503",  # for function without return
     "RUF001",  # for cyrillic
 ]
+
+[tool.pylint]
+max-line-length = 120
+disable = [
+    "C0103",  # trigger to short names
+    "C0114",  # idk
+    "C0115",  # idk
+    "C0116",  # idk
+    "C0301",  # line too long handled by ruff
+    "W0106",  # list comprehension false positive
+    "W0511",  # TODO
+
+    "E1101",  # XxxDsn.build
+]
