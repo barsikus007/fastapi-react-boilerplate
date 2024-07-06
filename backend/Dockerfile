@@ -1,6 +1,6 @@
 # pin version to prevent side-effects when new lts version releases
 ARG PYTHON_VERSION=3.12
-FROM python:${PYTHON_VERSION}-slim as builder
+FROM python:${PYTHON_VERSION}-slim AS builder
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # https://habr.com/en/companies/wunderfund/articles/586778/
 
 
-FROM python:${PYTHON_VERSION}-slim as development
+FROM python:${PYTHON_VERSION}-slim AS development
 
 WORKDIR /app
 
@@ -50,7 +50,7 @@ EXPOSE 8000
 CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]
 
 
-FROM development as production
+FROM development AS production
 
 COPY src/ src/
 COPY alembic/ alembic/

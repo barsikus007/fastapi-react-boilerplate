@@ -1,4 +1,4 @@
-FROM oven/bun:alpine as installer
+FROM oven/bun:alpine AS installer
 ARG USER=bun
 
 USER $USER
@@ -22,20 +22,20 @@ COPY --chown=$USER public/ public/
 COPY --chown=$USER package.json bun.lockb index.html .eslintrc.yaml .eslintignore vite.config.ts tsconfig.json tsconfig.node.json ./
 
 
-FROM installer as development
+FROM installer AS development
 
 EXPOSE 5173
 CMD ["bun", "dev", "--host"]
 
 
-FROM installer as builder
+FROM installer AS builder
 
 ARG VITE_APP_TITLE
 COPY src/ src/
 RUN bun run build
 
 
-FROM nginx:stable-alpine as serve
+FROM nginx:stable-alpine AS serve
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 # frontend section from nginx/nginx.prod.conf
