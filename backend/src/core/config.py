@@ -41,8 +41,8 @@ class Settings(BaseSettings):
     def assemble_db_connection(cls, v: PostgresDsn | None, info: ValidationInfo) -> PostgresDsn:
         if v:
             return v
-        # pylance is stupid
-        return PostgresDsn.build(  # pyright: ignore[reportAttributeAccessIssue]
+        # pylance and pylint is stupid
+        return PostgresDsn.build(  # pyright: ignore[reportAttributeAccessIssue]  # pylint: disable=no-member
             scheme="postgresql+asyncpg",
             username=info.data["POSTGRES_USER"],
             password=info.data["POSTGRES_PASSWORD"],

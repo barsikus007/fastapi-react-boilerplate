@@ -1,44 +1,42 @@
-# from uuid import uuid4, UUID
+import re
 from datetime import datetime
+from uuid import UUID, uuid4
 
 from sqlalchemy import TIMESTAMP, func
-from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, declared_attr, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, declared_attr, mapped_column, registry
+
+orm_registry = registry(
+    # https://docs.sqlalchemy.org/en/20/core/type_basics.html#generic-camelcase-types
+    # https://docs.sqlalchemy.org/en/20/orm/declarative_tables.html#mapped-column-derives-the-datatype-and-nullability-from-the-mapped-annotation
+    type_annotation_map={
+        datetime: TIMESTAMP(timezone=True),
+    },
+)
 
 
-# https://docs.sqlalchemy.org/en/20/orm/dataclasses.html#integrating-with-alternate-dataclass-providers-such-as-pydantic
-class Base(
+class ClearBase(
         MappedAsDataclass,
-        DeclarativeBase,
         kw_only=True,  # type: ignore[call-arg]
 ):
     @declared_attr.directive
-    def __tablename__(cls):  # pylint: disable=no-self-argument
-        return cls.__name__.lower()
+    def __tablename__(cls):  # pylint: disable=no-self-argument  # noqa: N805
+        # https://stackoverflow.com/a/1176023/15844518
+        name = cls.__name__  # pylint: disable=no-member
+        name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+        name = re.sub("__([A-Z])", r"_\1", name)
+        name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
+        return name.lower()
 
-    # https://docs.sqlalchemy.org/en/20/core/type_basics.html#generic-camelcase-types
-    # https://docs.sqlalchemy.org/en/20/orm/declarative_tables.html#mapped-column-derives-the-datatype-and-nullability-from-the-mapped-annotation
-    type_annotation_map = {
-        datetime: TIMESTAMP(timezone=True),
-    }
-
-    id: Mapped[int] = mapped_column(init=False, primary_key=True)
-    # id: Mapped[UUID] = mapped_column(default_factory=uuid4, primary_key=True)
-    date_create: Mapped[datetime] = mapped_column(init=False, server_default=func.now())
-    date_update: Mapped[datetime] = mapped_column(init=False, server_default=func.now(), onupdate=func.now())
+    date_create: Mapped[datetime] = mapped_column(init=False, server_default=func.now())  # pylint: disable=not-callable
+    date_update: Mapped[datetime] = mapped_column(init=False, server_default=func.now(), onupdate=func.now())  # pylint: disable=not-callable
     # TODO https://stackoverflow.com/questions/70946151/how-to-set-default-on-update-current-timestamp-in-postgres-with-sqlalchemy
     # TODO Mapped[datetime] = mapped_column(server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
 
 
-# cascade check
-# TODO: Why?
-    # student_id: int | None = Field(
-    #     foreign_key='student.id', primary_key=True
-    # )
-    # event_id: int | None = Field(
-    #     foreign_key='event.id', primary_key=True
-    # )
+# TODO IntBase or BigIntBase https://github.com/litestar-org/advanced-alchemy/blob/main/advanced_alchemy/base.py
+class Base(ClearBase, DeclarativeBase):
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
 
-    # classes: List["Class"] = Relationship(back_populates="enrollments", link_model=Attendance)
-    # role: Optional['Role'] = Relationship(back_populates='users')
-    # created_by: "User" = Relationship(sa_relationship_kwargs={"lazy":"selectin", "primaryjoin":"Group.created_by_id==User.id"})
-    # users: List["User"] = Relationship(back_populates="groups", link_model=LinkGroupUser, sa_relationship_kwargs={"lazy": "selectin"})
+
+class UUID4Base(ClearBase, DeclarativeBase):
+    id: Mapped[UUID] = mapped_column(default_factory=uuid4, primary_key=True)

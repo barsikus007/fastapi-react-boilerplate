@@ -131,6 +131,7 @@ docker compose -f compose.prod.yaml up -d --build
   - pendulium
   - apscheduler 4
   - <https://github.com/faust-streaming/faust>
+  - uuid7
 
 ### devops
 
@@ -170,6 +171,7 @@ docker compose -f compose.prod.yaml up -d --build
   - recommended extensions
   - tasks
     - .env file parse (use script for that)
+    - openapi schema based mock filler
   - move backend/frotnend specific to own folders
     - (don't move tasks needed for dev mode)
 - ./backend#on-ubuntu
