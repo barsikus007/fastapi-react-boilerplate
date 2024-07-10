@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from src.schemas.base import BaseSchema
 
 
-class Token(BaseModel):
+class Token(BaseSchema):
     access_token: str
     token_type: str
 
 
-class TokenRead(BaseModel):
+class TokenRead(BaseSchema):
     access_token: str
     token_type: str

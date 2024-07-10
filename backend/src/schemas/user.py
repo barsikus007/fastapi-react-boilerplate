@@ -1,10 +1,9 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import EmailStr
+
+from src.schemas.base import BaseSchema, BaseSchemaRead
 
 
-class UserBase(BaseModel):
-    class Config:
-        from_attributes = True
-
+class UserBase(BaseSchema):
     email: EmailStr
     name: str | None = None
     phone: str | None = None
@@ -15,10 +14,9 @@ class IUserCreate(UserBase):
     password: str
 
 
-class IUserRead(UserBase):
+class IUserRead(UserBase, BaseSchemaRead):
     is_superuser: bool
     is_active: bool
-    id: int
 
 
 class IUserUpdate(UserBase):
