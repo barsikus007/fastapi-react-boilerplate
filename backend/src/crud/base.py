@@ -40,8 +40,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return await db.get(self.model, id_)
 
     async def get_count(self, db: AsyncSession) -> ModelType:
-        response = await db.execute(create_count_query(query=select(self.model)))
-        return response.scalars().one()
+        result = await db.execute(create_count_query(query=select(self.model)))
+        return result.scalars().one()
 
     async def get_multi(
         self,

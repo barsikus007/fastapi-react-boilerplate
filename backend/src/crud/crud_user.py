@@ -17,8 +17,8 @@ class CRUDUser(CRUDBase[User, IUserCreate, IUserUpdate]):
         *,
         email: str,
     ) -> User | None:
-        users = await db.execute(select(User).where(User.email == email))
-        return users.scalars().first()
+        result = await db.execute(select(User).where(User.email == email))
+        return result.scalars().first()
 
     async def update(
         self,
