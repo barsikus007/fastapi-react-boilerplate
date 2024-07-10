@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 
+import structlog
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from fastapi.routing import APIRoute
@@ -10,13 +11,15 @@ from starlette.middleware.cors import CORSMiddleware
 from src.api.v1 import api_router
 from src.core.config import settings
 
+logger = structlog.stdlib.get_logger()
+
 
 def app_factory(title: str) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        print(f"Application {app.title} startup")
+        logger.info(f"Application {app.title} startup")
         yield
-        print(f"Application {app.title} shutdown")
+        logger.info(f"Application {app.title} shutdown")
 
     def custom_generate_unique_id(route: APIRoute) -> str:
         """For correct naming in generated frontend client"""

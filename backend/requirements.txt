@@ -13,6 +13,7 @@ python-jose[cryptography]~=3.3.0
 
 # Other deps
 gunicorn~=22.0.0
+structlog~=24.2.0
 
 # ORM deps
 # fix broken for no reason (probably a pip version) normalized optional-dependencies

@@ -16,8 +16,11 @@ orm_registry = registry(
 
 class ClearBase(
         MappedAsDataclass,
+        DeclarativeBase,
         kw_only=True,  # type: ignore[call-arg]
 ):
+    registry = orm_registry
+
     @declared_attr.directive
     def __tablename__(cls):  # pylint: disable=no-self-argument  # noqa: N805
         # https://stackoverflow.com/a/1176023/15844518
