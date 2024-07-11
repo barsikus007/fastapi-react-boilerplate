@@ -52,13 +52,13 @@ async def get_my_data(
 @router.put("/me")
 async def update_user_me(
     *,
-    db: Annotated[AsyncSession, Depends(deps.get_db)],
     user_in: IUserUpdate,
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
     current_user: Annotated[User, Depends(deps.get_current_active_user)],
 ) -> IUserRead:
     if user_in.email and await crud.user.get_by_email(db, email=user_in.email):
         raise HTTPException(status_code=400, detail="There is already a user with same email")
-    return await crud.user.update(db, obj_db=current_user, obj_in=user_in)  # type: ignore
+    return await crud.user.update(db, obj_db=current_user, obj_in=user_in)
 
 
 @router.delete("/{user_id}")
@@ -94,9 +94,9 @@ async def get_user_by_id(
 @router.put("/{user_id}")
 async def update_user(
     *,
-    db: Annotated[AsyncSession, Depends(deps.get_db)],
     user_id: int,
     user_in: IUserUpdateAdmin,
+    db: Annotated[AsyncSession, Depends(deps.get_db)],
     _: Annotated[User, Depends(deps.get_current_active_superuser)],
 ) -> IUserRead:
     user = await crud.user.get(db, id_=user_id)

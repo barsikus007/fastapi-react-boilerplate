@@ -2,7 +2,7 @@
 orjson~=3.10.6
 uvicorn[standard]~=0.30.1
 python-multipart~=0.0.9
-fastapi~=0.111.0
+fastapi-slim~=0.111.0
 fastapi-responses~=0.2.1
 pydantic[email]~=2.8.2
 pydantic-settings~=2.3.4

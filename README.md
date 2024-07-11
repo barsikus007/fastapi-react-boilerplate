@@ -127,10 +127,13 @@ docker compose -f compose.prod.yaml up -d --build
       - basinc cases only (user is very unusual for example)
     - how to remove fields when inherit pydantic models
 - libs related
+  - fastapi-responses is outdated
   - loguru -> default logging ? (with <https://github.com/hynek/structlog>)
   - pendulium
   - apscheduler 4
   - <https://github.com/faust-streaming/faust>
+  - <https://github.com/airtai/faststream>
+  - <https://github.com/reagento/dishka>
   - uuid7
 
 ### devops
