@@ -2,7 +2,6 @@ from collections.abc import AsyncGenerator
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from jose.exceptions import JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,7 +12,7 @@ from src.core.config import settings
 from src.db.session import SessionLocal
 from src.models import User
 
-reusable_oauth2 = OAuth2PasswordBearer(
+reusable_oauth2 = security.OAuth2PasswordBearerCookie(
     tokenUrl=f"{settings.API_V1_STR}/login/access-token",
 )
 

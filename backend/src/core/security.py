@@ -10,6 +10,10 @@ from jose import jwt
 from src.core.config import settings
 
 ALGORITHM = "HS256"
+COOKIE_PARAMS: dict = {
+    # "domain": "localhost:8000",  # TODO extract const?
+    "httponly": True,
+}
 
 
 def create_access_token(

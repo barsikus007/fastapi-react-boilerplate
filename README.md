@@ -96,7 +96,7 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - other
-  - pylint(too-few-public-methods) on sqlalchemy models
+  - ruff alembic
   - use return 201 when create
   - fix return casting `# type: ignore`
   - SQLAlchemy 2.0
