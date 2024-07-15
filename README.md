@@ -96,6 +96,8 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - other
+  - move 404's to cruds
+    - cruds is repository now?
   - ruff alembic
   - use return 201 when create
   - fix return casting `# type: ignore`

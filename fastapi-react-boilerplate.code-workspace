@@ -114,6 +114,12 @@
                 "problemMatcher": [],
             },
             {
+                "label": "Docker database postgres shell",
+                "type": "shell",
+                "command": "docker compose exec postgres-dev psql",
+                "problemMatcher": [],
+            },
+            {
                 "label": "Docker database postgres backup dump",
                 "type": "shell",
                 "command": "docker compose exec postgres-dev pg_dumpall -c -U postgres > dump_`date +%Y-%m-%d'_'%H_%M_%S`.sql",

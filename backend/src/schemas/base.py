@@ -1,4 +1,5 @@
 from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -8,7 +9,14 @@ class BaseSchema(BaseModel):
         from_attributes = True
 
 
-class BaseSchemaRead(BaseSchema):
+class BaseSchemaTimestamped(BaseSchema):
+    created_at: datetime
+    updated_at: datetime
+
+
+class UUID4BaseSchemaRead(BaseSchemaTimestamped):
+    id: UUID
+
+
+class BaseSchemaRead(BaseSchemaTimestamped):  # TODO: IntBaseSchemaRead
     id: int
-    date_create: datetime
-    date_update: datetime

@@ -69,7 +69,7 @@ async def remove_user(
     current_superuser: Annotated[User, Depends(deps.get_current_active_superuser)],
 ) -> IUserRead:
     if current_superuser.id == user_id:
-        raise HTTPException(status_code=404, detail="Users can not delete themself")
+        raise HTTPException(status_code=400, detail="Users can't delete themself")
 
     user = await crud.user.get(db, id_=user_id)
     if not user:
@@ -101,10 +101,7 @@ async def update_user(
 ) -> IUserRead:
     user = await crud.user.get(db, id_=user_id)
     if not user:
-        raise HTTPException(
-            status_code=404,
-            detail="The user with this id does not exist in the system",
-        )
+        raise HTTPException(status_code=404, detail="User not found")
     if user_in.email and (user_db := await crud.user.get_by_email(db, email=user_in.email)) and user.id != user_db.id:
         raise HTTPException(status_code=400, detail="There is already a user with same email")
     return await crud.user.update(db, obj_db=user, obj_in=user_in)

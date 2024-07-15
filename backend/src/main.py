@@ -48,7 +48,7 @@ def app_factory(title: str) -> FastAPI:
         )
 
     add_pagination(created_app)
-    api_router.add_api_route("/health", lambda: {"status": "I am alive!"}, include_in_schema=False)  # pyright: ignore[reportArgumentType]
+    api_router.add_api_route("/health", lambda: {"status": "I am alive!"}, include_in_schema=False)
     created_app.include_router(api_router, prefix=settings.API_V1_STR)
 
     return created_app
