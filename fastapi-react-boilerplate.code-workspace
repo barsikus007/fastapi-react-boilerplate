@@ -1,4 +1,18 @@
 {
+    "folders": [
+        {
+            "name": "backend",
+            "path": "backend"
+        },
+        {
+            "name": "frontend",
+            "path": "frontend"
+        },
+        {
+            "name": "project root",
+            "path": "."
+        }
+    ],
     "tasks": {
         // See https://go.microsoft.com/fwlink/?LinkId=733558
         // for the documentation about the tasks.json format
@@ -105,10 +119,19 @@
             },
             {
                 "label": "Docker database remove and create again",
-                "type": "process",
                 "dependsOn": [
                     "Docker database remove",
                     "Docker database create",
+                ],
+                "dependsOrder": "sequence",
+                "problemMatcher": [],
+            },
+            {
+                "label": "Docker database reset",
+                "dependsOn": [
+                    "Docker database remove and create again",
+                    "Docker alembic upgrade to head",
+                    "Docker backend run init_db",
                 ],
                 "dependsOrder": "sequence",
                 "problemMatcher": [],
@@ -141,20 +164,6 @@
             }
         ]
     },
-    "folders": [
-        {
-            "name": "backend",
-            "path": "backend"
-        },
-        {
-            "name": "frontend",
-            "path": "frontend"
-        },
-        {
-            "name": "fastapi-react-boilerplate",
-            "path": "."
-        }
-    ],
     "settings": {
         // TODO move to own config too
         // "eslint.workingDirectories": ["./frontend"],

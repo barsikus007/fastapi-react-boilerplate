@@ -28,7 +28,7 @@ COPY --from=builder /wheels /wheels
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir /wheels/*
 
-COPY alembic.ini .
+COPY alembic.ini pyproject.toml ./
 
 # Id 1000 is used instead of 10001 due to broken permissions for alembic migration files,
 ARG UID=1000
