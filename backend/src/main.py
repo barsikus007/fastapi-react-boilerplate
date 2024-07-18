@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 import structlog
@@ -10,6 +11,9 @@ from starlette.middleware.cors import CORSMiddleware
 
 from src.api.v1 import api_router
 from src.core.config import settings
+from src.core.logging import configure_logger
+
+configure_logger(is_production=settings.PRODUCTION, logging_level=logging.DEBUG if settings.DEBUG else logging.INFO)
 
 logger = structlog.stdlib.get_logger()
 
@@ -17,9 +21,9 @@ logger = structlog.stdlib.get_logger()
 def app_factory(title: str) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        logger.info(f"Application {app.title} startup")
+        await logger.ainfo("Application %s startup", app.title)
         yield
-        logger.info(f"Application {app.title} shutdown")
+        await logger.ainfo("Application %s shutdown", app.title)
 
     def custom_generate_unique_id(route: APIRoute) -> str:
         """For correct naming in generated frontend client"""

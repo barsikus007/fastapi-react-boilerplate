@@ -3,6 +3,7 @@ orjson~=3.10.6
 uvicorn[standard]~=0.30.1
 python-multipart~=0.0.9
 fastapi-slim~=0.111.0
+# TODO: abadoned, depends on fastapi full package
 fastapi-responses~=0.2.1
 pydantic[email]~=2.8.2
 pydantic-settings~=2.3.4
@@ -11,13 +12,16 @@ pydantic-settings~=2.3.4
 bcrypt~=4.1.3
 python-jose[cryptography]~=3.3.0
 
+# Logging
+structlog~=24.4.0
+rich~=13.7.1  # TODO: dev deps
+
 # Other deps
 ruff~=0.5.2
 gunicorn~=22.0.0
-structlog~=24.2.0
 
 # ORM deps
-# fix broken for no reason (probably a pip version) normalized optional-dependencies
+# TODO: fix broken for no reason (probably a pip version) normalized optional-dependencies
 # sqlalchemy[postgresql-asyncpg]~=2.0.31
 sqlalchemy[postgresql_asyncpg]~=2.0.31
 alembic~=1.13.2

@@ -23,6 +23,8 @@ services:
       - ./backend/:/app/:ro
     env_file:
       - .env
+    environment:
+      - PRODUCTION=True
 #     depends_on:
 #       - postgres-dev
 

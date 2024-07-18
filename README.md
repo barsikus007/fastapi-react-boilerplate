@@ -68,6 +68,7 @@ docker compose -f compose.prod.yaml up -d --build
 ### Untemplating
 
 - `s/fastapi-react-boilerplate/your-project-name/g`
+- `mv fastapi-react-boilerplate.code-workspace your-project-name.code-workspace`
 
 ## FastAPI React Boilerplate TODO
 
@@ -129,7 +130,6 @@ docker compose -f compose.prod.yaml up -d --build
     - how to remove fields when inherit pydantic models
 - libs related
   - fastapi-responses is outdated
-  - loguru -> default logging ? (with <https://github.com/hynek/structlog>)
   - pendulium
   - apscheduler 4
   - <https://github.com/faust-streaming/faust>
