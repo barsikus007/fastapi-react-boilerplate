@@ -97,6 +97,7 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - other
+  - gunicorn (and maybe uvicorn.error and watchdog) sqla alembic structlogs
   - move 404's to cruds
     - cruds is repository now?
   - use return 201 when create
@@ -126,8 +127,9 @@ docker compose -f compose.prod.yaml up -d --build
         - make own solution
   - remake structure to more convinient usage
     - make schema autogeneration from models
-      - basinc cases only (user is very unusual for example)
+      - basic cases only (user is very unusual for example)
     - how to remove fields when inherit pydantic models
+  - file structure from src/main to src/app/main ?
 - libs related
   - fastapi-responses is outdated
   - pendulium

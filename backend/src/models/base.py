@@ -49,8 +49,12 @@ class ClearBase(
 
 # TODO IntBase or BigIntBase https://github.com/litestar-org/advanced-alchemy/blob/main/advanced_alchemy/base.py
 class Base(ClearBase, DeclarativeBase):  # TODO: IntBase
+    registry = orm_registry
+
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
 
 
 class UUID4Base(ClearBase, DeclarativeBase):
+    registry = orm_registry
+
     id: Mapped[UUID] = mapped_column(default_factory=uuid4, primary_key=True)

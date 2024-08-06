@@ -27,7 +27,9 @@ def configure_default_logging(
 
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
-    for logger_name in [None, "uvicorn", "uvicorn.access", "sqlalchemy.engine.Engine"]:
+    # loggers_to_override = [None, "uvicorn.error", "uvicorn.access", "sqlalchemy.engine.Engine"]
+    loggers_to_override = [None, "uvicorn.access", "sqlalchemy.engine.Engine"]  # TODO: extract to settings
+    for logger_name in loggers_to_override:
         _logger = logging.getLogger(logger_name)
         # print(f"⚡🐍 {logger_name=}")
         # print(f"⚡🐍 {_logger.handlers=}")

@@ -1,5 +1,6 @@
 import logging
 from contextlib import asynccontextmanager
+from uuid import uuid4
 
 import structlog
 from fastapi import FastAPI
@@ -8,6 +9,8 @@ from fastapi.routing import APIRoute
 from fastapi_pagination import add_pagination
 from fastapi_responses import custom_openapi
 from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
+from starlette.responses import Response
 
 from src.api.v1 import api_router
 from src.core.config import settings
@@ -59,6 +62,22 @@ def app_factory(title: str) -> FastAPI:
 
 
 app = app_factory(settings.PROJECT_NAME)
+
+
+@app.middleware("http")
+async def logging_middleware(request: Request, call_next) -> Response:
+    req_id = request.headers.get("X-Request-ID") or str(uuid4())
+
+    structlog.contextvars.clear_contextvars()
+    structlog.contextvars.bind_contextvars(
+        request_id=req_id,
+    )
+
+    response: Response = await call_next(request)
+
+    response.headers["X-Request-ID"] = req_id
+    return response
+
 
 if __name__ == "__main__":
     import uvicorn

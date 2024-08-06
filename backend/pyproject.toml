@@ -10,6 +10,7 @@ line-length = 120
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    "COM812", "ISC001",  # for ruff formatter
     "ANN001",  # for default=True like vars
     "ANN101",  # for self
     "ANN102",  # for cls
