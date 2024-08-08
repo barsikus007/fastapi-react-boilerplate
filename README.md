@@ -97,28 +97,29 @@ docker compose -f compose.prod.yaml up -d --build
 ### backend
 
 - other
-  - gunicorn (and maybe uvicorn.error and watchdog) sqla alembic structlogs
   - move 404's to cruds
     - cruds is repository now?
   - use return 201 when create
+  - alembic ruff only fixes, not formatting
   - fix return casting `# type: ignore`
   - SQLAlchemy 2.0
     - pydantic.dataclasses.dataclass fix
     - relation model examples
     - onupdate timestamps
-  - pip install or pip wheel
-    - why pip wheel --no-deps ?
   - hide docs in prod (None to docs and openapi schema)
   - form-multipart test
-  - gunicorn logging disable
+  - gunicorn (and maybe uvicorn.error and watchdog) sqla alembic structlogs
+  - uv
+    - add to readme
+    - use pyproject
+    - pdm?
+      - <https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry>
+      - <https://gabnotes.org/posts/lighten-your-python-image-docker-multi-stage-builds/>
   - ruff
     - wemake-python-styleguide
   - --proxy-headers <https://fastapi.tiangolo.com/deployment/docker/#behind-a-tls-termination-proxy>
     - other nginx configurations from uvicorn docs
       - better nginx location sctucture (global fastapi location)
-  - poetry ?
-    - <https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry>
-    - <https://gabnotes.org/posts/lighten-your-python-image-docker-multi-stage-builds/>
 - arch related
   - <https://docs.sqlalchemy.org/en/20/changelog/migration_20.html#migration-20-step-six>
   - errors
@@ -146,7 +147,6 @@ docker compose -f compose.prod.yaml up -d --build
   - nginx serve static files
   - max filesize deps for FastAPI
   - nginx client_max_body_size 100M;
-  - GUID in env or another workaround for correct file rights (container user not root) (migrations for example)
 - update && fix compose.debug.yaml
   - backend
   - frontend

@@ -1,20 +1,17 @@
 # pin version to prevent side-effects when new lts version releases
 ARG PYTHON_VERSION=3.12
-FROM python:${PYTHON_VERSION}-slim AS builder
+FROM python:${PYTHON_VERSION}-slim AS installer
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
-RUN --mount=type=cache,target=/root/.cache/pip \
+RUN --mount=from=ghcr.io/astral-sh/uv:latest,source=/uv,target=/bin/uv \
+    --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    pip wheel --wheel-dir /wheels -r requirements.txt
-# https://habr.com/en/companies/wunderfund/articles/586778/
+    uv pip install --system -r requirements.txt
 
 
-FROM python:${PYTHON_VERSION}-slim AS development
+FROM installer AS base
 
-WORKDIR /app
+ARG WORKDIR=/app
+WORKDIR $WORKDIR
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -22,38 +19,47 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 # Set Python path to workdir
-ENV PYTHONPATH=/app
-
-COPY --from=builder /wheels /wheels
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir /wheels/*
+ENV PYTHONPATH=$WORKDIR
 
 COPY alembic.ini pyproject.toml ./
 
-# Id 1000 is used instead of 10001 due to broken permissions for alembic migration files,
-ARG UID=1000
-ARG USER=appuser
-# Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    $USER && chown -R $USER /app
-USER $USER
-
 EXPOSE 8000
+
+
+FROM base AS development
 
 CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]
 
 
-FROM development AS production
+FROM base AS production
+ARG USER=python
+
+# Create a non-privileged user that the app will run under.
+# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
+ARG UID=10001
+RUN useradd \
+    --no-log-init \
+    --no-create-home \
+    --shell /sbin/nologin \
+    --uid "${UID}" \
+    $USER
+USER $USER
 
 COPY src/ src/
 COPY alembic/ alembic/
 
+ENV PRODUCTION=True
+
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["gunicorn", "src.main:app", "-b", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
+
+
+FROM base AS debug
+
+RUN --mount=from=ghcr.io/astral-sh/uv:latest,source=/uv,target=/bin/uv \
+    --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --system debugpy
+
+EXPOSE 5678
+
+CMD ["python", "-m", "debugpy", "--wait-for-client", "--listen", "0.0.0.0:5678", "-m", "uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]

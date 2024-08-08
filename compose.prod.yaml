@@ -17,10 +17,16 @@ services:
   backend-prod:
     image: backend-prod
     restart: always
-    build: backend/
-    command: sh -c 'alembic upgrade head && python ./src/db/init_db.py && gunicorn src.main:app -b 0.0.0.0 -w 4 -k uvicorn.workers.UvicornWorker'
-    volumes:
-      - ./backend/:/app/:ro
+    build:
+      context: backend/
+      target: production
+    command:
+      - "sh"
+      - "-c"
+      - |
+        alembic upgrade head \
+        && python ./src/db/init_db.py \
+        && gunicorn src.main:app -b 0.0.0.0 -w 4 -k uvicorn.workers.UvicornWorker
     env_file:
       - .env
     environment:

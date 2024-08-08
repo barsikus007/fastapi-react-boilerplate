@@ -1,8 +1,10 @@
-# For local type checking and suggestion (developer mode)
+# Frontend
 
-## Install node
+## For local type checking and suggestion (developer mode)
 
-### On Windows
+### Install node
+
+#### On Windows
 
 I recommend to use WSL filesystem instead of Windows one (Linux instruction)
 
@@ -16,7 +18,7 @@ proto install node lts
 # proto install bun
 ```
 
-### On Linux
+#### On Linux
 
 ```sh
 # install https://moonrepo.dev/proto
@@ -25,7 +27,7 @@ proto install node lts
 proto install bun
 ```
 
-## Install packages
+### Install packages
 
 Be sure that you in current (frontend) dir
 
@@ -33,13 +35,13 @@ Be sure that you in current (frontend) dir
 bun i
 ```
 
-## Config linters and etc
+### Config linters and etc
 
-### VSCode
+#### VSCode
 
 Install recommended extensions
 
-### Other editors
+#### Other editors
 
 ¯\\\_( ͡° ͜ʖ ͡°)_/¯
 
