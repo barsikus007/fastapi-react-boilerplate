@@ -23,16 +23,31 @@ services:
     depends_on:
       - postgres-dev
 
-  # frontend-dev:
-  #   image: frontend
-  #   build:
-  #     context: frontend/
-  #     target: debug
-  #   volumes:
-  #     - ./frontend/src/:/app/src/
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 3000:3000
-  #     - 9229:9229
-  #   command: yarn start --inspect=0.0.0.0:9229
+  # same as in compose.yaml but with ports
+  frontend-dev:
+    image: frontend-dev
+    build:
+      context: frontend/
+      target: development
+    volumes:
+      - ./frontend/src/:/app/src/
+    ports:
+      - 5173:5173
+    env_file:
+      - .env
+
+  # same as in compose.yaml but with ports
+  postgres-dev:
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
