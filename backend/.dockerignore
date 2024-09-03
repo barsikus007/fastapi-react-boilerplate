@@ -5,8 +5,6 @@
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
 
 **/.DS_Store
-**/__pycache__
-**/.venv
 **/.classpath
 **/.dockerignore
 **/.env
@@ -20,7 +18,6 @@
 **/*.*proj.user
 **/*.dbmdl
 **/*.jfm
-**/bin
 **/charts
 **/docker-compose*
 **/compose*
@@ -30,3 +27,7 @@
 **/values.dev.yaml
 LICENSE
 README.md
+
+**/__pycache__
+**/.venv
+**/bin
