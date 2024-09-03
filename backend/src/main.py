@@ -37,7 +37,7 @@ def app_factory(title: str) -> FastAPI:
         version="0.1",
         openapi_url=f"{settings.API_V1_STR}/openapi.json",
         default_response_class=ORJSONResponse,
-        docs_url="/docs",
+        docs_url="/docs" if not settings.PRODUCTION or settings.DEBUG else None,
         redoc_url=None,
         lifespan=lifespan,
         generate_unique_id_function=custom_generate_unique_id,

@@ -182,3 +182,4 @@ docker compose -f compose.prod.yaml up -d --build
     - (don't move tasks needed for dev mode)
 - ./backend#on-ubuntu
   - add bedian (asdf or pyenv)
+- debug mode docs
