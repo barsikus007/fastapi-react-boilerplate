@@ -35,6 +35,7 @@ services:
       - 5173:5173
     env_file:
       - .env
+    tty: true  # for color logs
 
   # same as in compose.yaml but with ports
   postgres-dev:

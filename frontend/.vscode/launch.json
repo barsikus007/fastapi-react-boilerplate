@@ -1,17 +1,15 @@
 {
     "configurations": [
-        // https://mfcallahan.com/2023/04/24/configuring-vs-code-for-vue-js-development-using-vite/
         {
             "type": "msedge",
             "request": "launch",
             "name": "JavaScript: Browser Attach",
             "url": "http://localhost:5173",
-            "webRoot": "${workspaceFolder}/src",
-            "sourceMapPathOverrides": {
-                "webpack:///./src/*": "${webRoot}/*"
-            },
-            "runtimeArgs": ["--remote-debugging-port=9222"],
-            "sourceMaps": true
+            // ! these lines seems unnecessary
+            // "webRoot": "${workspaceFolder}/src",
+            // "sourceMapPathOverrides": {
+            //     "webpack:///./src/*": "${webRoot}/*"
+            // },
         }
     ]
 }

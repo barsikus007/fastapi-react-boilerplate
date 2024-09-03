@@ -43,6 +43,7 @@ services:
     #   - 5173:5173
     env_file:
       - .env
+    tty: true  # for color logs
 
   postgres-dev:
     image: postgres:16-alpine
