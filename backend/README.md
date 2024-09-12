@@ -2,53 +2,23 @@
 
 ## For local type checking and suggestion (developer mode)
 
-### Install python
-
-#### On Windows
-
-I recommend [scoop](https://scoop.sh) package manager
-
-```pwsh
-scoop install python312
-```
-
-#### On Linux
-
-You already have python, just be sure that you have 3.12 version with venv installed
-
-If your version is lower, then find the way to install it on your distro
-
-Here is the most common distro installation instruction:
-
-##### On Ubuntu
+### Install uv
 
 ```bash
-sudo add-apt-repository ppa:deadsnakes/ppa -y
-sudo apt install build-essential python3.12-dev python3.12-venv -y
+# linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# windows (https://scoop.sh)
+scoop install uv
 ```
-
-##### Other
-
-If your distro haven't prebuilt package, then you can use [pythonz](https://github.com/saghul/pythonz)
 
 ### Install packages
 
-Be sure that you in backend dir
-
-#### On Windows
-
-```pwsh
-py -m venv venv
-venv\Scripts\pip install --upgrade pip wheel setuptools
-venv\Scripts\pip install -r requirements.txt
-```
-
-#### On Linux
+Be sure that you are in `backend/` dir
 
 ```bash
-python3.12 -m venv venv
-venv/bin/pip install --upgrade pip wheel setuptools
-venv/bin/pip install -r requirements.txt
+uv venv
+uv pip install -r requirements.txt
+# uv sync --frozen --no-install-project
 ```
 
 ### Point your IDE to virtual environment

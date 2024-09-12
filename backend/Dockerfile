@@ -1,14 +1,16 @@
 # pin version to prevent side-effects when new lts version releases
 ARG PYTHON_VERSION=3.12
 ARG UV_VERSION=latest
-# 0.3.4
+# 0.4.9
 FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
 FROM python:${PYTHON_VERSION}-slim AS installer
 
 RUN --mount=from=uv,source=/uv,target=/bin/uv \
     --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    uv pip install --system -r requirements.txt
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    # --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv pip install --system -r pyproject.toml
+    # uv sync --frozen --no-install-project  # --compile-bytecode
 
 
 FROM installer AS base
