@@ -7,10 +7,10 @@ FROM python:${PYTHON_VERSION}-slim AS installer
 
 RUN --mount=from=uv,source=/uv,target=/bin/uv \
     --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     # --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv pip install --system -r pyproject.toml
-    # uv sync --frozen --no-install-project  # --compile-bytecode
+    # uv sync --frozen  # --compile-bytecode
 
 
 FROM installer AS base
@@ -37,6 +37,7 @@ CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]
 
 
 FROM base AS production
+
 ARG USER=python
 
 # Create a non-privileged user that the app will run under.
@@ -55,7 +56,7 @@ COPY alembic/ alembic/
 
 ENV PRODUCTION=True
 
-# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
+#? During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["gunicorn", "src.main:app", "-b", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
 
 

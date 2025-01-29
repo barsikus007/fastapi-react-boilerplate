@@ -7,8 +7,8 @@ dependencies = [
     "orjson~=3.10.6",
     "uvicorn[standard]~=0.30.1",
     "python-multipart~=0.0.9",
-    "fastapi-slim~=0.111.0",
-    # TODO: abadoned, depends on fastapi full package
+    "fastapi~=0.112.0",
+    # TODO: abadoned
     "fastapi-responses~=0.2.1",
     "pydantic[email]~=2.8.2",
     "pydantic-settings~=2.3.4",
@@ -32,6 +32,7 @@ dependencies = [
 ]
 
 [tool.uv]
+package = false
 dev-dependencies = [
     "rich~=13.7.1",
     "ruff~=0.5.2",

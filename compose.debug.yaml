@@ -21,7 +21,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgres-dev
+      postgres-dev:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/pyproject.toml
 
   # same as in compose.yaml but with ports
   frontend-dev:
