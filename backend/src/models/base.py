@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import TIMESTAMP, MetaData, func
+from sqlalchemy import JSON, TIMESTAMP, MetaData, func
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, declared_attr, mapped_column, registry
 
@@ -20,6 +20,7 @@ orm_registry = registry(
     # https://docs.sqlalchemy.org/en/20/orm/declarative_tables.html#mapped-column-derives-the-datatype-and-nullability-from-the-mapped-annotation
     type_annotation_map={
         datetime: TIMESTAMP(timezone=True),
+        dict: JSON,
     },
 )
 
