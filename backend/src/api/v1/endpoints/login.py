@@ -15,7 +15,7 @@ from src.schemas.token import TokenRead
 router = APIRouter()
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def login(
     email: Annotated[EmailStr, Body()],
     password: Annotated[str, Body()],
