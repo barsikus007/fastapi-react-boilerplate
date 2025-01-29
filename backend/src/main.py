@@ -14,7 +14,7 @@ from starlette.responses import Response
 
 from src.api.v1 import api_router
 from src.core.config import settings
-from src.core.logging import configure_logger
+from src.core.custom_logging import configure_logger
 
 configure_logger(is_production=settings.PRODUCTION, logging_level=logging.DEBUG if settings.DEBUG else logging.INFO)
 
