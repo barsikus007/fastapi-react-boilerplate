@@ -99,7 +99,6 @@ docker compose -f compose.prod.yaml up -d --build
 - other
   - move 404's to cruds
     - cruds is repository now?
-  - use return 201 when create
   - alembic ruff only fixes, not formatting
   - fix return casting `# type: ignore`
   - SQLAlchemy 2.0
